@@ -51,6 +51,9 @@ datasets/
 secrets/
 credentials*
 
+# ---- 第三方运行时产生的垃圾 ----
+MUJOCO_LOG.TXT
+
 # ---- 编辑器 / 系统 ----
 .DS_Store
 .idea/
