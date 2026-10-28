@@ -17,18 +17,39 @@
 | `docs/tutorial/` | 入门教程、逐步教学 |
 | `docs/user-guide/` | 面向使用者的操作说明（按角色分册） |
 | `docs/operations/RUNBOOK.md` | 部署 / 运维 / 踩坑 / 排障（注明日期） |
+| `docs/testing/` | 评测报告（需求 / 方案 / 用例 / 结果） |
+| `src/policies.py` | π0.5 策略适配层（`Pi05Policy.act()`） |
+| `src/eval_safelibero.py` | rollout 循环 + CAR / TSR / ETS 指标 |
+| `tools/run_eval.py` | 评测 CLI |
+| `tools/activate_env.sh` | 环境入口（`source` 后即可用 python / main_demo.py） |
+| `requirements-lock.txt` | `.venv` 的完整包清单（`pip freeze`） |
 | `docs/reference/` | 术语、角色权限、状态机、模块清单 |
 | `docs/explanation/` | 架构、设计取舍、决策记录（ADR） |
 | `docs/testing/` | 需求 / 方案 / 用例 / 测试报告 |
 | `.cache-local/` | 本项目相关缓存（HF / torch / pip 等），**不放用户 home** |
 
-## 相关环境（已有，勿污染）
+## 评测环境（本项目自建，2026-10-28）
 
-- `/opt/venv/openvla` — libero + robosuite 1.4.1 + mujoco 3.3.7（Python 3.11）
-- `/opt/venv/openpi` — openpi + jax 0.5.3（GPU 可见）
-- 共享参考项目：`/data/2608.SDL/MojocoProj`（π0.5 + LIBERO，**只读**）
+**`./.venv`**（Python 3.8.18）— SafeLIBERO 专用：`robosuite==1.4.1` + `mujoco==2.3.7` +
+`bddl==1.0.1` + `torch==2.4.1+cu121`，EGL 离屏渲染。完整清单见 `requirements-lock.txt`。
 
-本项目自有依赖请装进本目录下的独立虚拟环境（`uv venv` / `conda`），不要装进基础环境。
+```bash
+cd /data/safeVLA && source tools/activate_env.sh   # 每个新 shell 都要
+python tools/check_all_scenes.py                   # 32 个场景健康检查
+```
+
+搭建过程与 4 个踩坑详见 `docs/operations/RUNBOOK.md`（含「重新下载数据集后要重跑
+`tools/fix_safelibero_asset_paths.py`」这条必读注意事项）。
+
+## 相关环境（团队共享，已有，勿污染）
+
+| 路径 | 内容 |
+|---|---|
+| `/opt/venv/openvla` | **原版** libero + robosuite 1.4.1 + mujoco 3.3.7（Python 3.11） |
+| `/opt/venv/openpi` | openpi + jax 0.5.3（GPU 可见） |
+| `/data/2608.SDL/MojocoProj` | π0.5 + LIBERO 共享参考项目（**只读**） |
+
+本项目自有依赖装在 `./.venv`，已与上面隔离。不要装进 `/opt/miniconda3` 或 `/opt/venv/*`。
 
 ## 约定
 
