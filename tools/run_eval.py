@@ -73,6 +73,8 @@ def parse_args():
                     help="断点续跑：跳过 out 目录里已完成的 (场景, episode)")
     ap.add_argument("--replan-steps", type=int, default=None,
                     help="每 N 步重新推理（AEGIS 用 5）；默认执行完整 action chunk")
+    ap.add_argument("--resolution", type=int, default=256,
+                    help="相机渲染分辨率。AEGIS 原文用 1024，对比时两边须一致")
     return ap.parse_args()
 
 
@@ -111,7 +113,8 @@ def main():
         from src.policies import Pi05Policy  # noqa: PLC0415
 
         print("[eval] 加载 π0.5 策略（首次含 JAX 编译，约 1~3 分钟）…")
-        policy = Pi05Policy(verbose=True, replan_steps=args.replan_steps)
+        policy = Pi05Policy(verbose=True, replan_steps=args.replan_steps,
+                            image_size=args.resolution)
         if args.replan_steps:
             print(f"[eval] closed-loop 重规划：每 {args.replan_steps} 步重新推理")
 
@@ -150,7 +153,9 @@ def main():
                     / task.bddl_file
                 )
                 env = OffScreenRenderEnv(
-                    bddl_file_name=bddl, camera_heights=256, camera_widths=256
+                    bddl_file_name=bddl,
+                    camera_heights=args.resolution,
+                    camera_widths=args.resolution,
                 )
                 env.seed(7)
                 max_steps = args.max_steps or DEFAULT_MAX_STEPS[suite_name]

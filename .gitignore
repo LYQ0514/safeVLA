@@ -61,3 +61,7 @@ MUJOCO_LOG.TXT
 .idea/
 .vscode/
 *.swp
+
+# ---- 第三方权重（体积大，见各自 README 重建）----
+third_party/groundingdino_weights/*.pth
+third_party/groundingdino_weights/bert-base-uncased/

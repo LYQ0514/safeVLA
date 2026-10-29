@@ -97,7 +97,12 @@ def run_episode(env, task_suite, task_id, episode_idx, policy, max_steps=300,
     # 空转**之后**再取障碍物初始位置：此时物体已落稳，避免把下落误判成碰撞
     tracker = CollisionTracker(env, obs)
     if hasattr(policy, "reset"):
-        policy.reset()
+        # 传 obs/prompt：安全层需要稳定后的观测来定位障碍物、建初始椭球。
+        # 不传也能工作（老策略的 reset 签名是 ()），故用 try 兜底。
+        try:
+            policy.reset(obs, prompt)
+        except TypeError:
+            policy.reset()
 
     frames = []
     success = False
