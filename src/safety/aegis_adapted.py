@@ -53,6 +53,28 @@ EEF_Q_LONG_OBJECT = np.array([0.06, 0.12, 0.20])
 EEF_OFFSET_LOCAL = np.array([0.0, 0.0, -0.08])
 
 
+def set_h_gain(gain):
+    """消融用：调整 CBF 约束里的 h 增益（上游固定 10）。
+
+    调小 → 约束更松，更少干预、TSR 更高但 CAR 更低。
+    """
+    global QP_H_GAIN
+    QP_H_GAIN = gain
+
+
+def set_use_small_eef(flag):
+    """消融用：是否忽略上游「大椭球」规则（orange juice/milk/alphabet soup）。
+
+    True = 所有任务都用 [0.06,0.12,0.11] 小椭球，用来验证
+    "大椭球导致过度约束" 这一假设。
+    """
+    global _USE_SMALL_EEF
+    _USE_SMALL_EEF = flag
+
+
+_USE_SMALL_EEF = False
+
+
 def _quat_wxyz_to_rot(quat_wxyz):
     """MuJoCo/robosuite 四元数是 wxyz，转 3x3 旋转矩阵。"""
     from scipy.spatial.transform import Rotation as R
@@ -141,7 +163,9 @@ class AegisSafetyLayer:
         """episode 开始：定位障碍物、算初始椭球与 z 方向。"""
         # 末端椭球半轴按任务类型选（上游同款规则）
         lang = task_language.lower()
-        if any(k in lang for k in ("orange juice", "milk", "alphabet soup")):
+        if _USE_SMALL_EEF:
+            self.Q1_diag = EEF_Q_DEFAULT.copy()
+        elif any(k in lang for k in ("orange juice", "milk", "alphabet soup")):
             self.Q1_diag = EEF_Q_LONG_OBJECT.copy()
         else:
             self.Q1_diag = EEF_Q_DEFAULT.copy()

@@ -97,6 +97,10 @@ def main():
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--max-episodes", type=int, default=None,
                     help="调试用：最多跑多少条就停")
+    ap.add_argument("--h-gain", type=float, default=None,
+                    help="消融：CBF 约束的 h 增益（上游固定 10）")
+    ap.add_argument("--small-eef", action="store_true",
+                    help="消融：忽略上游大椭球规则，所有任务用小椭球")
     args = ap.parse_args()
 
     if not os.environ.get("LIBERO_CONFIG_PATH"):
@@ -114,6 +118,14 @@ def main():
 
     from src.eval_safelibero import run_episode, save_results, summarize  # noqa: PLC0415
     from src.policies import Pi05Policy  # noqa: PLC0415
+    import src.safety.aegis_adapted as _aeg  # noqa: PLC0415
+
+    if args.h_gain is not None:
+        _aeg.set_h_gain(args.h_gain)
+        print(f"[aegis] 消融：h 增益 = {args.h_gain}（上游 10）")
+    if args.small_eef:
+        _aeg.set_use_small_eef(True)
+        print("[aegis] 消融：忽略大椭球规则，统一用小椭球")
 
     stamp = dt.datetime.now().strftime("%Y%m%d_%H%M%S")
     out_dir = pathlib.Path(args.out or (ROOT / "data" / "eval" / f"aegis_{stamp}"))
