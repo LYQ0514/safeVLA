@@ -41,7 +41,9 @@ runs/
 outputs/
 logs/
 *.log
-data/
+# 用 data/* 而非 data/：git 不会进入被忽略的目录，
+# 写成 data/ 会让下面的 !data/eval 否定规则失效。
+data/*
 datasets/
 
 # ---- 环境 / 凭据（绝不入库）----
@@ -65,3 +67,9 @@ MUJOCO_LOG.TXT
 # ---- 第三方权重（体积大，见各自 README 重建）----
 third_party/groundingdino_weights/*.pth
 third_party/groundingdino_weights/bert-base-uncased/
+
+# ---- 评测结果：只存 summary.json（文本、可复现分析），不存视频 ----
+!data/eval/
+data/eval/*/videos/
+data/eval/*/*.mp4
+data/eval/ablation_*/
