@@ -243,3 +243,49 @@ python tools/diagnose_eval.py                   # 阈值校准 + 轨迹追踪
 python tools/run_eval.py --suite safelibero_spatial --level I --tasks 0 --episodes 0 1 2
 python tools/run_eval.py --all --no-video       # 全量 1600 条，约 2.4h（后台跑）
 ```
+
+---
+
+## 2026-10-29 全量评测的两个运维坑
+
+### 踩坑 8：后台长任务被会话清理杀掉（`nohup` 不够）
+
+**现象**：全量评测跑 2 小时 10 分后进程消失，日志戛然而止在 18:50，**无 traceback**。
+排查排除了容器重启（`uptime -s` 显示连续运行 3 天）和 OOM
+（`/sys/fs/cgroup/memory.events` 里 `oom_kill 0`，内存仅用 4/125 GB）。
+
+**根因**：`nohup` 只能挡 SIGHUP，挡不住**会话结束时的进程组清理**。
+
+**修复**：用 `setsid` 让进程进入独立会话：
+
+```bash
+setsid nohup python tools/run_eval.py --all --no-video \
+    --out data/eval/xxx --resume > log 2>&1 < /dev/null &
+```
+
+**验证**：`ps -o sid= -p <pid>` 的会话 ID 与当前 shell 不同，即已脱离。
+
+**注意**：`pkill -f run_eval.py` 之后要确认旧进程真的退出，否则两个进程抢 GPU。
+
+---
+
+### 踩坑 9：落盘粒度太粗，中断丢数据
+
+**现象**：上述中断时实际跑完 528 条，但只存下 400 条 —— goal 场景已完成的 128 条白跑。
+
+**根因**：只在**场景边界**（200 条一次）调 `save_results`。
+
+**修复**：改为**每 20 条**落盘一次（`if len(all_results) % 20 == 0`）。
+中断最多丢 20 条。
+
+---
+
+### 全量评测耗时参考（单卡 4090，π0.5）
+
+| 套件 | max_steps | 速率 | 400 条耗时 |
+|---|---|---|---|
+| spatial / goal / object | 300 | ~5.9 s/ep | ~40 min |
+| long | 550 | ~10.8 s/ep | ~72 min |
+| **全量 1600 条** | | | **~4 小时** |
+
+用 `--replan-steps 5`（每 5 步重新推理）会再慢约 10~20%。

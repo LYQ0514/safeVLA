@@ -41,13 +41,16 @@ class Pi05Policy:
     """
 
     def __init__(self, ckpt_dir=None, num_infer_steps=10, image_size=256,
-                 openpi_data_home=None, verbose=True):
+                 openpi_data_home=None, verbose=True, replan_steps=None):
         _ensure_runner_importable()
         import pi05_libero_runner as R  # noqa: PLC0415
 
         self._runner = R
         self.image_size = image_size
         self.num_infer_steps = num_infer_steps
+        # replan_steps: 每次推理后只执行前 N 个动作就重新推理（AEGIS 用 5）。
+        # None = 执行完整个 action chunk（默认，π0.5 官方 open-loop 方式）。
+        self.replan_steps = replan_steps
 
         # runner 的 OPENPI_DATA_HOME 是模块常量且指向 root 只读目录，
         # openpi 启动时会 chmod 它并抛 PermissionError，必须显式传到可写目录。
@@ -85,6 +88,9 @@ class Pi05Policy:
                 np.clip(np.asarray(a, dtype=np.float32).reshape(-1)[:7], -1.0, 1.0)
                 for a in chunk
             ]
+            # closed-loop 重规划：只保留前 replan_steps 个，执行完立即重新推理
+            if self.replan_steps:
+                self._queue = self._queue[: self.replan_steps]
         return self._queue.pop(0)
 
     def close(self):
