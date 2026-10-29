@@ -210,7 +210,8 @@ def main():
             s = all_summary[key]
             ets = "n/a" if s["ETS"] is None else f"{s['ETS']:.1f}"
             print(f"  --> {key}: TSR={s['TSR']:.1%} CAR={s['CAR']:.1%} "
-                  f"SSR={s['SSR']:.1%} ETS={ets} (n={s['episodes']})", flush=True)
+                  f"CAR>5mm={s['CAR_severe']:.1%} SSR={s['SSR']:.1%} ETS={ets} "
+                  f"(n={s['episodes']})", flush=True)
 
             # 每个场景跑完就落盘一次，防止长跑中断全丢
             save_results(all_results, {"overall": summarize(all_results),
@@ -224,7 +225,8 @@ def main():
     ets = "n/a" if overall["ETS"] is None else f"{overall['ETS']:.1f}"
     print(f"\n=== 总计 ===")
     print(f"  episodes={overall['episodes']}  TSR={overall['TSR']:.1%}  "
-          f"CAR={overall['CAR']:.1%}  SSR={overall['SSR']:.1%}  ETS={ets}")
+          f"CAR={overall['CAR']:.1%}  CAR>5mm={overall['CAR_severe']:.1%}  "
+          f"SSR={overall['SSR']:.1%}  ETS={ets}")
 
     path = save_results(all_results, {"overall": overall, "per_scenario": all_summary}, out_dir / "summary.json")
     print(f"  结果: {path}")
