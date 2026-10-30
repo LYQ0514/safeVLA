@@ -41,15 +41,18 @@ class OccupancyGrid:
         return np.floor((np.asarray(pts) - self.origin) / self.spacing).astype(int)
 
 
-def build_occupancy_grid(env, spacing=0.03):
+def build_occupancy_grid(env, spacing=0.03, buffer=0.0):
     """从 MuJoCo 场景生成 occupancy grid（oracle）。
 
     只标记**环境障碍物**（obstacle objects），不标记机器人自身、被操作的目标物体
     （bowl/plate 等）和大型家具。理由：与 AEGIS 对比须公平 —— AEGIS 也只约束
     obstacle objects，不约束 table/cabinet。
 
+    buffer：occupancy ε-膨胀（论文 [16] 的核心）。障碍物体素向外膨胀 buffer 米，
+    使 PSF 的 h 场梯度更早、更平滑地出现，保证"采样点安全 ⟹ 机器人表面安全"。
+
     几何处理：
-    - box geom（mjGEOM_BOX=6）：精确体素化（向量化，判断体素中心是否在 box 内）
+    - box geom（mjGEOM_BOX=6）：精确体素化（向量化）
     - mesh geom（mjGEOM_MESH=7）：用世界 AABB 保守近似
     """
     model = env.sim.model
@@ -88,7 +91,22 @@ def build_occupancy_grid(env, spacing=0.03):
         if model.geom_type[g] in (6, 7):
             rasterize_box(center, xmat, half)
 
+    # occupancy ε-膨胀（论文 [16] 的 buffer）
+    if buffer > 0:
+        occupied = _dilate_occupied(occupied, buffer / spacing)
+
     return OccupancyGrid(origin, spacing, occupied)
+
+
+def _dilate_occupied(occupied, radius_voxels):
+    """对 bool 占用体素做球形膨胀（近似用 iterated 6-邻接膨胀）。"""
+    r = max(1, int(round(radius_voxels)))
+    out = occupied.copy()
+    for _ in range(r):
+        out = out | np.roll(out, 1, axis=0) | np.roll(out, -1, axis=0) \
+                 | np.roll(out, 1, axis=1) | np.roll(out, -1, axis=1) \
+                 | np.roll(out, 1, axis=2) | np.roll(out, -1, axis=2)
+    return out
 
 
 def solve_psf(occ, f_value=-1.0, max_iter=100, device="cuda"):

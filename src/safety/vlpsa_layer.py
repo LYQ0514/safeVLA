@@ -47,12 +47,18 @@ SAMPLE_BODIES = [f"robot0_link{n}" for n in range(8)] + [
 
 class VlpsaLayer:
     def __init__(self, env, spacing=0.03, cbf_gain=1.0, device="cuda",
-                 verbose=False, surface_scale=1.0):
+                 verbose=False, surface_scale=1.0, clf_gain=1.0, slack_penalty=1.0,
+                 buffer=0.0, grasp_protection=True, grasp_radius=0.06):
         self.env = env
         self.spacing = spacing
         self.cbf_gain = cbf_gain  # γ in α(h) = γ h
+        self.clf_gain = clf_gain  # γ_c in V̇ ≤ -γ_c V + δ
+        self.slack_penalty = slack_penalty  # p in min ∥v-v_nom∥² + p δ²
+        self.buffer = buffer  # occupancy ε-膨胀（米）
         self.device = device
         self.verbose = verbose
+        self.grasp_protection = grasp_protection
+        self.grasp_radius = grasp_radius  # 被抓物体包围球半径（米）
 
         # 原生 mujoco 对象（robosuite 用 wrapper，原生对象在 ._model/.​_data）
         self._m = env.sim.model._model
@@ -65,10 +71,16 @@ class VlpsaLayer:
         self._jacp = np.zeros((3, self._m.nv), dtype=np.float64)
         self._jacr = np.zeros((3, self._m.nv), dtype=np.float64)
 
+        # 持物保护状态
+        self._gripper_open_width = None  # 初始张开宽度（用于抓取检测）
+        self._grasped = False
+        self._grasp_sample = None  # (body_id=eef, local_point)
+
         # 统计
         self.qp_calls = 0
         self.feasible = 0
         self.intervened = 0
+        self.grasp_events = 0
 
     def _build_samples(self, surface_scale):
         """对每个 link 的碰撞 mesh，采样其 AABB 的 8 角点 + 6 面心 + 中心。
@@ -97,9 +109,17 @@ class VlpsaLayer:
                         lp = pos.copy()
                         lp[axis] += s * half[axis]
                         samples.append((bid, lp))
-        # eef + 双指（body 原点）
-        for bn in ["gripper0_eef", "gripper0_leftfinger", "gripper0_rightfinger"]:
-            bid = mujoco.mj_name2id(self._m, mujoco.mjtObj.mjOBJ_BODY, bn)
+        # 末端 + 夹爪全部 body（含指尖 tip！之前漏掉指尖，导致 CBF 感知不到指尖碰撞）
+        gripper_bodies = [
+            "gripper0_right_gripper", "gripper0_eef",
+            "gripper0_leftfinger", "gripper0_rightfinger",
+            "gripper0_finger_joint1_tip", "gripper0_finger_joint2_tip",
+        ]
+        for bn in gripper_bodies:
+            try:
+                bid = mujoco.mj_name2id(self._m, mujoco.mjtObj.mjOBJ_BODY, bn)
+            except Exception:
+                continue
             samples.append((bid, np.zeros(3)))
         if self.verbose:
             print(f"[vlpsa] 全身采样点 {len(samples)} 个")
@@ -107,7 +127,7 @@ class VlpsaLayer:
 
     # ---- episode 初始化 ----
     def reset(self, obs, prompt=""):
-        occ = build_occupancy_grid(self.env, spacing=self.spacing)
+        occ = build_occupancy_grid(self.env, spacing=self.spacing, buffer=self.buffer)
         h = solve_psf(occ, max_iter=200, device=self.device)
         torch.cuda.synchronize()
         self.psf = PSF(occ, h)
@@ -115,23 +135,70 @@ class VlpsaLayer:
         self.qp_calls = 0
         self.feasible = 0
         self.intervened = 0
+        # 持物保护状态：抓取检测基准 = 初始（张开）宽度
+        gq = np.asarray(obs.get("robot0_gripper_qpos", [0.04, -0.04]), dtype=np.float64)
+        self._gripper_open_width = abs(gq[0] - gq[1])
+        self._grasped = False
+        self._grasp_sample = None
+        self.grasp_events = 0
         if self.verbose:
             print(f"[vlpsa] occupancy {occ.shape} 占用 {occ.occupied.sum()} "
-                  f"体素, h∈[{h.min().item():.4f},{h.max().item():.4f}]")
+                  f"体素, h∈[{h.min().item():.4f},{h.max().item():.4f}], "
+                  f"gripper 张开 {self._gripper_open_width:.4f}")
         return True
 
+    # ---- 持物保护：抓取检测与采样点注入 ----
+    def _update_grasp(self, obs):
+        """检测抓取状态，注入/移除被抓物体采样点（论文 III-B）。"""
+        if not self.grasp_protection:
+            return
+        gq = np.asarray(obs.get("robot0_gripper_qpos", [0.04, -0.04]), dtype=np.float64)
+        width = abs(gq[0] - gq[1])
+        # 抓取：宽度明显小于初始张开宽度（两指闭合夹住物体）
+        threshold = 0.5 * self._gripper_open_width
+        grasped = width < threshold
+        if grasped and not self._grasped:
+            self._grasped = True
+            self.grasp_events += 1
+            # 被抓物体包围球，固定在末端（eef body 局部原点，半径 grasp_radius）
+            eef_bid = mujoco.mj_name2id(self._m, mujoco.mjtObj.mjOBJ_BODY, "gripper0_eef")
+            self._grasp_sample = (eef_bid, np.array([0.0, 0.0, 0.0]))
+        elif not grasped:
+            self._grasped = False
+            self._grasp_sample = None
+
+    def _active_samples(self):
+        """返回当前有效采样集（机器人全身 + 可能的被抓物体包围球）。
+
+        被抓物体用 grasp_radius 的球面采样（6 轴向点），固定在 eef 局部坐标。
+        """
+        samples = list(self._samples)
+        if self._grasped and self._grasp_sample is not None:
+            bid, _ = self._grasp_sample
+            r = self.grasp_radius
+            for axis in range(3):
+                for s in (-1, 1):
+                    lp = np.zeros(3)
+                    lp[axis] = s * r
+                    samples.append((bid, lp))
+        return samples
+
     # ---- 采样点世界坐标 ----
-    def _sample_points(self):
-        pts = np.zeros((len(self._samples), 3))
-        for i, (bid, lp) in enumerate(self._samples):
+    def _sample_points(self, samples=None):
+        if samples is None:
+            samples = self._active_samples()
+        pts = np.zeros((len(samples), 3))
+        for i, (bid, lp) in enumerate(samples):
             R = self._d.xmat[bid].reshape(3, 3)
             pts[i] = self._d.xpos[bid] + R @ lp
         return pts
 
     # ---- 采样点位置雅可比 (3,7) ----
-    def _sample_jacobians(self):
-        J = np.zeros((len(self._samples), 3, 7))
-        for i, (bid, lp) in enumerate(self._samples):
+    def _sample_jacobians(self, samples=None):
+        if samples is None:
+            samples = self._active_samples()
+        J = np.zeros((len(samples), 3, 7))
+        for i, (bid, lp) in enumerate(samples):
             mujoco.mj_jac(self._m, self._d, self._jacp, self._jacr, lp, bid)
             J[i] = self._jacp[:, self._qidx]
         return J
@@ -143,17 +210,32 @@ class VlpsaLayer:
         J_full = np.vstack([self._jacp[:, self._qidx], self._jacr[:, self._qidx]])
         return J_full
 
-    def filter(self, action, obs):
-        """把策略末端速度 action[:6] 投影到安全集，返回 (safe_action, info)。"""
-        v_nom = np.asarray(action[:6], dtype=np.float64)
+    def filter(self, action, obs, x_desired=None, action_scale=0.009, joint_space=True):
+        """按论文 MC-CBF-QP 解安全关节速度，返回 (safe_action, info)。
+
+        论文在**关节速度空间**（v ∈ R⁷）解 QP，保留 Franka 的冗余自由度
+        （7 关节 vs 6 末端），这是之前末端空间复现的根本错误所在：
+
+            min  ∥v − v_nom∥² + p δ²
+            s.t. ∇hᵀ Jᵢ v ≥ −γ_cbf hᵢ     (CBF, 全身硬约束，Jᵢ∈R³ˣ⁷)
+                 eᵀ J_ee v ≥ γ_clf V − δ   (CLF, 追踪软约束)
+
+        action 是 π0.5 的末端速度格式（[dx,dy,dz,rx,ry,rz,grip]）。
+        返回 8 维关节动作（7 关节速度 + 夹爪），供 JOINT_VELOCITY 控制器；
+        若 joint_space=False，映射回 6 维末端速度（旧逻辑，供对照）。
+        """
         info = {"h_min": None, "feasible": None, "intervened": False}
 
         if self.psf is None:
             return np.asarray(action, dtype=np.float64), info
 
-        pts = self._sample_points()
-        Js = self._sample_jacobians()
-        J_ee = self._eef_jacobian()
+        # 持物保护：检测抓取，更新采样集
+        self._update_grasp(obs)
+        samples = self._active_samples()
+
+        pts = self._sample_points(samples)
+        Js = self._sample_jacobians(samples)   # (N, 3, 7) 关节位置雅可比
+        J_ee = self._eef_jacobian()            # (6, 7) 末端全雅可比
 
         # 查询 h 与 ∇h（GPU）
         pts_t = torch.as_tensor(pts, dtype=torch.float32, device=self.device)
@@ -163,45 +245,97 @@ class VlpsaLayer:
 
         info["h_min"] = float(h.min())
 
-        # 末端速度 → 关节速度伪逆
-        J_ee_pinv = np.linalg.pinv(J_ee)  # (7,6)
+        # ---- nominal 关节速度 ----
+        # π0.5 末端速度 → 物理末端速度 → 关节速度（最小范数伪逆，作为 QP 初始猜测）
+        x_dot_des = np.zeros(6)
+        x_dot_des[:3] = np.asarray(action[:3]) * action_scale   # 平移 m/s
+        x_dot_des[3:6] = np.asarray(action[3:6]) * action_scale  # 旋转（近似）
+        v_nom = np.linalg.pinv(J_ee) @ x_dot_des                 # (7,)
 
-        # 每个采样点一条约束：∇h_iᵀ J_i J_ee⁺ v ≥ −γ h_i
-        A_rows = []
-        b_rows = []
-        for i in range(len(self._samples)):
-            a = grad[i] @ Js[i] @ J_ee_pinv  # (3)@(3,7)@(7,6) = (6,)
-            A_rows.append(a)
-            b_rows.append(-self.cbf_gain * h[i])
-        A = np.vstack(A_rows)  # (M, 6)
-        b = np.array(b_rows)
+        if joint_space:
+            # ---- 关节空间 QP（论文 MC-CBF-QP）----
+            v = cp.Variable(7)
+            constraints = []
+            objective_expr = cp.sum_squares(v - v_nom)
+            # CBF：∇hᵀ Jᵢ v ≥ −γ hᵢ（Jᵢ 直接 3×7，不经过伪逆 → 保留冗余度）
+            A_rows, b_rows = [], []
+            for i in range(len(samples)):
+                A_rows.append(grad[i] @ Js[i])   # (7,)
+                b_rows.append(-self.cbf_gain * h[i])
+            A = np.vstack(A_rows)
+            b = np.array(b_rows)
+            constraints.append(A @ v >= b)
+            # CLF：追踪期望轨迹（软约束）
+            use_clf = x_desired is not None and self.clf_gain > 0
+            delta = None
+            if use_clf:
+                delta = cp.Variable(1)
+                objective_expr = objective_expr + self.slack_penalty * cp.square(delta)
+                x_ee = np.asarray(obs["robot0_eef_pos"], dtype=np.float64)
+                # 位置误差用物理米（不除 action_scale）：V 单位 m²，
+                # eᵀ J_ee_pos v 单位 m·(m/s)=m²/s，γV 单位 m²/s —— 量纲一致。
+                e = np.asarray(x_desired, dtype=np.float64) - x_ee
+                V = 0.5 * float(e @ e)
+                J_ee_pos = J_ee[:3]  # (3,7)
+                constraints.append(e @ J_ee_pos @ v >= self.clf_gain * V - delta)
+                info["V"] = V
+                info["e_norm"] = float(np.linalg.norm(e))
 
-        # QP
-        v = cp.Variable(6)
-        objective = cp.Minimize(cp.sum_squares(v - v_nom))
-        constraints = [A @ v >= b]
-        prob = cp.Problem(objective, constraints)
-        self.qp_calls += 1
-        try:
-            prob.solve(solver=cp.OSQP)
-        except Exception:
-            prob = None
+            prob = cp.Problem(cp.Minimize(objective_expr), constraints)
+            self.qp_calls += 1
+            try:
+                prob.solve(solver=cp.OSQP)
+            except Exception:
+                prob = None
 
-        if prob is not None and v.value is not None:
-            v_safe = v.value
-            self.feasible += 1
-            info["feasible"] = True
-            if np.linalg.norm(v_safe - v_nom) > 1e-4:
-                self.intervened += 1
-                info["intervened"] = True
+            if prob is not None and v.value is not None:
+                v_safe = np.asarray(v.value, dtype=np.float64)
+                self.feasible += 1
+                info["feasible"] = True
+                if np.linalg.norm(v_safe - v_nom) > 1e-4:
+                    self.intervened += 1
+                    info["intervened"] = True
+            else:
+                v_safe = v_nom
+                info["feasible"] = False
+
+            # 输出 8 维：7 关节速度 + 夹爪
+            out = np.zeros(8)
+            out[:7] = v_safe
+            out[7] = action[6]  # 夹爪（JOINT_VELOCITY 下 action[7]=+1 闭合）
+            return out, info
+
         else:
-            # QP 不可行：回退原始动作（与 AEGIS 一致，但记录；这里保守改为限幅）
-            v_safe = v_nom
-            info["feasible"] = False
-
-        out = np.asarray(action, dtype=np.float64).copy()
-        out[:6] = v_safe
-        return out, info
+            # ---- 末端空间 QP（旧逻辑，供对照，不推荐）----
+            v_nom_ee = x_dot_des
+            J_ee_pinv = np.linalg.pinv(J_ee)
+            A_rows, b_rows = [], []
+            for i in range(len(samples)):
+                A_rows.append(grad[i] @ Js[i] @ J_ee_pinv)
+                b_rows.append(-self.cbf_gain * h[i])
+            A = np.vstack(A_rows)
+            b = np.array(b_rows)
+            v = cp.Variable(6)
+            constraints = [A @ v >= b]
+            prob = cp.Problem(cp.Minimize(cp.sum_squares(v - v_nom_ee)), constraints)
+            self.qp_calls += 1
+            try:
+                prob.solve(solver=cp.OSQP)
+            except Exception:
+                prob = None
+            if prob is not None and v.value is not None:
+                v_safe = np.asarray(v.value, dtype=np.float64)
+                self.feasible += 1
+                info["feasible"] = True
+                if np.linalg.norm(v_safe - v_nom_ee) > 1e-4:
+                    self.intervened += 1
+                    info["intervened"] = True
+            else:
+                v_safe = v_nom_ee
+                info["feasible"] = False
+            out = np.asarray(action, dtype=np.float64).copy()
+            out[:6] = v_safe
+            return out, info
 
     def stats(self):
         return {
@@ -209,4 +343,5 @@ class VlpsaLayer:
             "feasible": self.feasible,
             "intervened": self.intervened,
             "infeasible_rate": (self.qp_calls - self.feasible) / max(self.qp_calls, 1),
+            "grasp_events": self.grasp_events,
         }

@@ -27,6 +27,8 @@ import pathlib
 import sys
 import warnings
 
+import numpy as np  # noqa: F401  (VlpsaPolicy 用到)
+
 warnings.filterwarnings("ignore")
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -37,25 +39,61 @@ from tools.run_eval import DEFAULT_MAX_STEPS, LEVELS, SUITES  # noqa: E402
 
 
 class VlpsaPolicy:
-    """π0.5 + VLPSA 安全层（PSF + 全身采样）。"""
+    """π0.5 + VLPSA 安全层（PSF + 全身采样 + CLF 轨迹追踪）。
 
-    def __init__(self, base_policy, env, spacing=0.03, cbf_gain=1.0, verbose=False):
+    论文把 VLA 视为高层规划器：action chunk 插值成期望轨迹 x_d(t)，
+    CLF 追踪这条轨迹。因此本类维护 chunk 状态，把累积的期望位置喂给安全层。
+    """
+
+    # action[:3] 归一化速度 → 末端速度（m/s）。实测 OSC_POSE 下 action=1 → 0.2078 m/s
+    EEF_VEL_SCALE = 0.2
+    DT = 0.05  # control_freq=20Hz 的控制周期
+
+    def __init__(self, base_policy, env, spacing=0.03, cbf_gain=1.0, verbose=False,
+                 clf_gain=1.0, slack_penalty=1.0, buffer=0.0, grasp_protection=True):
         from src.safety.vlpsa_layer import VlpsaLayer
 
         self.base = base_policy
         self.env = env
-        self.layer = VlpsaLayer(env, spacing=spacing, cbf_gain=cbf_gain, verbose=verbose)
+        self.layer = VlpsaLayer(env, spacing=spacing, cbf_gain=cbf_gain,
+                                verbose=verbose, clf_gain=clf_gain,
+                                slack_penalty=slack_penalty, buffer=buffer,
+                                grasp_protection=grasp_protection)
+        # 控制器类型决定 QP 在关节空间还是末端空间
+        cname = type(env.robots[0].controller).__name__
+        self.joint_space = (cname == "JointVelocityController")
         self.verbose = verbose
+        self._last_infer = -1
+        self._x_start = None
+        self._cum = None
 
     def reset(self, obs=None, prompt=""):
         self.base.reset()
+        self._last_infer = -1
+        self._x_start = None
+        self._cum = None
         if obs is None:
             return
         self.layer.reset(obs, prompt)
 
     def act(self, obs, prompt):
+        x_ee = np.asarray(obs["robot0_eef_pos"], dtype=np.float64)
+        # 检测重新推理：chunk 边界重置轨迹起点
+        if self.base.infer_count != self._last_infer:
+            self._last_infer = self.base.infer_count
+            self._x_start = x_ee.copy()
+            self._cum = np.zeros(3)
+
         action = self.base.act(obs, prompt)
-        safe, info = self.layer.filter(action, obs)
+        # 期望位置累积：x_desired += 末端速度 × dt
+        self._cum = self._cum + np.asarray(action[:3]) * self.EEF_VEL_SCALE * self.DT
+        x_desired = self._x_start + self._cum
+
+        if self.layer.clf_gain <= 0:
+            x_desired = None  # CLF 关闭，纯 CBF 投影
+        safe, info = self.layer.filter(action, obs, x_desired=x_desired,
+                                       action_scale=self.EEF_VEL_SCALE,
+                                       joint_space=self.joint_space)
         return safe
 
     def stats(self):
@@ -77,6 +115,12 @@ def main():
     ap.add_argument("--replan-steps", type=int, default=5)
     ap.add_argument("--spacing", type=float, default=0.03, help="occupancy 体素边长(m)")
     ap.add_argument("--cbf-gain", type=float, default=1.0, help="CBF α(h)=γh 的 γ")
+    ap.add_argument("--clf-gain", type=float, default=1.0, help="CLF 追踪增益 γ_c")
+    ap.add_argument("--no-clf", action="store_true", help="关闭 CLF，退化为纯 CBF 投影")
+    ap.add_argument("--buffer", type=float, default=0.0, help="occupancy ε-膨胀（米）")
+    ap.add_argument("--no-grasp", action="store_true", help="关闭持物保护")
+    ap.add_argument("--controller", default="OSC_POSE", choices=["OSC_POSE", "JOINT_VELOCITY"],
+                    help="底层控制器。VLPSA 论文用 JOINT_VELOCITY（关节速度空间 QP）")
     ap.add_argument("--out", default=None)
     ap.add_argument("--no-video", action="store_true")
     ap.add_argument("--all", action="store_true")
@@ -139,11 +183,15 @@ def main():
                     bddl_file_name=bddl,
                     camera_heights=args.resolution,
                     camera_widths=args.resolution,
+                    controller=args.controller,
                 )
                 env.seed(7)
                 max_steps = args.max_steps or DEFAULT_MAX_STEPS[suite_name]
                 policy = VlpsaPolicy(base, env, spacing=args.spacing,
-                                     cbf_gain=args.cbf_gain)
+                                     cbf_gain=args.cbf_gain,
+                                     clf_gain=0.0 if args.no_clf else args.clf_gain,
+                                     buffer=args.buffer,
+                                     grasp_protection=not args.no_grasp)
                 try:
                     for ep in episode_ids:
                         if (suite_name, level, task_id, ep) in done_keys:

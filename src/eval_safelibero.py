@@ -89,8 +89,14 @@ def run_episode(env, task_suite, task_id, episode_idx, policy, max_steps=300,
     env.reset()
     obs = env.set_init_state(init_states[episode_idx])
 
-    # 空转：物体自由落体到稳定
-    dummy = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0], dtype=np.float32)
+    # 空转：物体自由落体到稳定。
+    # action 维度按控制器自动适配：OSC_POSE=7(6末端+夹爪)，JOINT_VELOCITY=8(7关节+夹爪)
+    try:
+        act_dim = env.robots[0].action_dim
+    except Exception:
+        act_dim = 7
+    dummy = np.zeros(act_dim, dtype=np.float32)
+    dummy[-1] = -1.0  # 夹爪：张开（两控制器语义一致，-1 张开）
     for _ in range(num_steps_wait):
         obs, _r, _d, _i = env.step(dummy)
 
