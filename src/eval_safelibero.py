@@ -64,6 +64,16 @@ class CollisionTracker:
         # 记录全程最大位移，便于事后分析是"轻碰"还是"撞飞"
         self.max_displacement = 0.0
 
+    def update(self, obs, step):
+        if self.name is None or self.collided:
+            return
+        curr = np.asarray(obs[self.name + "_pos"], dtype=np.float64)
+        disp = float(np.sum(np.abs(curr - self.initial_pos)))
+        self.max_displacement = max(self.max_displacement, disp)
+        if disp > COLLISION_DISPLACEMENT_EPS:
+            self.collided = True
+            self.collision_step = step
+
 
 class ContactCollisionTracker:
     """论文 VLPSA 口径：扫描 MuJoCo 接触，区分视觉 mesh 和碰撞几何。

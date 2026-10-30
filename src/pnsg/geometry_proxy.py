@@ -91,7 +91,12 @@ def build_control_points(env, obs, control_radius=0.02):
 
 
 def build_obstacles(env, obs):
-    """构造障碍物球（工作空间内的 obstacle objects，用 geom 最大半轴当半径）。"""
+    """构造障碍物球：每个碰撞 box geom 一个球（用 rbound），而非整个物体一个包围球。
+
+    原因：SafeLIBERO 障碍物（如 moka pot）是多个分散的碰撞 box（主体+把手+盖子），
+    用单一包围球（rbound 最大 0.117m）会严重高估危险，导致代理误报。
+    每个碰撞 geom 一个球（rbound 更精确）才贴近真实 MuJoCo 碰撞几何。
+    """
     m = env.sim.model._model
     obstacle_names = set(
         n.replace("_joint0", "") for n in env.sim.model.joint_names if "obstacle" in n
@@ -102,19 +107,21 @@ def build_obstacles(env, obs):
         if key not in obs:
             continue
         p = np.asarray(obs[key], dtype=np.float64)
-        # 只取工作空间内
         if not (p[2] > 0 and abs(p[0]) < 0.5 and abs(p[1]) < 0.5):
             continue
-        # 半径 = 该 body 所有 geom 最大半轴
         try:
-            bid = _body_name2id(m, name + "_main")
+            bid = mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY, name + "_main")
         except Exception:
             continue
-        gids = [g for g in range(m.ngeom) if m.geom_bodyid[g] == bid]
-        if not gids:
-            continue
-        r = max(float(np.max(m.geom_size[g])) for g in gids)
-        obstacles.append(ObstaclePrimitive(p, r))
+        # 每个碰撞 geom（contype>0）一个球
+        for g in range(m.ngeom):
+            if m.geom_bodyid[g] != bid:
+                continue
+            if m.geom_contype[g] <= 0:
+                continue
+            center = env.sim.data._data.geom_xpos[g].copy()  # data 里有 world pos
+            r = float(m.geom_rbound[g])
+            obstacles.append(ObstaclePrimitive(center, r))
     return obstacles
 
 

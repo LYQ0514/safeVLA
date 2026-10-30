@@ -52,9 +52,10 @@ def build():
         cfg, CKPT_DIR, sample_kwargs={"num_steps": NUM_STEPS}
     )
     model = policy._model
-    sample_actions = model.sample_actions  # 未 jit 原始方法（可 jacfwd）
-    # Unnormalize 的 affine 参数（前 6 维 pose 的 std）
-    std = policy._output_transform  # 组合 transform，含 Unnormalize
+    # 用上游 while_loop 版 sample_actions（前向模式 jacfwd 可用）。
+    # 注意：反向模式（vjp）对 while_loop 不可行；fori_loop 改写因 KV cache
+    # shape 动态增长（968→978）也失败。故 Jacobian 只能 jacfwd（编译后 ~7s）。
+    sample_actions = model.sample_actions
     return policy, model, sample_actions
 
 
