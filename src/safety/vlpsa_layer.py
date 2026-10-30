@@ -111,6 +111,10 @@ class VlpsaLayer:
         h = solve_psf(occ, max_iter=200, device=self.device)
         torch.cuda.synchronize()
         self.psf = PSF(occ, h)
+        # 重置计数器（episode 间复用 layer，否则统计跨 episode 累计）
+        self.qp_calls = 0
+        self.feasible = 0
+        self.intervened = 0
         if self.verbose:
             print(f"[vlpsa] occupancy {occ.shape} 占用 {occ.occupied.sum()} "
                   f"体素, h∈[{h.min().item():.4f},{h.max().item():.4f}]")
