@@ -121,6 +121,9 @@ def main():
     ap.add_argument("--no-grasp", action="store_true", help="关闭持物保护")
     ap.add_argument("--controller", default="OSC_POSE", choices=["OSC_POSE", "JOINT_VELOCITY"],
                     help="底层控制器。VLPSA 论文用 JOINT_VELOCITY（关节速度空间 QP）")
+    ap.add_argument("--collision-mode", default="displacement", choices=["displacement", "contact"],
+                    help="碰撞检测口径：displacement=障碍位移>1mm（本框架默认）；"
+                         "contact=MuJoCo 接触（论文 VLPSA 口径）")
     ap.add_argument("--out", default=None)
     ap.add_argument("--no-video", action="store_true")
     ap.add_argument("--all", action="store_true")
@@ -204,6 +207,7 @@ def main():
                             max_steps=max_steps,
                             num_steps_wait=args.num_steps_wait,
                             collect_frames=not args.no_video,
+                            collision_mode=args.collision_mode,
                         )
                         st = policy.stats()
                         r.update({"suite": suite_name, "level": level,
