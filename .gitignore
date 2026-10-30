@@ -72,4 +72,4 @@ third_party/groundingdino_weights/bert-base-uncased/
 !data/eval/
 data/eval/*/videos/
 data/eval/*/*.mp4
-data/eval/ablation_*/
+# ablation_* 也入库（消融结果，text 很小）
