@@ -106,6 +106,7 @@ Pygments==2.19.2
 pynput==1.8.2
 PyOpenGL==3.1.10
 pyparsing==3.1.4
+pypdf==5.9.0
 pyquaternion==0.9.9
 pytest==8.3.5
 python-dateutil==3.0.0
