@@ -289,3 +289,62 @@ setsid nohup python tools/run_eval.py --all --no-video \
 | **全量 1600 条** | | | **~4 小时** |
 
 用 `--replan-steps 5`（每 5 步重新推理）会再慢约 10~20%。
+
+---
+
+## 2026-10-30 复现 VLPSA（Poisson 安全函数）
+
+### 踩坑 10：conv3d zero-padding 把工作空间边界当 Dirichlet h=0
+
+**现象**：PSF（Poisson Safety Function）解出的 h 场值异常小（全场 max 仅 0.017），
+导致 CBF 约束过度严格，机械臂被压死，任务全部失败（TSR 0%）。
+
+**根因**：GPU 上解 Poisson 方程时，拉普拉斯算子用 `conv3d(padding=1)`。
+zero-padding 会**隐式把网格边界外的值当 0**，等价于把工作空间边界设成
+Dirichlet h=0 边界。机器人 link 采样点分布在工作空间边缘，h 被伪边界拉低。
+
+**修复**：replicate padding = Neumann 边界（∂h/∂n=0）：
+
+```python
+hp = F.pad(h.view(1,1,*shape), (1,1,1,1,1,1), mode="replicate")
+lap = F.conv3d(hp, kernel, padding=0)
+```
+
+**验证**：h 场 max 0.017 → 0.21（12 倍）；单条 episode FAIL → OK clean。
+
+**教训**：数值 PDE 的边界条件决定解的尺度。zero-padding ≠ 自由边界。
+
+---
+
+### 踩坑 11：robosuite 的 sim.model 是 wrapper，mj_jac 需原生对象
+
+**现象**：`mujoco.mj_jacBody(env.sim.model, ...)` 报 TypeError，参数不匹配。
+
+**根因**：`env.sim.model` 是 robosuite 的 `binding_utils.MjModel` wrapper，
+不是原生 mujoco 对象。原生对象在 `._model` / `._data`：
+
+```python
+m = env.sim.model._model   # 原生 mujoco.MjModel
+d = env.sim.data._data     # 原生 mujoco.MjData
+```
+
+**注意**：原生对象用 `mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_BODY, name)`
+（没有 `body_name2id` 方法，那是 wrapper 的）。雅可比取机器人关节列：
+
+```python
+qidx = env.robots[0].controller.qvel_index   # [0..6]
+mujoco.mj_jacBody(m, d, jacp, jacr, body_id)
+J7 = jacp[:, qidx]   # (3,7)
+```
+
+**验证**：`mj_jacBody` 算的 eef 雅可比与 `ctrl.J_pos` 差 0.00000。
+
+---
+
+### VLPSA 全量评测耗时参考
+
+| 项 | 值 |
+|---|---|
+| filter（815 采样点 QP） | 12.5ms/次 |
+| occupancy + Poisson | ~36ms/episode（一次） |
+| 全量 1600 条（1024, replan=5） | ~5 小时 |
