@@ -1,0 +1,49 @@
+{
+  "protocol": "PROSPECTIVE_SAME_RUN_CAR_SOURCE_AUDIT",
+  "experiment_version": "step5_spatial_v1",
+  "suite": "safelibero_spatial",
+  "level": "I",
+  "tasks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "methods": [
+    "pi05",
+    "aegis",
+    "vlpsa"
+  ],
+  "n_states_per_task": 50,
+  "max_steps": 60,
+  "execute_steps": 2,
+  "replicate_id": 0,
+  "pilot_used_states": {
+    "0": [
+      0,
+      1,
+      2,
+      4,
+      8,
+      10,
+      11,
+      15,
+      16,
+      17,
+      19,
+      21,
+      22,
+      27,
+      30,
+      31,
+      34,
+      36,
+      43,
+      45
+    ]
+  },
+  "config_hash": "881b056f973f51ab1eac06494edfccb0a8d1734bc1043c6638b88cc82fafc049",
+  "method_config_hash": "2bed51731770ab7ea51264259c62241ab4ce03632f1168ef028397d284976f11",
+  "contract_version": "collision_event_contract_v2.1",
+  "contract_sha256": "f67a5bac8f0bbbdca971e2bd92cf9a98ccfb87728ccb1a327541a40e9a7fdd1f"
+}

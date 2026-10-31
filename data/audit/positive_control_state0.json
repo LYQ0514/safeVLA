@@ -1,0 +1,36 @@
+{
+  "state_id": 0,
+  "query": 20,
+  "obstacle": "moka_pot_obstacle_1",
+  "n_constraints": 3,
+  "nominal_c2_reason": "robot-obstacle 接触 @ step 0",
+  "results": {
+    "nominal": {
+      "status": "ok",
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "min_proxy_clearance": -0.0713421374863839,
+      "min_native_clearance": -0.00030866453903327933,
+      "delta_pose_norm": 0.0,
+      "c_src": 0.0
+    },
+    "source": {
+      "status": "OVER_BUDGET",
+      "c2_pass": true,
+      "c2_reason": "C_2 pass",
+      "min_proxy_clearance": 0.056677527325239965,
+      "min_native_clearance": null,
+      "delta_pose_norm": 52.428486426293844,
+      "c_src": 1374.373094476039
+    },
+    "action": {
+      "status": "ok",
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "min_proxy_clearance": -0.03198586014741647,
+      "min_native_clearance": -0.00010097672265851727,
+      "delta_pose_norm": 0.30951900300220914,
+      "c_src": NaN
+    }
+  }
+}
