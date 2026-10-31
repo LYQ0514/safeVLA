@@ -4,5 +4,5 @@ payload_obstacle,0,0,0,0,0,0
 robot_distractor,0,0,0,0,0,0
 distractor_obstacle,0,0,0,0,0,0
 receptacle_obstacle,0,0,0,0,0,0
-new_object_environment,1916,1916,479,20,1458,1
-preexisting_support,113799,113799,750,30,72717,1
+new_object_environment,1916,1916,479,20,21,1
+preexisting_support,113799,113799,750,30,1715,1

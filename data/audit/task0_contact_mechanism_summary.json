@@ -63,7 +63,7 @@
       "geometric_records": 1916,
       "positive_substeps": 479,
       "positive_control_steps": 20,
-      "contiguous_events": 1458,
+      "contiguous_events": 21,
       "episodes": 1
     },
     "preexisting_support": {
@@ -71,7 +71,7 @@
       "geometric_records": 113799,
       "positive_substeps": 750,
       "positive_control_steps": 30,
-      "contiguous_events": 72717,
+      "contiguous_events": 1715,
       "episodes": 1
     }
   },
@@ -103,6 +103,15 @@
     "other_unclassified": 0,
     "unknown_allowance": 0,
     "geometric_records": 116159,
-    "contiguous_events": 74195
+    "unique_geom_pair_count": 63,
+    "pair_presences_after_substep_dedup": 43720,
+    "contiguous_events": 1756,
+    "event_duration_substeps_quantiles": {
+      "min": 1,
+      "q25": 25,
+      "q50": 25,
+      "q75": 25,
+      "max": 25
+    }
   }
 }

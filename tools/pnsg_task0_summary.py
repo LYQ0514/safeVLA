@@ -131,6 +131,26 @@ def main():
     # 五级统计
     counts = agg.five_level_counts()
 
+    # v10 补充：substep 内 pair 去重后的诊断
+    agg.compute_contiguous_events()
+    unique_pairs = set((min(e["geom1"], e["geom2"]), max(e["geom1"], e["geom2"]))
+                       for e in agg.geometric_records)
+    pair_presence_count = len(agg.pair_presences)
+    contiguous_count = len(agg.contiguous_events)
+
+    # event duration 分位数
+    durations = sorted(e["duration_substeps"] for e in agg.contiguous_events)
+    def quantile(q):
+        if not durations:
+            return 0
+        idx = min(int(q * len(durations)), len(durations) - 1)
+        return durations[idx]
+    duration_quantiles = {
+        "min": durations[0] if durations else 0,
+        "q25": quantile(0.25), "q50": quantile(0.50),
+        "q75": quantile(0.75), "max": durations[-1] if durations else 0,
+    }
+
     # 按机制分类的统计（geometric records 按 allowance 映射到 7 行）
     def mechanism_of(ev):
         if ev["allowance"] == "ALLOWED_PREEXISTING_SUPPORT":
@@ -248,7 +268,10 @@ def main():
             "other_unclassified": other_unclassified,
             "unknown_allowance": unknown_allowance,
             "geometric_records": len(agg.geometric_records),
-            "contiguous_events": len(agg.contiguous_events),
+            "unique_geom_pair_count": len(unique_pairs),
+            "pair_presences_after_substep_dedup": pair_presence_count,
+            "contiguous_events": contiguous_count,
+            "event_duration_substeps_quantiles": duration_quantiles,
         },
     }
 
@@ -285,6 +308,9 @@ def main():
 
     print(f"\n完整性: raw={len(agg.raw_records)}, unclassified={other_unclassified}, "
           f"unknown_allowance={unknown_allowance}")
+    print(f"聚合诊断: unique_pairs={len(unique_pairs)}, pair_presences={pair_presence_count}, "
+          f"contiguous_events={contiguous_count}")
+    print(f"事件时长分位: {duration_quantiles}")
 
     print(f"\n输出文件:")
     print(f"  {json_path}")
@@ -336,15 +362,20 @@ task0 只有一个 episode，Episodes 列仅验证 schema，不用于机制比�
     md_path.write_text(md)
     print(f"  {md_path}")
 
-    # gate 判定
-    gate_pass = (
+    # gate 判定（分两部分：classification gate + aggregation gate）
+    classification_pass = (
         total_classified == len(agg.raw_records)
         and other_unclassified == 0
         and unknown_allowance == 0
         and len(agg.geometric_records) <= len(agg.raw_records)
         and max((len(set(e["control_step"] for e in agg.geometric_records)), 0) if agg.geometric_records else 0) <= n_steps
     )
-    print(f"\n=== TASK0_CONTACT_SUMMARY_GATE: {'PASS' if gate_pass else 'FAIL'} ===")
+    aggregation_pass = (
+        len(agg.geometric_records) >= pair_presence_count >= contiguous_count
+    )
+    print(f"\n=== TASK0_CLASSIFICATION_GATE: {'PASS' if classification_pass else 'FAIL'} ===")
+    print(f"=== TASK0_EVENT_AGGREGATION_GATE: {'PASS' if aggregation_pass else 'FAIL'} ===")
+    print(f"    (raw={len(agg.geometric_records)} >= presences={pair_presence_count} >= events={contiguous_count})")
 
     policy.close()
     env.close()

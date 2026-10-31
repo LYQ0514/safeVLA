@@ -214,44 +214,92 @@ class ContactAggregator:
                 self.proximity_records.append(ev)
 
     def compute_contiguous_events(self):
-        """把 geometric contact 记录合并为连续事件（gap tolerance=0）。"""
-        # 按 (geom pair) 分组，连续 substep 合并
-        # 全局 timeline：按 (control_step, substep) 排序
-        ordered = sorted(self.geometric_records, key=lambda e: (e["control_step"], e["substep"]))
+        """把 geometric contact 记录合并为连续事件。
+
+        正确流程（修正 v10 指出的聚合异常）：
+        1. substep 内去重：同一 (control_step, substep) 内同一 unordered geom pair
+           的多个 contact points 合并为一个 pair_presence
+        2. 跨 substep 合并：连续 substep 的 pair_presence 合并为 contiguous event
+           （gap=0，即相邻 substep）
+
+        保证：raw records ≥ substep pair presences ≥ contiguous events。
+        """
+        # ---- 1. substep 内 pair 去重 ----
+        # key: (control_step, substep, unordered_geom_pair)
+        presence_map = {}
+        for ev in self.geometric_records:
+            pair = (min(ev["geom1"], ev["geom2"]), max(ev["geom1"], ev["geom2"]))
+            key = (ev["control_step"], ev["substep"], pair)
+            if key not in presence_map:
+                presence_map[key] = {
+                    "geom1": pair[0], "geom2": pair[1],
+                    "semantic_class": ev["semantic_class"],
+                    "allowance": ev["allowance"],
+                    "control_step": ev["control_step"],
+                    "substep": ev["substep"],
+                    "minimum_dist": ev["contact_dist"],
+                    "maximum_penetration": max(0.0, -ev["contact_dist"]),
+                    "contact_point_count": 1,
+                    "preexisting": ev["preexisting"],
+                }
+            else:
+                p = presence_map[key]
+                p["minimum_dist"] = min(p["minimum_dist"], ev["contact_dist"])
+                p["maximum_penetration"] = max(p["maximum_penetration"], max(0.0, -ev["contact_dist"]))
+                p["contact_point_count"] += 1
+
+        self.pair_presences = list(presence_map.values())
+
+        # ---- 2. 跨 substep 连续事件合并 ----
+        # 按 (geom pair) 分组，组内按时间排序，连续 substep 合并
+        by_pair = {}
+        for p in self.pair_presences:
+            pair = (p["geom1"], p["geom2"])
+            by_pair.setdefault(pair, []).append(p)
+
         events = []
-        active = {}  # (geom1, geom2) -> 当前连续事件
-        for ev in ordered:
-            key = (ev["geom1"], ev["geom2"])
-            # 全局单调时间戳
-            ts = ev["control_step"] * 1000000 + ev["substep"]
-            if key in active:
-                # 检查是否连续（gap=0，即上一个 substep 之后立刻出现）
-                if ts == active[key]["end_ts"] + 1:
+        for pair, presences in by_pair.items():
+            presences.sort(key=lambda p: (p["control_step"], p["substep"]))
+            # 连续合并（gap=0）
+            cur = None
+            for p in presences:
+                ts = p["control_step"] * 1000000 + p["substep"]
+                if cur is None:
+                    cur = self._new_event(p, ts)
+                elif ts == cur["end_ts"] + 1:
                     # 连续，延长
-                    active[key]["end_ts"] = ts
-                    active[key]["duration_substeps"] += 1
-                    active[key]["minimum_dist"] = min(active[key]["minimum_dist"], ev["contact_dist"])
-                    active[key]["maximum_penetration"] = max(active[key]["maximum_penetration"], -ev["contact_dist"])
-                    continue
+                    cur["end_ts"] = ts
+                    cur["end_control_step"] = p["control_step"]
+                    cur["end_substep"] = p["substep"]
+                    cur["duration_substeps"] += 1
+                    cur["minimum_dist"] = min(cur["minimum_dist"], p["minimum_dist"])
+                    cur["maximum_penetration"] = max(cur["maximum_penetration"], p["maximum_penetration"])
+                    cur["contact_point_count"] += p["contact_point_count"]
                 else:
                     # 断开，归档
-                    events.append(self._finalize_event(active.pop(key)))
-            # 新事件
-            active[key] = {
-                "geom1": ev["geom1"], "geom2": ev["geom2"],
-                "semantic_class": ev["semantic_class"],
-                "allowance": ev["allowance"],
-                "start_ts": ts, "end_ts": ts,
-                "start_control_step": ev["control_step"], "start_substep": ev["substep"],
-                "duration_substeps": 1,
-                "minimum_dist": ev["contact_dist"],
-                "maximum_penetration": max(0.0, -ev["contact_dist"]),
-                "preexisting": ev["preexisting"],
-            }
-        for key in active:
-            events.append(self._finalize_event(active[key]))
+                    events.append(self._finalize_event(cur))
+                    cur = self._new_event(p, ts)
+            if cur is not None:
+                events.append(self._finalize_event(cur))
+
         self.contiguous_events = events
         return events
+
+    @staticmethod
+    def _new_event(p, ts):
+        return {
+            "geom1": p["geom1"], "geom2": p["geom2"],
+            "semantic_class": p["semantic_class"],
+            "allowance": p["allowance"],
+            "start_ts": ts, "end_ts": ts,
+            "start_control_step": p["control_step"], "start_substep": p["substep"],
+            "end_control_step": p["control_step"], "end_substep": p["substep"],
+            "duration_substeps": 1,
+            "minimum_dist": p["minimum_dist"],
+            "maximum_penetration": p["maximum_penetration"],
+            "contact_point_count": p["contact_point_count"],
+            "preexisting": p["preexisting"],
+        }
 
     @staticmethod
     def _finalize_event(e):
@@ -261,9 +309,12 @@ class ContactAggregator:
             "allowance": e["allowance"],
             "start_control_step": e["start_control_step"],
             "start_substep": e["start_substep"],
+            "end_control_step": e["end_control_step"],
+            "end_substep": e["end_substep"],
             "duration_substeps": e["duration_substeps"],
             "minimum_dist": e["minimum_dist"],
             "maximum_penetration": e["maximum_penetration"],
+            "contact_point_count": e["contact_point_count"],
             "preexisting": e["preexisting"],
         }
 
