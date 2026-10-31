@@ -23,6 +23,7 @@ import mujoco
 from src.pnsg.contact_contract import (
     classify_role_pair,
     allowance_for,
+    temporal_allowance,
     CONTRACT_VERSION,
 )
 
@@ -88,28 +89,48 @@ class ContactEventRecorder:
         self._geom_role_cache[g] = role
         return role
 
-    def record_initial_contacts(self):
-        """记录当前状态（执行前 snapshot）的 geometric contact 集合。"""
+    def record_initial_contacts(self, worsen_eps=0.003):
+        """记录当前状态（执行前 snapshot）的 geometric contact 集合 + 初始深度。
+
+        初始深度用于「worsened」判定：运行中接触深度比初始深超过 worsen_eps
+        即标为 PREEXISTING_WORSENED（穿透恶化）。
+        """
         self.initial_contact_pairs = set()
+        self.initial_contact_depth = {}
+        self.worsen_eps = worsen_eps
         for c in range(self._d.ncon):
             if self._d.contact[c].dist > 0:
                 continue
             g1 = self._d.contact[c].geom1
             g2 = self._d.contact[c].geom2
-            self.initial_contact_pairs.add((min(g1, g2), max(g1, g2)))
+            pair = (min(g1, g2), max(g1, g2))
+            dist = float(self._d.contact[c].dist)
+            self.initial_contact_pairs.add(pair)
+            # 保留最深穿透（最负的 dist）
+            if pair not in self.initial_contact_depth or dist < self.initial_contact_depth[pair]:
+                self.initial_contact_depth[pair] = dist
+
+    def _temporal_identity(self, pair, dist):
+        """判定时间身份：PREEXISTING / NEW / PREEXISTING_WORSENED。"""
+        if pair not in self.initial_contact_pairs:
+            return "NEW"
+        init_dist = self.initial_contact_depth.get(pair, 0.0)
+        # 恶化：当前穿透比初始深超过 worsen_eps
+        if dist < init_dist - self.worsen_eps:
+            return "PREEXISTING_WORSENED"
+        return "PREEXISTING"
 
     # ---- 分类 ----
     def _classify_contact(self, g1, g2, dist):
-        """返回完整分类 dict（语义分类 + allowance 分离）。"""
+        """返回完整分类 dict（语义分类 + 时间身份 + 两阶段 allowance）。"""
         r1 = self._geom_role(g1)
         r2 = self._geom_role(g2)
         b1 = self.env.sim.model.body_names[self._m.geom_bodyid[g1]]
         b2 = self.env.sim.model.body_names[self._m.geom_bodyid[g2]]
         semantic = classify_role_pair(r1, r2) if (r1 and r2) else "OTHER_UNCLASSIFIED"
-        allowance = allowance_for(semantic)
-        # preexisting 判定
         pair = (min(g1, g2), max(g1, g2))
-        preexisting = pair in self.initial_contact_pairs
+        temporal = self._temporal_identity(pair, dist)
+        allowance = temporal_allowance(semantic, temporal)
         return {
             "geom1": g1, "geom2": g2,
             "body1": b1, "body2": b2,
@@ -117,10 +138,11 @@ class ContactEventRecorder:
             "instance2": self._body_instance(b2),
             "role1": r1, "role2": r2,
             "semantic_class": semantic,
+            "temporal_identity": temporal,
             "allowance": allowance,
             "contact_dist": float(dist),
             "contact_level": "geometric_contact" if dist <= 0 else "proximity_only",
-            "preexisting": preexisting,
+            "preexisting": temporal != "NEW",
         }
 
     def _check_contacts(self, substep, policy_step, control_step):

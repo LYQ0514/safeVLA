@@ -22,7 +22,7 @@ from __future__ import annotations
 
 import json
 
-CONTRACT_VERSION = "collision_event_contract_v2"
+CONTRACT_VERSION = "collision_event_contract_v2.1"
 
 # 角色集合
 ROLES = [
@@ -64,7 +64,9 @@ ROLE_PAIR_TO_SEMANTIC = {
     frozenset({"ENVIRONMENT"}): "ENVIRONMENT_SELF",
 }
 
-# 语义类别 → 默认 allowance
+# 语义类别 → 默认 allowance（静态角色对，不含时间身份）
+# 注意：*_ENVIRONMENT 的 allowance 是「占位」，真正判定需结合 temporal_identity
+# （preexisting / new / worsened），见 temporal_allowance()。
 SEMANTIC_TO_ALLOWANCE = {
     "ROBOT_STATIC_OBSTACLE": "FORBIDDEN",
     "PAYLOAD_STATIC_OBSTACLE": "FORBIDDEN",
@@ -76,17 +78,60 @@ SEMANTIC_TO_ALLOWANCE = {
     "PAYLOAD_DISTRACTOR": "ENVIRONMENT_DISTURBANCE",
     "DISTRACTOR_GOAL": "TASK_DEPENDENT",
     "RECEPTACLE_STATIC_OBSTACLE": "SECONDARY_DISTURBANCE",
-    "ROBOT_ENVIRONMENT": "ALLOWED",
-    "PAYLOAD_ENVIRONMENT": "ALLOWED",
-    "GOAL_ENVIRONMENT": "ALLOWED",
-    "DISTRACTOR_ENVIRONMENT": "ALLOWED",
-    "OBSTACLE_ENVIRONMENT": "ALLOWED",
+    # 环境相关：静态 role pair 不直接判 ALLOWED，需结合时间身份
+    "ROBOT_ENVIRONMENT": "TIME_DEPENDENT",
+    "PAYLOAD_ENVIRONMENT": "TIME_DEPENDENT",
+    "GOAL_ENVIRONMENT": "TIME_DEPENDENT",
+    "DISTRACTOR_ENVIRONMENT": "TIME_DEPENDENT",
+    "OBSTACLE_ENVIRONMENT": "TIME_DEPENDENT",
     "ROBOT_SELF": "FORBIDDEN",
     "PAYLOAD_SELF": "UNKNOWN",
     "DISTRACTOR_SELF": "UNKNOWN",
     "OBSTACLE_SELF": "UNKNOWN",
     "OTHER_UNCLASSIFIED": "UNKNOWN",
 }
+
+# 时间身份
+TEMPORAL_IDENTITIES = ["PREEXISTING", "NEW", "PREEXISTING_WORSENED", "UNKNOWN_TEMPORAL"]
+
+
+def temporal_allowance(semantic_class, temporal_identity):
+    """两阶段 allowance：语义类别 × 时间身份 → 最终 allowance。
+
+    修正 v7 的漏洞：*_ENVIRONMENT 不能无条件 ALLOWED。
+    - OBJECT_ENVIRONMENT（payload/goal/distractor/obstacle ↔ environment）：
+      初始已存在 → 正常支撑；运行中新出现 → 二次环境交互；恶化 → PREEXISTING_WORSENED
+    - ROBOT_ENVIRONMENT：新出现或恶化 → FORBIDDEN（机器人撞桌面/柜体是碰撞）
+    """
+    if semantic_class in (
+        "PAYLOAD_ENVIRONMENT", "GOAL_ENVIRONMENT",
+        "DISTRACTOR_ENVIRONMENT", "OBSTACLE_ENVIRONMENT",
+    ):
+        return {
+            "PREEXISTING": "ALLOWED_PREEXISTING_SUPPORT",
+            "NEW": "SECONDARY_ENVIRONMENT_INTERACTION",
+            "PREEXISTING_WORSENED": "PREEXISTING_WORSENED",
+            "UNKNOWN_TEMPORAL": "UNKNOWN",
+        }[temporal_identity]
+    if semantic_class == "ROBOT_ENVIRONMENT":
+        return {
+            "PREEXISTING": "PREEXISTING_WORSENED",  # 初始不该有 robot-environment 支撑接触
+            "NEW": "FORBIDDEN",
+            "PREEXISTING_WORSENED": "FORBIDDEN",
+            "UNKNOWN_TEMPORAL": "UNKNOWN",
+        }[temporal_identity]
+    # 其他类别用静态 allowance
+    return SEMANTIC_TO_ALLOWANCE.get(semantic_class, "UNKNOWN")
+
+
+def allowance_for(semantic_class):
+    """语义类别 → 静态默认 allowance（不含时间身份）。
+
+    注意：*_ENVIRONMENT 返回 TIME_DEPENDENT，最终 allowance 须用
+    temporal_allowance(semantic_class, temporal_identity)。
+    """
+    return SEMANTIC_TO_ALLOWANCE.get(semantic_class, "UNKNOWN")
+
 
 # 前四类是当前 CAR 来源分解的核心机制
 CORE_MECHANISM_CLASSES = [
@@ -134,9 +179,22 @@ def contract_dict():
             "episode_id", "control_step", "physics_substep",
             "geom1", "geom2", "body1", "body2", "instance1", "instance2",
             "role1", "role2", "semantic_class", "contact_dist",
-            "contact_level", "preexisting_at_snapshot", "task_stage",
-            "allowance", "role_manifest_sha256", "contract_version",
+            "contact_level", "preexisting_at_snapshot", "temporal_identity",
+            "task_stage", "allowance", "role_manifest_sha256", "contract_version",
         ],
+        "temporal_identities": TEMPORAL_IDENTITIES,
+        "temporal_allowance_rules": {
+            "object_environment": {
+                "PREEXISTING": "ALLOWED_PREEXISTING_SUPPORT",
+                "NEW": "SECONDARY_ENVIRONMENT_INTERACTION",
+                "PREEXISTING_WORSENED": "PREEXISTING_WORSENED",
+            },
+            "robot_environment": {
+                "PREEXISTING": "PREEXISTING_WORSENED",
+                "NEW": "FORBIDDEN",
+                "PREEXISTING_WORSENED": "FORBIDDEN",
+            },
+        },
         "statistical_units": [
             "raw_contact_record_count",
             "contact_positive_substep_count",

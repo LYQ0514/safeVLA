@@ -25,7 +25,7 @@ ROOT = "/data/safeVLA"
 sys.path.insert(0, ROOT)
 
 from src.pnsg.contact_contract import (  # noqa: E402
-    classify_role_pair, allowance_for, contract_dict, ROLES,
+    classify_role_pair, allowance_for, temporal_allowance, contract_dict, ROLES,
     ROLE_PAIR_TO_SEMANTIC, is_core_mechanism,
 )
 
@@ -126,6 +126,32 @@ def main():
     out.write_text(json.dumps(payload, ensure_ascii=False, indent=2))
     results.append(check("contract json written", out.exists()))
     results.append(check("contract hash recorded", len(contract_hash) == 64))
+
+    print("\n=== 11. temporal identity 两阶段 allowance（v8 漏洞修正）===")
+    # OBJECT_ENVIRONMENT：初始已存在 → 允许支撑；新出现 → 二次交互
+    results.append(check(
+        "preexisting object-environment = ALLOWED_PREEXISTING_SUPPORT",
+        temporal_allowance("DISTRACTOR_ENVIRONMENT", "PREEXISTING") == "ALLOWED_PREEXISTING_SUPPORT",
+    ))
+    results.append(check(
+        "new object-environment = SECONDARY_ENVIRONMENT_INTERACTION",
+        temporal_allowance("PAYLOAD_ENVIRONMENT", "NEW") == "SECONDARY_ENVIRONMENT_INTERACTION",
+    ))
+    results.append(check(
+        "worsened object-environment = PREEXISTING_WORSENED",
+        temporal_allowance("OBSTACLE_ENVIRONMENT", "PREEXISTING_WORSENED") == "PREEXISTING_WORSENED",
+    ))
+    # ROBOT_ENVIRONMENT：新出现 → FORBIDDEN（机器人撞桌面）
+    results.append(check(
+        "new robot-environment = FORBIDDEN",
+        temporal_allowance("ROBOT_ENVIRONMENT", "NEW") == "FORBIDDEN",
+    ))
+    # 非环境类不受时间身份影响
+    results.append(check(
+        "robot-obstacle 恒 FORBIDDEN（不受时间身份影响）",
+        temporal_allowance("ROBOT_STATIC_OBSTACLE", "PREEXISTING") == "FORBIDDEN"
+        and temporal_allowance("ROBOT_STATIC_OBSTACLE", "NEW") == "FORBIDDEN",
+    ))
 
     print("\n=== 汇总 ===")
     n_pass = sum(results)

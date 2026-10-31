@@ -1,5 +1,5 @@
 {
-  "contract_version": "collision_event_contract_v2",
+  "contract_version": "collision_event_contract_v2.1",
   "roles": [
     "ROBOT",
     "MANIPULATED_TARGET",
@@ -32,22 +32,22 @@
     "STATIC_SAFETY_OBSTACLE": "OBSTACLE_SELF"
   },
   "semantic_to_allowance": {
-    "DISTRACTOR_ENVIRONMENT": "ALLOWED",
+    "DISTRACTOR_ENVIRONMENT": "TIME_DEPENDENT",
     "DISTRACTOR_GOAL": "TASK_DEPENDENT",
     "DISTRACTOR_SELF": "UNKNOWN",
     "DISTRACTOR_STATIC_OBSTACLE": "SECONDARY_DISTURBANCE",
-    "GOAL_ENVIRONMENT": "ALLOWED",
+    "GOAL_ENVIRONMENT": "TIME_DEPENDENT",
     "MANIPULATED_TARGET_GOAL": "ALLOWED_BY_TASK_STAGE",
-    "OBSTACLE_ENVIRONMENT": "ALLOWED",
+    "OBSTACLE_ENVIRONMENT": "TIME_DEPENDENT",
     "OBSTACLE_SELF": "UNKNOWN",
     "OTHER_UNCLASSIFIED": "UNKNOWN",
     "PAYLOAD_DISTRACTOR": "ENVIRONMENT_DISTURBANCE",
-    "PAYLOAD_ENVIRONMENT": "ALLOWED",
+    "PAYLOAD_ENVIRONMENT": "TIME_DEPENDENT",
     "PAYLOAD_SELF": "UNKNOWN",
     "PAYLOAD_STATIC_OBSTACLE": "FORBIDDEN",
     "RECEPTACLE_STATIC_OBSTACLE": "SECONDARY_DISTURBANCE",
     "ROBOT_DISTRACTOR": "ENVIRONMENT_DISTURBANCE",
-    "ROBOT_ENVIRONMENT": "ALLOWED",
+    "ROBOT_ENVIRONMENT": "TIME_DEPENDENT",
     "ROBOT_GOAL": "TASK_DEPENDENT",
     "ROBOT_MANIPULATED_TARGET": "TASK_CONTACT",
     "ROBOT_SELF": "FORBIDDEN",
@@ -80,11 +80,30 @@
     "contact_dist",
     "contact_level",
     "preexisting_at_snapshot",
+    "temporal_identity",
     "task_stage",
     "allowance",
     "role_manifest_sha256",
     "contract_version"
   ],
+  "temporal_identities": [
+    "PREEXISTING",
+    "NEW",
+    "PREEXISTING_WORSENED",
+    "UNKNOWN_TEMPORAL"
+  ],
+  "temporal_allowance_rules": {
+    "object_environment": {
+      "PREEXISTING": "ALLOWED_PREEXISTING_SUPPORT",
+      "NEW": "SECONDARY_ENVIRONMENT_INTERACTION",
+      "PREEXISTING_WORSENED": "PREEXISTING_WORSENED"
+    },
+    "robot_environment": {
+      "PREEXISTING": "PREEXISTING_WORSENED",
+      "NEW": "FORBIDDEN",
+      "PREEXISTING_WORSENED": "FORBIDDEN"
+    }
+  },
   "statistical_units": [
     "raw_contact_record_count",
     "contact_positive_substep_count",
@@ -93,5 +112,5 @@
     "contact_positive_episode_count"
   ],
   "role_manifest_sha256": "cdebbcca22ca114bec50c104e6dfe58d26fd953fcdcc055524c5eaa935255c86",
-  "contract_sha256": "78e7bd7b0c9a8d4280d36615ef598345b9d398c9543f9867d7f6cfbb9a9b2b86"
+  "contract_sha256": "f67a5bac8f0bbbdca971e2bd92cf9a98ccfb87728ccb1a327541a40e9a7fdd1f"
 }
