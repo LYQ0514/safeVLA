@@ -126,6 +126,22 @@ class PnsgPolicy:
         try:
             self._proc.wait(timeout=5)
         except Exception:
-            self._proc.kill()
-        self._log_fh.close()
-        self._tmpdir.cleanup()
+            try:
+                self._proc.kill()
+                self._proc.wait(timeout=5)
+            except Exception:
+                import signal
+                try:
+                    self._proc.send_signal(signal.SIGKILL)
+                    self._proc.wait(timeout=5)
+                except Exception:
+                    pass
+        # 确保日志句柄关闭、临时目录清理
+        try:
+            self._log_fh.close()
+        except Exception:
+            pass
+        try:
+            self._tmpdir.cleanup()
+        except Exception:
+            pass

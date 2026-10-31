@@ -229,7 +229,6 @@ def main():
     print(f"预注册 20 个 episode: {episodes}")
 
     from src.pnsg.policy_adapter import PnsgPolicy
-    policy = PnsgPolicy()
 
     out_dir = pathlib.Path(ROOT, "data", "audit", "step5_pilot")
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -247,32 +246,39 @@ def main():
     try:
         for method in METHODS:
             print(f"\n=== 方法 {method} ===")
-            for ep in episodes:
-                if (method, ep) in done_keys:
-                    continue
-                r = run_rollout(method, TASK_ID, ep, ts, task, manifest, policy, out_dir)
-                all_results.append(r)
-                if r.get("status") == "ok":
-                    car = r["car"]
-                    print(f"  ep{ep:2d}: CAR={car['triggered']} t={car['trigger_step']} "
-                          f"L1={car['peak_l1_m']*1000:.1f}mm 机制={r['mechanisms']} "
-                          f"耗时={r['wall_time_s']:.0f}s", flush=True)
-                else:
-                    print(f"  ep{ep:2d}: ERROR {r.get('error')}", flush=True)
-                # 每 rollout 落盘
-                summary = {
-                    "protocol": "PROSPECTIVE_SAME_RUN_CAR_SOURCE_AUDIT",
-                    "status": "DESIGN_PILOT_ONLY",
-                    "suite": SUITE, "task_id": TASK_ID, "level": LEVEL,
-                    "n_episodes": N_EPISODES, "methods": METHODS,
-                    "max_steps": MAX_STEPS, "execute_steps": EXECUTE_STEPS,
-                    "episodes": episodes,
-                    "contract_version": contract["contract_version"],
-                    "results": all_results,
-                }
-                out_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2))
+            # 每个方法用独立的 policy worker，跑完即 close，避免 JAX 显存跨方法累积
+            policy = PnsgPolicy()
+            try:
+                for ep in episodes:
+                    if (method, ep) in done_keys:
+                        continue
+                    r = run_rollout(method, TASK_ID, ep, ts, task, manifest, policy, out_dir)
+                    all_results.append(r)
+                    if r.get("status") == "ok":
+                        car = r["car"]
+                        print(f"  ep{ep:2d}: CAR={car['triggered']} t={car['trigger_step']} "
+                              f"L1={car['peak_l1_m']*1000:.1f}mm 机制={r['mechanisms']} "
+                              f"耗时={r['wall_time_s']:.0f}s", flush=True)
+                    else:
+                        print(f"  ep{ep:2d}: ERROR {r.get('error')}", flush=True)
+                    # 每 rollout 落盘
+                    summary = {
+                        "protocol": "PROSPECTIVE_SAME_RUN_CAR_SOURCE_AUDIT",
+                        "status": "DESIGN_PILOT_ONLY",
+                        "suite": SUITE, "task_id": TASK_ID, "level": LEVEL,
+                        "n_episodes": N_EPISODES, "methods": METHODS,
+                        "max_steps": MAX_STEPS, "execute_steps": EXECUTE_STEPS,
+                        "episodes": episodes,
+                        "contract_version": contract["contract_version"],
+                        "results": all_results,
+                    }
+                    out_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2))
+            finally:
+                policy.close()
+                # 等待 worker 真正退出，释放 GPU 显存
+                time.sleep(3)
     finally:
-        policy.close()
+        pass
 
     print(f"\n结果: {out_path}")
 
