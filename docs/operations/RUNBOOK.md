@@ -348,3 +348,95 @@ J7 = jacp[:, qidx]   # (3,7)
 | filter（815 采样点 QP） | 12.5ms/次 |
 | occupancy + Poisson | ~36ms/episode（一次） |
 | 全量 1600 条（1024, replan=5） | ~5 小时 |
+
+## 2026-10-31 PNSG 候选复现 obs 不一致（实验身份缺陷）
+
+### 结论先看
+
+PNSG 正对照的「冻结危险状态」必须同时冻结**物理快照（snapshot）**与**策略输入（obs）**，
+且明确二者时序关系。首轮缺陷是：复现脚本**从 snapshot 重建 obs**，而非加载筛选时
+保存的 obs。robosuite 的 `robot0_eef_pos` sensor 读的是 `site_xpos[grip_site]`，且
+`env.step()` 返回的 obs 带**采样相位**（采样于 control step 内某子步），与最新状态有
+sub-mm ~ 数 mm 差异；重建的 obs 与策略实际看到的 obs 不同，导致「同一 z0 生成不同动作」，
+危险状态无法复现。
+
+**修复不是 force 刷新**，而是：筛选器保存策略实际消费的 obs（`env.step` 返回值），
+复现脚本加载该 obs。force 刷新属于另一种输入协议（同步诊断），改变部署行为，不能当修复。
+
+### 现象
+
+- state1/query19（障碍物 `white_storage_box_obstacle_1`）筛选中 nominal 5/5 危险。
+- 候选复现脚本里 nominal 却变成 5/5 安全（无接触），与筛选矛盾。
+
+### 根因
+
+1. **表层**：复现脚本从 snapshot 重建 obs（`restore + force=True` 刷新），重建出的
+   obs 与筛选保存的 obs 不一致，重生成的 nominal 动作偏离（diff≈2.0）。
+2. **中层**：`env.step()` 返回的 obs 是带采样相位的缓存，不是 step 边界物理状态的
+   纯函数。`robot0_eef_pos` sensor 读 `site_xpos[eef_site_id]`（grip_site），
+   采样于 control step 内某个子步；与最新状态差 sub-mm ~ 数 mm（状态相关，
+   快速接近阶段可达数 mm）。
+3. **深层**：真实部署（π0.5 rollout）消费的就是 `env.step()` 返回的 obs。
+   要「复现部署」，必须保存并复用这个 obs；从 snapshot 重建等于换了输入。
+
+**尚未隔离**：具体是哪个输入字段（agentview / wrist 图像 / 8 维 state）导致动作
+改变，本轮未做消融。
+
+### 关键事实：sensor 读的是 site，不是 body
+
+`robot0_eef_pos` sensor = `sim.data.site_xpos[gripper.important_sites["grip_site"]]`。
+量化传感延迟必须读**同一个 site**，读 body `xpos` 会混入 site-vs-body 几何偏差
+（实测 ~0.16–0.47 mm），不是传感延迟。读同一 site 后，真实采样相位滞后是
+`env.step` 返回的 site 位置 vs 最新 site 位置（本次 rollout 实测 ~0.4 mm，
+force 刷新后与最新 site 完全一致，差 0.000 mm）。
+
+### 修复（obs 协议冻结，见 docs/reference/pnsg_obs_protocol.md）
+
+- 冻结两种输入身份：
+  - **deployment（主实验）**：保存 `env.step()` 返回的 obs + 生成动作时的物理 snapshot，
+    量化并记录传感延迟。
+  - **synchronous（诊断）**：force 刷新后保存 obs，研究消除采样滞后。
+- `pnsg_find_stable_state.py`：加 `--obs-protocol {deployment,synchronous}`，默认
+  deployment；deployment 不 force，synchronous 才 force。
+- `pnsg_candidate_repro.py`：直接加载保存的 `obs.npz`（不重建），校验 obs_sha256 身份。
+- 每个状态记录：obs_protocol、obs_sha256、sensing_lag、snapshot/z0/nominal 哈希。
+
+### 完整 snapshot 边界（为何 qpos+qvel+time 对认证已足够）
+
+`sim.get_state().flatten()` = `[time(1) + qpos(97) + qvel(85)]`（183 维），**并非只有
+qpos+qvel**，还含 `data.time`。
+
+认证分支 `Certifier.certify_prefix → env.step(action)` 只依赖：
+- MuJoCo qpos/qvel/time（已在 flatten 里）
+- controller 的 `set_goal`（纯函数，从 ee_pos + action delta 计算 goal，无历史状态）
+
+LIBERO 的 OSC_POSE 控制器 **无插值器**（`interpolator_pos/ori = None`，use_delta=True）、
+**无 torque actuator**（`na=0`），故无需恢复控制器内部状态。唯一未恢复的是 robosuite
+`inner.timestep` 计数器，它只影响 `check_success`（进度/奖励），不影响物理执行，
+而 C_2 认证不依赖 success。
+
+> 注意：上述「183 维足以恢复认证分支」是已有测试支持的工程结论；仅凭无插值器、
+> `na=0` 还不能证明**所有**缓存和控制器状态都无影响。−1.15 与 −1.21 mm 的认证一致
+> 支持该案例结论，但状态与轨迹误差应同时保留。
+
+### 复核结果（deployment 身份）
+
+| 状态 | deployment 结果 | 旧 synchronous 结果 |
+|---|---|---|
+| state0/query20 | 两组都成功（source β=0.25，action β=0.25/0.5/1.0） | 同（待复核） |
+| state1/query19 | **两组都成功**（source β=0.75/1.0，action β=1.0） | 仅 Source 成功（action 全失败） |
+
+关键：state1 的「仅 Source 成功」是 synchronous 身份（非部署输入）的产物；deployment
+身份下两组都成功。且两次筛选的 snapshot 不同（rollout 跨进程发散），不能简单归因于
+单一因素。**源空间相对优势在 deployment 身份下尚未观察到。**
+
+### 教训
+
+- 「冻结状态」实验必须同时冻结**物理快照 + 策略输入 obs**，且明确身份（deployment / synchronous）。
+- robosuite 的 `_get_observations()` 是缓存的；`env.step` 返回的 obs 带采样相位，
+  是真实部署的输入，应原样保存复用，而非从 snapshot 重建。
+- 量化传感延迟要读 sensor 同一个几何点（site），不要混入 body-vs-site 偏差。
+- 跨进程复现危险状态前，先验证「保存 obs 直接生成」与「从 snapshot 重建」的一致性。
+
+
+
