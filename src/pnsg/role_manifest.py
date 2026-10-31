@@ -1,137 +1,152 @@
-"""对象角色清单生成器（docs/想法v5.md Step 1）。
+"""对象角色清单生成器（v6 版：AST 解析 + 完整证据链）。
 
-从 BDDL 解析对象角色，生成 task_object_role_manifest.json。
+对应 docs/想法v5.md 第四节 + 想法v6.md 的 ROLE_MANIFEST_GATE。
 
-角色定义（想法v5.md 第四节）：
-- MANIPULATED_TARGET：goal predicate 中「被搬运」的物体（goal 的 On 第一参数）
-- GOAL_RECEPTACLE：goal predicate 中的目标容器（goal 的 On 第二参数）
-- DISTRACTOR：objects 里出现、非 obstacle、非 goal 相关的 movable 物体
-- STATIC_SAFETY_OBSTACLE：名字含 obstacle 的物体
-- ROBOT：robot0/gripper0 相关 body
+用 S-expression AST 解析 BDDL，正确处理：
+- 多重 And goal clause
+- region 参数 → 父对象解析
+- 多角色支持（同一 object 可出现在多个 goal clause）
+- 完整证据链（goal clause + argument position）
 
-注意：角色清单只用于机制审计和认证器，**不修改官方 CAR evaluator**。
+角色（允许集合）：
+- MANIPULATED_TARGET：goal On/In 第一参数
+- GOAL_RECEPTACLE：goal On/In 第二参数（若父对象是 movable object）
+- TASK_CONTROLLED_OBJECT：Open/Close/TurnOn 等的操作对象（本 benchmark 未出现，预留）
+- DISTRACTOR：objects 里出现、非上述角色
+- STATIC_SAFETY_OBSTACLE：名字含 obstacle
+- ROBOT：robot0/gripper0
+
+注意：只用于机制审计和认证器，不修改官方 CAR。
 """
 
 from __future__ import annotations
 
 import hashlib
 import json
-import os
-import re
 import pathlib
 
-
-def _parse_objects(bddl_text):
-    """解析 (:objects ...) 块，返回 {instance_name: class_name}。"""
-    m = re.search(r'\(:objects(.*?)\)\s*\(:', bddl_text, re.S)
-    if not m:
-        return {}
-    body = m.group(1)
-    result = {}
-    # 每行是 "inst1 inst2 ... - class_name"
-    for line in body.splitlines():
-        line = line.strip()
-        if not line or line.startswith(';'):
-            continue
-        # 去掉行内注释
-        line = line.split(';')[0].strip()
-        if not line or '-' not in line:
-            continue
-        # 找最后一个 " - " 分隔
-        parts = re.split(r'\s+-\s+', line)
-        if len(parts) < 2:
-            continue
-        instances = parts[0].split()
-        cls = parts[-1].strip()
-        for inst in instances:
-            result[inst] = cls
-    return result
+from src.pnsg.sexpr import find_blocks, parse_text, parse_declarations, parse_regions
 
 
-def _parse_goal(bddl_text):
-    """解析 (:goal ...) 块，返回 goal 文本（用括号深度匹配，非正则截断）。"""
-    start = bddl_text.find("(:goal")
-    if start == -1:
-        return ""
-    depth = 0
-    i = start
-    while i < len(bddl_text):
-        ch = bddl_text[i]
-        if ch == '(':
-            depth += 1
-        elif ch == ')':
-            depth -= 1
-            if depth == 0:
-                return bddl_text[start:i + 1]
-        i += 1
-    return bddl_text[start:]
+def _collect_goal_clauses(ast):
+    """从 goal AST 收集所有 (On/In/Open/Close/TurnOn/TurnOff a b) 子句。
 
-
-def _parse_goal_roles(goal_text):
-    """从 goal predicate 提取 MANIPULATED_TARGET 和 GOAL_RECEPTACLE。
-
-    goal 形如 (And (On x y)) 或 (And (In x region))。
-    每个二元关系 (On/In x y) 中 x 是被搬运物体，y 是目标容器/区域。
+    返回 [(predicate, args_list)]。
     """
-    manipulated = set()
-    receptacles = set()
-    for m in re.finditer(r'\((On|In)\s+([^\s()]+)\s+([^\s()]+)\)', goal_text):
-        manipulated.add(m.group(2))
-        receptacles.add(m.group(3))
-    return manipulated, receptacles
+    clauses = []
+    if isinstance(ast, dict):
+        pred = ast["predicate"]
+        if pred in ("On", "In", "Open", "Close", "TurnOn", "TurnOff"):
+            args = [a for a in ast["arguments"] if isinstance(a, str)]
+            clauses.append((pred, args))
+        for a in ast["arguments"]:
+            clauses.extend(_collect_goal_clauses(a))
+    return clauses
+
+
+def _resolve_region_to_object(region_name, regions):
+    """region 名 → 父对象。region 完整名 = 父对象 + '_' + region_name。"""
+    for r in regions:
+        if region_name.endswith("_" + r["name"]):
+            return r["target"]
+    return None
 
 
 def build_role_manifest(bddl_path):
-    """从 bddl 文件生成角色清单，返回 dict。"""
+    """从 bddl 生成角色清单（v6 完整版）。"""
     bddl_path = pathlib.Path(bddl_path)
     bddl_text = bddl_path.read_text()
     bddl_sha = hashlib.sha256(bddl_text.encode()).hexdigest()
 
-    objects = _parse_objects(bddl_text)
-    goal_text = _parse_goal(bddl_text)
-    manipulated, receptacles = _parse_goal_roles(goal_text)
+    blocks = find_blocks(bddl_text)
+    objects = parse_declarations(blocks.get(":objects", "()"))
+    fixtures = parse_declarations(blocks.get(":fixtures", "()"))
+    regions = parse_regions(blocks.get(":regions", "()"))
+    goal_ast = parse_text(blocks.get(":goal", "()")) if ":goal" in blocks else None
+    goal_clauses = _collect_goal_clauses(goal_ast) if goal_ast else []
 
-    manifest = {"objects": {}, "bddl_path": str(bddl_path), "bddl_sha256": bddl_sha,
-                "goal_predicate": goal_text.strip()}
+    # obj_of_interest
+    ooi_names = []
+    if ":obj_of_interest" in blocks:
+        ooi_ast = parse_text(blocks[":obj_of_interest"])
+        if ooi_ast:
+            ooi_names = [a for a in ooi_ast["arguments"] if isinstance(a, str)]
+
+    # 收集每个 object 的角色 + 证据
+    roles = {}  # inst -> {"roles": set, "evidence": list}
 
     for inst, cls in objects.items():
-        if "obstacle" in inst or "obstacle" in cls:
-            role = "STATIC_SAFETY_OBSTACLE"
-        elif inst in manipulated:
-            role = "MANIPULATED_TARGET"
-        elif inst in receptacles:
-            role = "GOAL_RECEPTACLE"
-        else:
-            role = "DISTRACTOR"
+        roles[inst] = {"roles": set(), "evidence": [], "object_class": cls}
 
-        # obj_of_interest：BDDL 作者显式标注的任务相关物体（物体名，非 region 名）
-        ooi_m = re.search(r'\(:obj_of_interest\s*(.*?)\)\s*\(', bddl_text, re.S)
-        ooi_names = ooi_m.group(1).split() if ooi_m else []
-        in_ooi = inst in ooi_names
+    # 从 goal clause 推导角色
+    for pred, args in goal_clauses:
+        if pred in ("On", "In"):
+            # 第一参数：被操作物
+            if args and args[0] in roles:
+                roles[args[0]]["roles"].add("MANIPULATED_TARGET")
+                roles[args[0]]["evidence"].append({
+                    "predicate": pred, "argument_position": 0,
+                    "goal_clause": f"({pred} {' '.join(args)})",
+                })
+            # 第二参数：可能是 object 或 region
+            if len(args) >= 2:
+                second = args[1]
+                if second in roles:
+                    # 直接是 movable object
+                    roles[second]["roles"].add("GOAL_RECEPTACLE")
+                    roles[second]["evidence"].append({
+                        "predicate": pred, "argument_position": 1,
+                        "goal_clause": f"({pred} {' '.join(args)})",
+                    })
+                elif second.endswith("_region"):
+                    parent = _resolve_region_to_object(second, regions)
+                    if parent and parent in roles:
+                        roles[parent]["roles"].add("GOAL_RECEPTACLE")
+                        roles[parent]["evidence"].append({
+                            "predicate": pred, "argument_position": 1,
+                            "goal_clause": f"({pred} {' '.join(args)})",
+                            "region_name": second, "region_parent": parent,
+                        })
+        elif pred in ("Open", "Close", "TurnOn", "TurnOff"):
+            if args and args[0] in roles:
+                roles[args[0]]["roles"].add("TASK_CONTROLLED_OBJECT")
+                roles[args[0]]["evidence"].append({
+                    "predicate": pred, "argument_position": 0,
+                    "goal_clause": f"({pred} {' '.join(args)})",
+                })
 
-        # receptacle 可能是 region 名（如 basket_1_contain_region），
-        # 用 obj_of_interest 里对应的物体名补正 GOAL_RECEPTACLE 角色。
-        # 规则：在 ooi 里、且不是 manipulated、且某个 receptacle region 名以它开头 → GOAL_RECEPTACLE
-        is_receptacle_by_ooi = False
-        if in_ooi and inst not in manipulated:
-            for rec in receptacles:
-                if rec.startswith(inst):  # basket_1_contain_region startswith basket_1
-                    is_receptacle_by_ooi = True
-                    break
-        if is_receptacle_by_ooi and role == "DISTRACTOR":
-            role = "GOAL_RECEPTACLE"
+    # 障碍物
+    for inst in objects:
+        if "obstacle" in inst or "obstacle" in objects[inst]:
+            roles[inst]["roles"].add("STATIC_SAFETY_OBSTACLE")
 
+    # 无角色的 → DISTRACTOR
+    for inst in roles:
+        if not roles[inst]["roles"]:
+            roles[inst]["roles"].add("DISTRACTOR")
+
+    manifest = {
+        "bddl_path": str(bddl_path),
+        "bddl_sha256": bddl_sha,
+        "goal_predicate": json.dumps(goal_ast, ensure_ascii=False) if goal_ast else "",
+        "goal_clauses": goal_clauses,
+        "obj_of_interest": ooi_names,
+        "fixtures": fixtures,
+        "regions": regions,
+        "objects": {},
+    }
+
+    for inst in objects:
         manifest["objects"][inst] = {
-            "object_class": cls,
-            "role": role,
-            "role_evidence": {
-                "in_goal_manipulated": inst in manipulated,
-                "in_goal_receptacle": inst in receptacles,
-                "in_obj_of_interest": in_ooi,
-                "receptacle_by_ooi": is_receptacle_by_ooi,
-                "is_obstacle": "obstacle" in inst or "obstacle" in cls,
-            },
+            "object_class": objects[inst],
+            "roles": sorted(roles[inst]["roles"]),
+            "evidence": roles[inst]["evidence"],
+            "in_obj_of_interest": inst in ooi_names,
         }
+
+    manifest["role_manifest_sha256"] = hashlib.sha256(
+        json.dumps(manifest, sort_keys=True, ensure_ascii=False).encode()
+    ).hexdigest()
     return manifest
 
 
@@ -164,10 +179,3 @@ if __name__ == "__main__":
     manifests = build_all_manifests(root, out)
     total = sum(len(s) for s in manifests.values())
     print(f"生成 {total} 个任务的角色清单 → {out}")
-    # 示例
-    for suite in list(manifests)[:1]:
-        for task in list(manifests[suite])[:1]:
-            m = manifests[suite][task]
-            print(f"\n示例 {suite}/{task}:")
-            for inst, info in m["objects"].items():
-                print(f"  {inst:30s} {info['role']}")
