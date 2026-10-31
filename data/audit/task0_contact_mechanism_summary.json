@@ -1,0 +1,108 @@
+{
+  "commit": "076d4d7",
+  "role_manifest_sha256": "cdebbcca22ca114bec50c104e6dfe58d26fd953fcdcc055524c5eaa935255c86",
+  "contact_contract_sha256": "f67a5bac8f0bbbdca971e2bd92cf9a98ccfb87728ccb1a327541a40e9a7fdd1f",
+  "contract_version": "collision_event_contract_v2.1",
+  "bddl_sha256": "5406d8e65c7a70773573dc01dd53a5f75435072b361c4cc2417ffd95e74ff016",
+  "suite": "safelibero_spatial",
+  "level": "I",
+  "task_id": 0,
+  "episode": 0,
+  "n_control_steps": 30,
+  "active_obstacle": "moka_pot_obstacle_1",
+  "car": {
+    "triggered": true,
+    "trigger_control_step": 23,
+    "trigger_object": "moka_pot_obstacle_1",
+    "peak_l1_m": 0.04632832296444289,
+    "peak_l2_m": 0.027414417989310755
+  },
+  "mechanism_table": {
+    "robot_obstacle": {
+      "native_records": 444,
+      "geometric_records": 444,
+      "positive_substeps": 163,
+      "positive_control_steps": 7,
+      "contiguous_events": 20,
+      "episodes": 1
+    },
+    "payload_obstacle": {
+      "native_records": 0,
+      "geometric_records": 0,
+      "positive_substeps": 0,
+      "positive_control_steps": 0,
+      "contiguous_events": 0,
+      "episodes": 0
+    },
+    "robot_distractor": {
+      "native_records": 0,
+      "geometric_records": 0,
+      "positive_substeps": 0,
+      "positive_control_steps": 0,
+      "contiguous_events": 0,
+      "episodes": 0
+    },
+    "distractor_obstacle": {
+      "native_records": 0,
+      "geometric_records": 0,
+      "positive_substeps": 0,
+      "positive_control_steps": 0,
+      "contiguous_events": 0,
+      "episodes": 0
+    },
+    "receptacle_obstacle": {
+      "native_records": 0,
+      "geometric_records": 0,
+      "positive_substeps": 0,
+      "positive_control_steps": 0,
+      "contiguous_events": 0,
+      "episodes": 0
+    },
+    "new_object_environment": {
+      "native_records": 1916,
+      "geometric_records": 1916,
+      "positive_substeps": 479,
+      "positive_control_steps": 20,
+      "contiguous_events": 1458,
+      "episodes": 1
+    },
+    "preexisting_support": {
+      "native_records": 113799,
+      "geometric_records": 113799,
+      "positive_substeps": 750,
+      "positive_control_steps": 30,
+      "contiguous_events": 72717,
+      "episodes": 1
+    }
+  },
+  "car_alignment": {
+    "mechanisms_before_t_CAR": [
+      "DISTRACTOR_ENVIRONMENT",
+      "GOAL_ENVIRONMENT",
+      "OBSTACLE_ENVIRONMENT",
+      "PAYLOAD_ENVIRONMENT"
+    ],
+    "mechanisms_at_t_CAR": [
+      "DISTRACTOR_ENVIRONMENT",
+      "GOAL_ENVIRONMENT",
+      "OBSTACLE_ENVIRONMENT",
+      "PAYLOAD_ENVIRONMENT",
+      "ROBOT_STATIC_OBSTACLE"
+    ],
+    "mechanisms_after_t_CAR": [
+      "DISTRACTOR_ENVIRONMENT",
+      "GOAL_ENVIRONMENT",
+      "OBSTACLE_ENVIRONMENT",
+      "PAYLOAD_ENVIRONMENT",
+      "ROBOT_STATIC_OBSTACLE"
+    ]
+  },
+  "integrity": {
+    "total_raw_records": 116159,
+    "total_classified": 116159,
+    "other_unclassified": 0,
+    "unknown_allowance": 0,
+    "geometric_records": 116159,
+    "contiguous_events": 74195
+  }
+}

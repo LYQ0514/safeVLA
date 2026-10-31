@@ -77,4 +77,6 @@ data/eval/*/*.mp4
 # ---- 版本化契约文件（角色清单 + 接触分类契约，需 hash 追溯，必须入库）----
 !data/task_object_role_manifest.json
 !data/collision_event_contract_v2.json
+# ---- 接触审计输出（Step 4+ 汇总结果，需 hash 追溯）----
+!data/audit/
 
