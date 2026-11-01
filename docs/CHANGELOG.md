@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### 2026-11-01 — Source→AEGIS 串接实现（归档，停止规模扩展）
+
+- **新增**：`src/safety/source_aegis.py`（源空间 steering 提案 + AEGIS 过滤）、
+  `tools/run_eval_source_aegis.py`。
+- **冒烟**：spatial task0 5 episode，TSR 20% / CAR 80% / SSR 20%（小样本）；
+  单案例 ep35 基线碰撞 12.15mm → 组合后 0.002mm。
+- **结论**：触发机制风险辨别能力未量化、计算开销高（5 条 37min，外推 400 条约 50h）、
+  源空间相对同条件动作修正的增量价值未建立 → 停止规模扩展。
+- 归档：`docs/explanation/source_aegis_concat_archive.md`。
+- 执行边界：本实现无 C_2 认证，是「AEGIS 过滤后执行」，不能继承「认证后执行」表述。
+
 ### 2026-11-01 — AEGIS 上游 Source 改造可行性探索（收口，暂停）
 
 - **新增**：最小采集器 `tools/aegis_long_collect.py`（显式源噪声，6 episode long task0）、
