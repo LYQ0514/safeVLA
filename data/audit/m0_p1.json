@@ -1,0 +1,912 @@
+{
+  "V": {
+    "success": true,
+    "collided": false,
+    "max_displacement": 0.00012368426727594334,
+    "steps": 278,
+    "n_intervene": 0,
+    "n_keep_nominal": 0,
+    "n_reject": 0,
+    "d_soup_final": 0.15861052701409153,
+    "final_subgoals": {
+      "soup": null,
+      "cream": null
+    },
+    "trace": [
+      {
+        "step": 0,
+        "disp": 1.488358047918581e-13,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 10,
+        "disp": 8.859094013935476e-13,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 20,
+        "disp": 1.6207313269234191e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 30,
+        "disp": 2.3554387607038763e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 40,
+        "disp": 3.09010456112091e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 50,
+        "disp": 3.8247703615379436e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 60,
+        "disp": 4.559463917530593e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 70,
+        "disp": 8.612971010913198e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 80,
+        "disp": 8.612970973513948e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 90,
+        "disp": 8.612970928319891e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 100,
+        "disp": 8.612970883126875e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 110,
+        "disp": 8.612970837936287e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 120,
+        "disp": 8.612970792746047e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 130,
+        "disp": 8.612970747543316e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 140,
+        "disp": 8.612970702353423e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 150,
+        "disp": 8.612970657159019e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 160,
+        "disp": 8.612970611945187e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 170,
+        "disp": 8.61297056674766e-05,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 180,
+        "disp": 8.61297052155742e-05,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 190,
+        "disp": 8.612970476358853e-05,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 200,
+        "disp": 8.612970431165143e-05,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 210,
+        "disp": 8.612970385974555e-05,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 220,
+        "disp": 8.612970340785009e-05,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 230,
+        "disp": 8.612970295594422e-05,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 240,
+        "disp": 8.612970250391691e-05,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 250,
+        "disp": 8.612970205202145e-05,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 260,
+        "disp": 8.612970160011557e-05,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 270,
+        "disp": 8.61297011482201e-05,
+        "soup_pred": true,
+        "cream_pred": false
+      }
+    ]
+  },
+  "F": {
+    "success": false,
+    "collided": false,
+    "max_displacement": 4.0488567359941996e-11,
+    "steps": 550,
+    "n_intervene": 92,
+    "n_keep_nominal": 0,
+    "n_reject": 0,
+    "d_soup_final": 0.2777212327025119,
+    "final_subgoals": {
+      "soup": null,
+      "cream": null
+    },
+    "trace": [
+      {
+        "step": 0,
+        "disp": 1.488358047918581e-13,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 10,
+        "disp": 8.859094013935476e-13,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 20,
+        "disp": 1.6207625519459867e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 30,
+        "disp": 2.355469985726444e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 40,
+        "disp": 3.0901323166965255e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 50,
+        "disp": 3.824808525454415e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 60,
+        "disp": 4.55952983702268e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 70,
+        "disp": 5.294192167992762e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 80,
+        "disp": 6.029038379651297e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 90,
+        "disp": 6.763974796930583e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 100,
+        "disp": 7.498706516839704e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 110,
+        "disp": 8.233424358961017e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 120,
+        "disp": 8.968242815043936e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 130,
+        "disp": 9.702936371036586e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 140,
+        "disp": 1.0437605640900571e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 150,
+        "disp": 1.1172271441317605e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 160,
+        "disp": 1.1907041325143197e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 170,
+        "disp": 1.2641856311779165e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 180,
+        "disp": 1.3376511703855343e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 190,
+        "disp": 1.411130934325655e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 200,
+        "disp": 1.484623188274803e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 210,
+        "disp": 1.5580932377634582e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 220,
+        "disp": 1.631560858639247e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 230,
+        "disp": 1.7050499900861382e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 240,
+        "disp": 1.7785169170725368e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 250,
+        "disp": 1.8519855787824113e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 260,
+        "disp": 1.925451117990029e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 270,
+        "disp": 1.9989270655385027e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 280,
+        "disp": 2.072404053921062e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 290,
+        "disp": 2.1458695931286798e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 300,
+        "disp": 2.219336173170383e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 310,
+        "disp": 2.2928024062673913e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 320,
+        "disp": 2.366289109101416e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 330,
+        "disp": 2.4397563830325097e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 340,
+        "disp": 2.5132288611340314e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 350,
+        "disp": 2.586729441755864e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 360,
+        "disp": 2.660206083193728e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 370,
+        "disp": 2.7336716224013458e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 380,
+        "disp": 2.80713959022183e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 390,
+        "disp": 2.8806065172082285e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 400,
+        "disp": 2.954073791139322e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 410,
+        "disp": 3.027540718125721e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 420,
+        "disp": 3.101027767904441e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 430,
+        "disp": 3.174494001001449e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 440,
+        "disp": 3.247967519937056e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 450,
+        "disp": 3.3214663658354127e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 460,
+        "disp": 3.394941272549801e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 470,
+        "disp": 3.468407158702114e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 480,
+        "disp": 3.5418942084808336e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 490,
+        "disp": 3.6153652988035745e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 500,
+        "disp": 3.688830838011192e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 510,
+        "disp": 3.7622974180528956e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 520,
+        "disp": 3.835771283933198e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 530,
+        "disp": 3.909255211209661e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 540,
+        "disp": 3.982720750417279e-11,
+        "soup_pred": false,
+        "cream_pred": false
+      }
+    ]
+  },
+  "B": {
+    "success": true,
+    "collided": true,
+    "max_displacement": 0.0012536015144065625,
+    "steps": 278,
+    "n_intervene": 26,
+    "n_keep_nominal": 0,
+    "n_reject": 0,
+    "d_soup_final": 0.15564238116114498,
+    "final_subgoals": {
+      "soup": null,
+      "cream": null
+    },
+    "trace": [
+      {
+        "step": 0,
+        "disp": 1.488358047918581e-13,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 10,
+        "disp": 8.859094013935476e-13,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 20,
+        "disp": 1.620745204711227e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 30,
+        "disp": 2.355452638491684e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 40,
+        "disp": 3.0901253778026216e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 50,
+        "disp": 3.824798117113559e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 60,
+        "disp": 6.983356399306931e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 70,
+        "disp": 0.0009295929002594815,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 80,
+        "disp": 0.0009295928994917588,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 90,
+        "disp": 0.0009295928987379937,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 100,
+        "disp": 0.0009295928979839579,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 110,
+        "disp": 0.0009295928972301443,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 120,
+        "disp": 0.0009295928964763375,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 130,
+        "disp": 0.0009295928957225585,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 140,
+        "disp": 0.0009295928949686408,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 150,
+        "disp": 0.0009295928942146987,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 160,
+        "disp": 0.000929592893460951,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 170,
+        "disp": 0.0009295928927068806,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 180,
+        "disp": 0.0009295928919528587,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 190,
+        "disp": 0.0009295928911990728,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 200,
+        "disp": 0.0009295928904452522,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 210,
+        "disp": 0.0009295928896912511,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 220,
+        "disp": 0.0009295928889375034,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 230,
+        "disp": 0.0009295928881837036,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 240,
+        "disp": 0.0009295928874299524,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 250,
+        "disp": 0.0009295928866759375,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 260,
+        "disp": 0.0009295928859221168,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 270,
+        "disp": 0.000929592885168324,
+        "soup_pred": true,
+        "cream_pred": false
+      }
+    ]
+  },
+  "M": {
+    "success": true,
+    "collided": true,
+    "max_displacement": 0.0013419448768467804,
+    "steps": 293,
+    "n_intervene": 32,
+    "n_keep_nominal": 40,
+    "n_reject": 0,
+    "d_soup_final": 0.15240178473368382,
+    "final_subgoals": {
+      "soup": null,
+      "cream": null
+    },
+    "trace": [
+      {
+        "step": 0,
+        "disp": 1.488358047918581e-13,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 10,
+        "disp": 8.859094013935476e-13,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 20,
+        "disp": 1.6208250019911219e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 30,
+        "disp": 2.355535905218531e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 40,
+        "disp": 3.090239869552036e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 50,
+        "disp": 3.824909139416022e-12,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 60,
+        "disp": 6.583248664162461e-05,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 70,
+        "disp": 0.001086576595698243,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 80,
+        "disp": 0.0010865765950821143,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 90,
+        "disp": 0.0010865765943240957,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 100,
+        "disp": 0.001086576593566247,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 110,
+        "disp": 0.001086576592808433,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 120,
+        "disp": 0.001086576592050463,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 130,
+        "disp": 0.0010865765912924756,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 140,
+        "disp": 0.0010865765905344951,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 150,
+        "disp": 0.0010865765897764626,
+        "soup_pred": false,
+        "cream_pred": false
+      },
+      {
+        "step": 160,
+        "disp": 0.0010865765890186556,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 170,
+        "disp": 0.001086576588261015,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 180,
+        "disp": 0.001086576587503097,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 190,
+        "disp": 0.0010865765867450576,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 200,
+        "disp": 0.00108657658598732,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 210,
+        "disp": 0.0010865765852293256,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 220,
+        "disp": 0.0010865765844713694,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 230,
+        "disp": 0.0010865765837133265,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 240,
+        "disp": 0.001086576582955471,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 250,
+        "disp": 0.0010865765821975668,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 260,
+        "disp": 0.001086576581439569,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 270,
+        "disp": 0.001086576580681578,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 280,
+        "disp": 0.0010865765799235906,
+        "soup_pred": true,
+        "cream_pred": false
+      },
+      {
+        "step": 290,
+        "disp": 0.001086576579165794,
+        "soup_pred": true,
+        "cream_pred": false
+      }
+    ]
+  }
+}
