@@ -1,0 +1,36 @@
+{
+  "raw_path_len": 35,
+  "shortcut_len": 3,
+  "smoothed_len": 3,
+  "smoothed_collision_free": true,
+  "results": {
+    "raw": {
+      "T": 18.460603190678047,
+      "first_contact_t": null,
+      "Dmax": 0.0026789386949796143,
+      "track_err_max": 0.521102587859949,
+      "track_err_mean": 0.16211313021431473,
+      "tau_max_abs": 45.94698583976864,
+      "pos_err": 0.0040258204471652105,
+      "vel_norm": 0.0015935325856109028,
+      "label": "Raw RRT",
+      "n_waypoints": 35,
+      "L_rad": 8.980301595339023,
+      "accept": false
+    },
+    "smoothed": {
+      "T": 1.8314985805844637,
+      "first_contact_t": null,
+      "Dmax": 0.002675047200418827,
+      "track_err_max": 0.1972018210306243,
+      "track_err_mean": 0.08664963633433888,
+      "tau_max_abs": 25.250377409851566,
+      "pos_err": 0.003782607306836844,
+      "vel_norm": 0.004331542465856522,
+      "label": "Smoothed RRT",
+      "n_waypoints": 3,
+      "L_rad": 0.6657492902922318,
+      "accept": false
+    }
+  }
+}

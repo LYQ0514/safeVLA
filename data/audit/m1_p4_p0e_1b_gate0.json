@@ -1,0 +1,3412 @@
+{
+  "stillness_2s_Dmax_mm": 5.220743976019904e-09,
+  "exec_Dmax_mm": 1.0090897620216552,
+  "first_over_step": 4731,
+  "first_over_t_s": 9.462,
+  "contact_substep_count": 4732,
+  "unique_mug_contact_pairs": [
+    "red_coffee_mug_obstacle_1_main↔box_small_base_1_main"
+  ],
+  "mug_contacts_detail": [
+    [
+      0,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947683051734e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214156869424e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833217149677e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844649187119e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744905132358e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477467770565e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      1,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214156295655e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833217149677e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446478426783e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744898417462e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      2,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 258
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.862355968913377e-08,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214161433095e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844647895059e-07,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744840910069e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847740532052e-08,
+          "efc_address": 282
+        }
+      ]
+    ],
+    [
+      3,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214155280162e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446490736274e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744886722769e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477453892777e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      4,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214155619372e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844649108548e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211928382895e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744893672838e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      5,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 258
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.862355968913377e-08,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121416148356e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446492569603e-07,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744845738613e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477412259413e-08,
+          "efc_address": 282
+        }
+      ]
+    ],
+    [
+      6,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 258
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214156337133e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446490910876e-07,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744894189473e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 282
+        }
+      ]
+    ],
+    [
+      7,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415596551e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648986326e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744887636562e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477453892777e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      8,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.862355968913377e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214162260613e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844649117278e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744881208677e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477446953883e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      9,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214155537157e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446491434684e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.246574489521928e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      10,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214154732406e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833217149677e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446491521984e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744840096728e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847740532052e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      11,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415754317e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446491434684e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744887915606e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477453892777e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      12,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415732089e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740042147e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446488990245e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744888926573e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477453892777e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      13,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214157390366e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648925215e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744895363284e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      14,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415633843e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446489339453e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744888427062e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477453892777e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      15,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 252
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 255
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415583694e-08,
+          "efc_address": 258
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446492045795e-07,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744895240539e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 276
+        }
+      ]
+    ],
+    [
+      16,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214155627022e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740042147e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446489514056e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744895866377e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      17,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214154850997e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446492395e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.246574483304793e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477398381626e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      18,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214157642527e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844649117278e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744888305159e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477453892777e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      19,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214157854123e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648986326e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744881493594e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477446953883e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      20,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415766468e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446491434684e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744895245396e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      21,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214157162163e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446490212466e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744902311105e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477467770565e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      22,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 258
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214156511304e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446487593424e-07,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744895628179e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 282
+        }
+      ]
+    ],
+    [
+      23,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.72412141556057e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648802993e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744895628754e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      24,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214154677455e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446489339453e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211928382895e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744840116596e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847740532052e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      25,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947683051734e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559696072665e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214170499236e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648986326e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.246574489718764e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      26,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214156275306e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446490998176e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744894243571e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      27,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214155630906e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446490037863e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744887808182e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477453892777e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      28,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.862355968913377e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214162513247e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446490212466e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.246574483910838e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847740532052e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      29,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214157381475e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446488902945e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744893859976e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      30,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947683051734e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.862355968913377e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214163959053e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648829184e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744903242421e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477467770565e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      31,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.862355968913377e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121416303591e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648925215e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744886675315e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477453892777e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      32,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.72412141558943e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446490736277e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744831038611e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477398381626e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      33,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214158403953e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446490910876e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211926301227e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744892603197e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      34,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947683745623e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559696072665e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214171926632e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446488902948e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744909557503e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847747470946e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      35,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415713022e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648995056e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744892861774e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      36,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 258
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214156342364e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446490037863e-07,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744837477041e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847740532052e-08,
+          "efc_address": 282
+        }
+      ]
+    ],
+    [
+      37,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 258
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415830376e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446490387069e-07,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744892103653e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 282
+        }
+      ]
+    ],
+    [
+      38,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.862355968913377e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214164449327e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833217149677e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844649091088e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.246574489555547e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      39,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214157442316e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446490387069e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744892985874e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      40,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415639235e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648925215e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744893238897e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      41,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214156033776e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648925215e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744837853964e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847740532052e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      42,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214158256457e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446492220397e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.246574489248028e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      43,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947683051734e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.862355968913377e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214164858007e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833217149677e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446491347382e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744902492441e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477467770565e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      44,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947681663955e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214157853233e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446492307697e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744886169453e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477453892777e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      45,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214157777503e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622741429926e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648995056e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.24657448937397e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      46,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415686877e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648986326e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744893868033e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 285
+        }
+      ]
+    ],
+    [
+      47,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947683051734e-07,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.862355968913377e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.7241214162881945e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844649056167e-07,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.246574485505087e-08,
+          "efc_address": 285
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.5008477419198307e-08,
+          "efc_address": 288
+        }
+      ]
+    ],
+    [
+      48,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 258
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415788245e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833215761898e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.4238446488728343e-07,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.6042119269951165e-08,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744893482098e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 282
+        }
+      ]
+    ],
+    [
+      49,
+      [
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 203,
+          "geom2": 217,
+          "dist": -1.4854947682357844e-07,
+          "efc_address": 261
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -2.8623559682194877e-08,
+          "efc_address": 264
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 204,
+          "geom2": 217,
+          "dist": -1.724121415697216e-08,
+          "efc_address": 267
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 205,
+          "geom2": 217,
+          "dist": -6.562833216455788e-08,
+          "efc_address": 270
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 206,
+          "geom2": 217,
+          "dist": -7.774622740736037e-08,
+          "efc_address": 273
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 207,
+          "geom2": 217,
+          "dist": -1.423844648794263e-07,
+          "efc_address": 276
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 208,
+          "geom2": 217,
+          "dist": -4.604211927689006e-08,
+          "efc_address": 279
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.2465744893359815e-08,
+          "efc_address": 282
+        },
+        {
+          "pair": "red_coffee_mug_obstacle_1_main↔box_small_base_1_main",
+          "geom1": 209,
+          "geom2": 217,
+          "dist": -1.500847746083167e-08,
+          "efc_address": 285
+        }
+      ]
+    ]
+  ]
+}

@@ -56,13 +56,19 @@ bug，不是方法结论。
 
 | 验收条件 | 结果 |
 |---|---|
-| 无禁止接触 | ⚠️ 无硬接触，但 mug 位移 2.1mm（轻触）|
+| 无禁止接触 | ⚠️ 无 hard contact，但 mug 位移 2.1mm（轻触）|
 | Dmax < 1mm | ❌ 2.115mm |
 | 到达预抓取位姿 | ✅ pos_err 4 mrad |
 | 关节速度稳定 | ✅ 0.0016 rad/s |
 | 力矩限幅 | ✅ max 45.8 N·m |
 
 **判定：FAIL**（Dmax 超 CAR）。
+
+> ⚠️ **归因修正（见 m1_p4_p0e_1b）**：本报告的「跟踪滞后导致轻触」归因有误。
+> 后续 1b 审计确认 mug 位移的真实来源是「robot link5 碰到 mug 底座
+> box_small_base_1_main（FREE joint）→ 底座经支撑接触带动 mug」，且该接触被
+> `build_body_geoms` 漏检（底座 body 名不含 "obstacle"）。跟踪滞后（141 mrad）
+> 存在但非本次 CAR 越界的直接原因。
 
 ## 5. 科学含义
 
