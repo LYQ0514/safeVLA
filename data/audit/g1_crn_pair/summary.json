@@ -1,0 +1,880 @@
+{
+  "n_pairs": 48,
+  "n11": 0,
+  "n10": 33,
+  "n01": 0,
+  "n00": 15,
+  "delta_tsr_crn": -0.6875,
+  "tsr_baseline": 0.6875,
+  "tsr_aegis": 0.0,
+  "car_baseline": 0.10416666666666667,
+  "car_aegis": 0.75,
+  "ssr_baseline": 0.10416666666666667,
+  "ssr_aegis": 0.0,
+  "results": [
+    {
+      "state_id": 0,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.007895448946599128,
+        "steps": 374,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0017812384052425141,
+        "steps": 550,
+        "n_intervene": 203
+      }
+    },
+    {
+      "state_id": 0,
+      "stream": 1,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.006108248600775232,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0021339695469798914,
+        "steps": 550,
+        "n_intervene": 85
+      }
+    },
+    {
+      "state_id": 0,
+      "stream": 2,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.004586863162655146,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499679998529103e-11,
+        "steps": 550,
+        "n_intervene": 54
+      }
+    },
+    {
+      "state_id": 1,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.003450259560784437,
+        "steps": 307,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.04995863234614e-11,
+        "steps": 550,
+        "n_intervene": 42
+      }
+    },
+    {
+      "state_id": 1,
+      "stream": 1,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.005884306614598003,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499738979127287e-11,
+        "steps": 550,
+        "n_intervene": 67
+      }
+    },
+    {
+      "state_id": 1,
+      "stream": 2,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0037731757658222807,
+        "steps": 318,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049972857078643e-11,
+        "steps": 550,
+        "n_intervene": 88
+      }
+    },
+    {
+      "state_id": 2,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": false,
+        "max_displacement": 0.00020348949625910093,
+        "steps": 284,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.04996730596352e-11,
+        "steps": 550,
+        "n_intervene": 84
+      }
+    },
+    {
+      "state_id": 2,
+      "stream": 1,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0014091918582910049,
+        "steps": 278,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499683467976055e-11,
+        "steps": 550,
+        "n_intervene": 162
+      }
+    },
+    {
+      "state_id": 2,
+      "stream": 2,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0012938829447120548,
+        "steps": 245,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499645304059584e-11,
+        "steps": 550,
+        "n_intervene": 44
+      }
+    },
+    {
+      "state_id": 3,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0023235087220335113,
+        "steps": 377,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049970775410472e-11,
+        "steps": 550,
+        "n_intervene": 46
+      }
+    },
+    {
+      "state_id": 3,
+      "stream": 1,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0017805138039119414,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0011928443223510853,
+        "steps": 550,
+        "n_intervene": 63
+      }
+    },
+    {
+      "state_id": 3,
+      "stream": 2,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.002511223108626781,
+        "steps": 375,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049961754848397e-11,
+        "steps": 550,
+        "n_intervene": 24
+      }
+    },
+    {
+      "state_id": 4,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.003521103008145867,
+        "steps": 436,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049968693742301e-11,
+        "steps": 550,
+        "n_intervene": 39
+      }
+    },
+    {
+      "state_id": 4,
+      "stream": 1,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0017328212167088512,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499679998529103e-11,
+        "steps": 550,
+        "n_intervene": 70
+      }
+    },
+    {
+      "state_id": 4,
+      "stream": 2,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0036293945393566125,
+        "steps": 284,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049962448737787e-11,
+        "steps": 550,
+        "n_intervene": 83
+      }
+    },
+    {
+      "state_id": 5,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0027073581137107283,
+        "steps": 285,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0033479093768478754,
+        "steps": 550,
+        "n_intervene": 237
+      }
+    },
+    {
+      "state_id": 5,
+      "stream": 1,
+      "baseline": {
+        "success": true,
+        "collided": false,
+        "max_displacement": 2.0220825014405364e-11,
+        "steps": 274,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0020816170316774116,
+        "steps": 550,
+        "n_intervene": 96
+      }
+    },
+    {
+      "state_id": 5,
+      "stream": 2,
+      "baseline": {
+        "success": true,
+        "collided": false,
+        "max_displacement": 0.0006702971239649184,
+        "steps": 277,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499631426271776e-11,
+        "steps": 550,
+        "n_intervene": 59
+      }
+    },
+    {
+      "state_id": 6,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0012425783042430034,
+        "steps": 385,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049966959018825e-11,
+        "steps": 550,
+        "n_intervene": 37
+      }
+    },
+    {
+      "state_id": 6,
+      "stream": 1,
+      "baseline": {
+        "success": true,
+        "collided": false,
+        "max_displacement": 2.617234554080916e-11,
+        "steps": 355,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499718162445575e-11,
+        "steps": 550,
+        "n_intervene": 39
+      }
+    },
+    {
+      "state_id": 6,
+      "stream": 2,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0031434741566112763,
+        "steps": 314,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049970775410472e-11,
+        "steps": 550,
+        "n_intervene": 38
+      }
+    },
+    {
+      "state_id": 7,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0035179200394408923,
+        "steps": 335,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499756326362046e-11,
+        "steps": 550,
+        "n_intervene": 79
+      }
+    },
+    {
+      "state_id": 7,
+      "stream": 1,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0027378218117943415,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049960020124921e-11,
+        "steps": 550,
+        "n_intervene": 71
+      }
+    },
+    {
+      "state_id": 7,
+      "stream": 2,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.002202793987348666,
+        "steps": 293,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049974591802119e-11,
+        "steps": 550,
+        "n_intervene": 45
+      }
+    },
+    {
+      "state_id": 8,
+      "stream": 0,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.002676633416472715,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0010017188790153071,
+        "steps": 550,
+        "n_intervene": 301
+      }
+    },
+    {
+      "state_id": 8,
+      "stream": 1,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.004807095651828196,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0014778147071694003,
+        "steps": 550,
+        "n_intervene": 115
+      }
+    },
+    {
+      "state_id": 8,
+      "stream": 2,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.00497982270575607,
+        "steps": 383,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.003782855144884592,
+        "steps": 550,
+        "n_intervene": 353
+      }
+    },
+    {
+      "state_id": 9,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.004354511314038811,
+        "steps": 345,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.04996730596352e-11,
+        "steps": 550,
+        "n_intervene": 47
+      }
+    },
+    {
+      "state_id": 9,
+      "stream": 1,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.006444455827827763,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.016349566816547013,
+        "steps": 550,
+        "n_intervene": 155
+      }
+    },
+    {
+      "state_id": 9,
+      "stream": 2,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0074316210378761495,
+        "steps": 398,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049969040686996e-11,
+        "steps": 550,
+        "n_intervene": 42
+      }
+    },
+    {
+      "state_id": 10,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0031627195570257706,
+        "steps": 398,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049974938746814e-11,
+        "steps": 550,
+        "n_intervene": 43
+      }
+    },
+    {
+      "state_id": 10,
+      "stream": 1,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0063392334338470205,
+        "steps": 464,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499752856915094e-11,
+        "steps": 550,
+        "n_intervene": 71
+      }
+    },
+    {
+      "state_id": 10,
+      "stream": 2,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.00565944035108501,
+        "steps": 494,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049965918184739e-11,
+        "steps": 550,
+        "n_intervene": 84
+      }
+    },
+    {
+      "state_id": 11,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.003089934955745728,
+        "steps": 497,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049963489571873e-11,
+        "steps": 550,
+        "n_intervene": 56
+      }
+    },
+    {
+      "state_id": 11,
+      "stream": 1,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0013288648346429024,
+        "steps": 325,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049966959018825e-11,
+        "steps": 550,
+        "n_intervene": 40
+      }
+    },
+    {
+      "state_id": 11,
+      "stream": 2,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.002606804888631499,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0018445359138943782,
+        "steps": 550,
+        "n_intervene": 180
+      }
+    },
+    {
+      "state_id": 12,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.002999426848148797,
+        "steps": 394,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499683467976055e-11,
+        "steps": 550,
+        "n_intervene": 80
+      }
+    },
+    {
+      "state_id": 12,
+      "stream": 1,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0023731867493736944,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049969387631691e-11,
+        "steps": 550,
+        "n_intervene": 62
+      }
+    },
+    {
+      "state_id": 12,
+      "stream": 2,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.004285978026022406,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049963836516568e-11,
+        "steps": 550,
+        "n_intervene": 35
+      }
+    },
+    {
+      "state_id": 13,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0059824146884151184,
+        "steps": 460,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499520403969314e-11,
+        "steps": 550,
+        "n_intervene": 104
+      }
+    },
+    {
+      "state_id": 13,
+      "stream": 1,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0026872576857637324,
+        "steps": 269,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049970775410472e-11,
+        "steps": 550,
+        "n_intervene": 102
+      }
+    },
+    {
+      "state_id": 13,
+      "stream": 2,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.004796328218481468,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049963489571873e-11,
+        "steps": 550,
+        "n_intervene": 83
+      }
+    },
+    {
+      "state_id": 14,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.0011958491674890458,
+        "steps": 407,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049972510133948e-11,
+        "steps": 550,
+        "n_intervene": 41
+      }
+    },
+    {
+      "state_id": 14,
+      "stream": 1,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.0025796837569503836,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.049972510133948e-11,
+        "steps": 550,
+        "n_intervene": 35
+      }
+    },
+    {
+      "state_id": 14,
+      "stream": 2,
+      "baseline": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.001229284698656529,
+        "steps": 550,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499773673596806e-11,
+        "steps": 550,
+        "n_intervene": 45
+      }
+    },
+    {
+      "state_id": 15,
+      "stream": 0,
+      "baseline": {
+        "success": true,
+        "collided": false,
+        "max_displacement": 1.7575902538924382e-11,
+        "steps": 238,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.00494910047213673,
+        "steps": 550,
+        "n_intervene": 118
+      }
+    },
+    {
+      "state_id": 15,
+      "stream": 1,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.002631809382709474,
+        "steps": 285,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": false,
+        "max_displacement": 4.0499679998529103e-11,
+        "steps": 550,
+        "n_intervene": 39
+      }
+    },
+    {
+      "state_id": 15,
+      "stream": 2,
+      "baseline": {
+        "success": true,
+        "collided": true,
+        "max_displacement": 0.00146015296043292,
+        "steps": 253,
+        "n_intervene": 0
+      },
+      "aegis": {
+        "success": false,
+        "collided": true,
+        "max_displacement": 0.002608491729246737,
+        "steps": 550,
+        "n_intervene": 165
+      }
+    }
+  ]
+}
