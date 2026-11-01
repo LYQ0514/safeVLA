@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### 2026-11-01 — AEGIS 上游 Source 改造可行性探索（收口，暂停）
+
+- **新增**：最小采集器 `tools/aegis_long_collect.py`（显式源噪声，6 episode long task0）、
+  smoke `tools/aegis_long_smoke.py`、时间对齐分析 `tools/aegis_long_align.py`。
+- **AEGIS 状态保存/恢复**：`src/safety/aegis_adapted.py` 新增 `save_state`/`restore_state`
+  （z_fixed/p2/R2/Q2/Q1/计数器等有状态字段）。
+- **结果**：6/6 soup 未完成；「CBF 阻碍推进」动机未被支持，主因是策略提案不足
+  （5/6）与抓取失败（EP2）。冻结的 Source 生成器与失败间缺少作用机制。
+- **决定**：暂停 AEGIS 上游 Source 候选续轨实验。分析见
+  `docs/explanation/aegis_long_alignment_analysis.md`。
+
 ### 2026-11-01 — PNSG 固定预算设计批次（12 状态）与方法主张收缩
 
 - **新增**：12 状态固定批次（deployment obs 协议）结果

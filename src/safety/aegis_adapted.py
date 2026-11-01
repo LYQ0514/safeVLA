@@ -291,3 +291,37 @@ class AegisSafetyLayer:
             "intervened": self.intervene_count,
             "infeasible_rate": (self.infeasible_count / total) if total else 0.0,
         }
+
+    # ------------------------------------------------------------------
+    # 状态保存 / 恢复：AEGIS 是有状态控制器（z_fixed 演化、p2 更新、计数器）。
+    # 只恢复 MuJoCo 状态无法复现一个候选分支对 filter 的推进，必须连同这些字段
+    # 一起保存/恢复，候选分支才能从相同 AEGIS 状态开始。
+    # ------------------------------------------------------------------
+    def save_state(self):
+        """保存 filter 输出的全部有状态字段（含缓存与计数器）。"""
+        return {
+            "obstacle_name": self.obstacle_name,
+            "p2": None if self.p2 is None else np.asarray(self.p2).copy(),
+            "R2": None if self.R2 is None else np.asarray(self.R2).copy(),
+            "Q2_diag": None if self.Q2_diag is None else np.asarray(self.Q2_diag).copy(),
+            "z_fixed": None if self.z_fixed is None else np.asarray(self.z_fixed).copy(),
+            "Q1_diag": np.asarray(self.Q1_diag).copy(),
+            "feasible_count": self.feasible_count,
+            "infeasible_count": self.infeasible_count,
+            "intervene_count": self.intervene_count,
+            "_last_p1": None if getattr(self, "_last_p1", None) is None
+                        else np.asarray(self._last_p1).copy(),
+        }
+
+    def restore_state(self, st):
+        """恢复 filter 状态（深拷贝，避免共享引用）。"""
+        self.obstacle_name = st["obstacle_name"]
+        self.p2 = None if st["p2"] is None else np.asarray(st["p2"]).copy()
+        self.R2 = None if st["R2"] is None else np.asarray(st["R2"]).copy()
+        self.Q2_diag = None if st["Q2_diag"] is None else np.asarray(st["Q2_diag"]).copy()
+        self.z_fixed = None if st["z_fixed"] is None else np.asarray(st["z_fixed"]).copy()
+        self.Q1_diag = np.asarray(st["Q1_diag"]).copy()
+        self.feasible_count = st["feasible_count"]
+        self.infeasible_count = st["infeasible_count"]
+        self.intervene_count = st["intervene_count"]
+        self._last_p1 = None if st.get("_last_p1") is None else np.asarray(st["_last_p1"]).copy()
