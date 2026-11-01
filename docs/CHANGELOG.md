@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### 2026-11-01 — H1-W 第一轮（负结果 + 契约盲区发现）
+
+- **新增**：`docs/testing/h1w_round1_results.md`、`tools/h1w_witness.py`、
+  `docs/explanation/h1w_coordinate_protocol_v1.md`。
+- H1 非凸见证：task0 预设范围未发现（Level 1 未达成），5 个不安全状态均为幅度型。
+- **意外发现**：ep00 step330 执行 a_M 把目标任务物体 cream_cheese 撞飞 375mm，
+  但 contact 契约（ROBOT_MANIPULATED_TARGET=TASK_CONTACT 允许）与官方 CAR
+  （只看 obstacle）均不判定违规——两个契约存在「目标物体保护盲区」。
+- 方向转变：从「非凸安全集」转向「几何接触安全 vs 物体状态安全」。
+- 时间身份已核实：D_before=10.62mm（早已违规），5.87mm 是 a_M 新增位移，非伪影。
+- 不批准 task3 新采集。
 ### 2026-11-01 — AEGIS 任务类型失败表型分析（描述性，非因果）
 
 - **新增**：`docs/explanation/aegis_task_failure_modes.md`。
