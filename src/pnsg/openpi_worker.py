@@ -52,11 +52,15 @@ def build():
         cfg, CKPT_DIR, sample_kwargs={"num_steps": NUM_STEPS}
     )
     model = policy._model
-    # 用上游 while_loop 版 sample_actions（前向模式 jacfwd 可用）。
+    # 两条路径分开：
+    # - generate 用 module_jit 包装（性能：编译后 ~0.08s，而非每次 5s）
+    # - generate_jacobian 用原始 while_loop 版（jacfwd 需要，编译后 ~7s）
     # 注意：反向模式（vjp）对 while_loop 不可行；fori_loop 改写因 KV cache
-    # shape 动态增长（968→978）也失败。故 Jacobian 只能 jacfwd（编译后 ~7s）。
-    sample_actions = model.sample_actions
-    return policy, model, sample_actions
+    # shape 动态增长（968→978）也失败。故 Jacobian 只能 jacfwd。
+    from openpi.shared import nnx_utils
+    sample_actions_jit = nnx_utils.module_jit(model.sample_actions)
+    sample_actions_raw = model.sample_actions
+    return policy, model, sample_actions_jit, sample_actions_raw
 
 
 def _obs_to_inputs(policy, obs):
@@ -86,7 +90,7 @@ def _norm_stats_std(policy):
 
 
 def main():
-    policy, model, sample_actions = build()
+    policy, model, sample_actions_jit, sample_actions_raw = build()
     std_pose = _norm_stats_std(policy)  # (6,)
     H = model.action_horizon
     D = model.action_dim
@@ -125,16 +129,19 @@ def main():
                         observation, state_np = _obs_to_inputs(policy, req["obs"])
                         z_jax = jnp.asarray(z)[np.newaxis, ...]  # (1,H,D)
 
-                        f = lambda zz: sample_actions(rng_key, observation, num_steps=NUM_STEPS, noise=zz)
-                        raw = f(z_jax)  # (1,H,D)
-
                         if cmd == "generate_jacobian":
+                            # jacfwd 需要原始 while_loop 版（jit 版 jacfwd 不兼容）
+                            f = lambda zz: sample_actions_raw(rng_key, observation, num_steps=NUM_STEPS, noise=zz)
+                            raw = f(z_jax)
                             f_pose = lambda zz: f(zz)[0, :, :6]  # (H,6)
                             J_raw = jax.jacfwd(f_pose)(z_jax)     # (H,6,1,H,D)
                             J_raw = J_raw[:, :, 0, :, :].reshape(H * 6, H * D)  # (60,320)
                             # external J = raw J * std（逐 pose 通道）
                             scale = np.tile(std_pose, H)  # (60,)
                             J_ext = J_raw * scale[:, None]
+                        else:
+                            # generate 用 jit 版（性能：编译后 ~0.08s）
+                            raw = sample_actions_jit(rng_key, observation, num_steps=NUM_STEPS, noise=z_jax)
 
                         raw_np = np.asarray(raw[0], dtype=np.float32)  # (H,32)
                         # output transform 需带 state 键（Unnormalize strict=True）
