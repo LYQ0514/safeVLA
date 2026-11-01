@@ -2,6 +2,16 @@
 
 ## [Unreleased]
 
+### 2026-11-01 — step330 反事实动力学归因（历史惯性，终止案例）
+
+- **新增**：`docs/testing/step330_counterfactual_attribution.md`、
+  `tools/attribution_counterfactual.py`。
+- 反事实实验：a_M vs 零动作 a_0，mug 终点位置差异 Δ_causal = 0.000mm。
+- mug 位移 4.58mm 是历史碰撞残余动力学（初速 0.66m/s 水平滑动 + 与 box_base 推挤），
+  与当前动作无关。step330 双契约差异例证已证伪。
+- 理论认识：基于历史最大位移的 CAR 单调不减，历史违规不可撤销——当前控制器只能
+  预防未来违规，不能撤销已发生违规（非算法贡献，纳入方法论）。
+- 三次解释转变完整记录；不启动 task3、不恢复 H1。
 ### 2026-11-01 — H1-W 第一轮（负结果 + 更正：375mm 是读取伪影）
 
 - **新增**：`docs/testing/h1w_round1_results.md`、`tools/h1w_witness.py`、
