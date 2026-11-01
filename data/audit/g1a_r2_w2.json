@@ -1,0 +1,759 @@
+[
+  {
+    "state_id": 2,
+    "stream": 0,
+    "baseline": {
+      "success": true,
+      "max_displacement": 0.00014664676427549733,
+      "m_car_mm": 0.8533532357245026,
+      "steps": 265,
+      "n_intervene": 0,
+      "final_subgoals": {
+        "alphabet_soup_1": true,
+        "cream_cheese_1": true
+      },
+      "subgoal_progress": [
+        {
+          "step": 0,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 50,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 100,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 150,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 200,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 250,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        }
+      ]
+    },
+    "aegis": {
+      "success": false,
+      "max_displacement": 4.0488369601465735e-11,
+      "m_car_mm": 0.9999999595116305,
+      "steps": 550,
+      "n_intervene": 135,
+      "final_subgoals": {
+        "alphabet_soup_1": false,
+        "cream_cheese_1": false
+      },
+      "subgoal_progress": [
+        {
+          "step": 0,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 50,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 100,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 150,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 200,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 250,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 300,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 350,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 400,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 450,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 500,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        }
+      ]
+    },
+    "task_flip": 1
+  },
+  {
+    "state_id": 5,
+    "stream": 1,
+    "baseline": {
+      "success": true,
+      "max_displacement": 1.998917004142342e-11,
+      "m_car_mm": 0.9999999800108299,
+      "steps": 271,
+      "n_intervene": 0,
+      "final_subgoals": {
+        "alphabet_soup_1": true,
+        "cream_cheese_1": true
+      },
+      "subgoal_progress": [
+        {
+          "step": 0,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 50,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 100,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 150,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 200,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 250,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        }
+      ]
+    },
+    "aegis": {
+      "success": false,
+      "max_displacement": 0.027062744513482492,
+      "m_car_mm": -26.062744513482492,
+      "steps": 550,
+      "n_intervene": 263,
+      "final_subgoals": {
+        "alphabet_soup_1": false,
+        "cream_cheese_1": true
+      },
+      "subgoal_progress": [
+        {
+          "step": 0,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 50,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 100,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 150,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 200,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 250,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 300,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 350,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 400,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 450,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 500,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        }
+      ]
+    },
+    "task_flip": 1
+  },
+  {
+    "state_id": 5,
+    "stream": 2,
+    "baseline": {
+      "success": true,
+      "max_displacement": 2.0136121936520368e-11,
+      "m_car_mm": 0.9999999798638781,
+      "steps": 273,
+      "n_intervene": 0,
+      "final_subgoals": {
+        "alphabet_soup_1": true,
+        "cream_cheese_1": true
+      },
+      "subgoal_progress": [
+        {
+          "step": 0,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 50,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 100,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 150,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 200,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 250,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        }
+      ]
+    },
+    "aegis": {
+      "success": false,
+      "max_displacement": 0.2993980483874893,
+      "m_car_mm": -298.39804838748927,
+      "steps": 550,
+      "n_intervene": 307,
+      "final_subgoals": {
+        "alphabet_soup_1": false,
+        "cream_cheese_1": true
+      },
+      "subgoal_progress": [
+        {
+          "step": 0,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 50,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 100,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 150,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 200,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 250,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 300,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 350,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 400,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 450,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 500,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        }
+      ]
+    },
+    "task_flip": 1
+  },
+  {
+    "state_id": 6,
+    "stream": 1,
+    "baseline": {
+      "success": true,
+      "max_displacement": 2.8144729602441743e-11,
+      "m_car_mm": 0.9999999718552703,
+      "steps": 382,
+      "n_intervene": 0,
+      "final_subgoals": {
+        "alphabet_soup_1": true,
+        "cream_cheese_1": true
+      },
+      "subgoal_progress": [
+        {
+          "step": 0,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 50,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 100,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 150,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 200,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 250,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 300,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 350,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        }
+      ]
+    },
+    "aegis": {
+      "success": false,
+      "max_displacement": 4.0488407765382206e-11,
+      "m_car_mm": 0.9999999595115923,
+      "steps": 550,
+      "n_intervene": 47,
+      "final_subgoals": {
+        "alphabet_soup_1": false,
+        "cream_cheese_1": false
+      },
+      "subgoal_progress": [
+        {
+          "step": 0,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 50,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 100,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 150,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 200,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 250,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 300,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 350,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 400,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 450,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 500,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        }
+      ]
+    },
+    "task_flip": 1
+  },
+  {
+    "state_id": 15,
+    "stream": 0,
+    "baseline": {
+      "success": true,
+      "max_displacement": 0.0009255054942212994,
+      "m_car_mm": 0.07449450577870065,
+      "steps": 234,
+      "n_intervene": 0,
+      "final_subgoals": {
+        "alphabet_soup_1": true,
+        "cream_cheese_1": true
+      },
+      "subgoal_progress": [
+        {
+          "step": 0,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 50,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 100,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 150,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 200,
+          "subgoals": {
+            "alphabet_soup_1": true,
+            "cream_cheese_1": false
+          }
+        }
+      ]
+    },
+    "aegis": {
+      "success": false,
+      "max_displacement": 0.01837956623259098,
+      "m_car_mm": -17.37956623259098,
+      "steps": 550,
+      "n_intervene": 175,
+      "final_subgoals": {
+        "alphabet_soup_1": false,
+        "cream_cheese_1": true
+      },
+      "subgoal_progress": [
+        {
+          "step": 0,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 50,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 100,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": false
+          }
+        },
+        {
+          "step": 150,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 200,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 250,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 300,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 350,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 400,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 450,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        },
+        {
+          "step": 500,
+          "subgoals": {
+            "alphabet_soup_1": false,
+            "cream_cheese_1": true
+          }
+        }
+      ]
+    },
+    "task_flip": 1
+  }
+]
