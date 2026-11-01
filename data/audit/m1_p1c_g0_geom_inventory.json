@@ -1,0 +1,4978 @@
+{
+  "54": {
+    "link6": {
+      "robot0_link6": [
+        {
+          "geom_id": 47,
+          "geom_name": "robot0_g31_vis",
+          "type": "mesh",
+          "size": [
+            0.04231,
+            0.04906,
+            0.10797
+          ],
+          "pos": [
+            0.02539,
+            -0.01552,
+            -0.00514
+          ],
+          "quat": [
+            0.18717,
+            0.66653,
+            -0.17158,
+            0.7009
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.07854,
+            -0.05589,
+            0.70597
+          ],
+          "world_xmat": [
+            -0.2178,
+            -0.48,
+            0.8498,
+            -0.976,
+            0.103,
+            -0.1919,
+            0.0045,
+            -0.8712,
+            -0.4909
+          ]
+        },
+        {
+          "geom_id": 48,
+          "geom_name": "robot0_g32_vis",
+          "type": "mesh",
+          "size": [
+            0.00042,
+            0.01071,
+            0.01328
+          ],
+          "pos": [
+            0.0001,
+            0.00149,
+            0.05297
+          ],
+          "quat": [
+            0.52029,
+            0.42259,
+            -0.57623,
+            0.46762
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.04327,
+            -0.10906,
+            0.72126
+          ],
+          "world_xmat": [
+            -0.276,
+            -0.9418,
+            -0.1919,
+            -0.9607,
+            0.2642,
+            0.0851,
+            -0.0294,
+            0.2078,
+            -0.9777
+          ]
+        },
+        {
+          "geom_id": 49,
+          "geom_name": "robot0_g33_vis",
+          "type": "mesh",
+          "size": [
+            0.00254,
+            0.03769,
+            0.05079
+          ],
+          "pos": [
+            0.10335,
+            0.06819,
+            -0.00058
+          ],
+          "quat": [
+            0.59164,
+            0.51259,
+            0.40266,
+            0.47442
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.154,
+            -0.07657,
+            0.78955
+          ],
+          "world_xmat": [
+            0.2148,
+            -0.3214,
+            0.9223,
+            -0.0775,
+            -0.9469,
+            -0.312,
+            0.9736,
+            -0.0045,
+            -0.2283
+          ]
+        },
+        {
+          "geom_id": 50,
+          "geom_name": "robot0_g34_vis",
+          "type": "mesh",
+          "size": [
+            0.00067,
+            0.00106,
+            0.0022
+          ],
+          "pos": [
+            0.08821,
+            0.07773,
+            -0.0106
+          ],
+          "quat": [
+            0.70711,
+            0.0,
+            0.0,
+            0.70711
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.14081,
+            -0.0643,
+            0.79936
+          ],
+          "world_xmat": [
+            -0.0056,
+            -0.9842,
+            -0.1771,
+            -0.0286,
+            0.1772,
+            -0.9838,
+            0.9996,
+            -0.0005,
+            -0.0291
+          ]
+        },
+        {
+          "geom_id": 51,
+          "geom_name": "robot0_g35_vis",
+          "type": "mesh",
+          "size": [
+            0.00042,
+            0.001,
+            0.0022
+          ],
+          "pos": [
+            0.09867,
+            0.07588,
+            -0.0
+          ],
+          "quat": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.14924,
+            -0.07653,
+            0.79722
+          ],
+          "world_xmat": [
+            -0.0056,
+            -0.1771,
+            0.9842,
+            -0.0286,
+            -0.9838,
+            -0.1772,
+            0.9996,
+            -0.0291,
+            0.0005
+          ]
+        },
+        {
+          "geom_id": 52,
+          "geom_name": "robot0_g36_vis",
+          "type": "mesh",
+          "size": [
+            0.00067,
+            0.00107,
+            0.00218
+          ],
+          "pos": [
+            0.0882,
+            0.07773,
+            0.01062
+          ],
+          "quat": [
+            0.70711,
+            0.0,
+            0.0,
+            0.70711
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.13705,
+            -0.08518,
+            0.79875
+          ],
+          "world_xmat": [
+            -0.0056,
+            -0.9842,
+            -0.1771,
+            -0.0286,
+            0.1772,
+            -0.9838,
+            0.9996,
+            -0.0005,
+            -0.0291
+          ]
+        },
+        {
+          "geom_id": 53,
+          "geom_name": "robot0_g37_vis",
+          "type": "mesh",
+          "size": [
+            0.00094,
+            0.001,
+            0.00217
+          ],
+          "pos": [
+            0.07776,
+            0.07957,
+            -0.0
+          ],
+          "quat": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.12864,
+            -0.07293,
+            0.80089
+          ],
+          "world_xmat": [
+            -0.0056,
+            -0.1771,
+            0.9842,
+            -0.0286,
+            -0.9838,
+            -0.1772,
+            0.9996,
+            -0.0291,
+            0.0005
+          ]
+        },
+        {
+          "geom_id": 54,
+          "geom_name": "robot0_g38_vis",
+          "type": "mesh",
+          "size": [
+            6e-05,
+            0.00135,
+            0.00142
+          ],
+          "pos": [
+            0.06339,
+            0.08161,
+            -0.0
+          ],
+          "quat": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.11449,
+            -0.07045,
+            0.80292
+          ],
+          "world_xmat": [
+            -0.0056,
+            -0.1771,
+            0.9842,
+            -0.0286,
+            -0.9838,
+            -0.1772,
+            0.9996,
+            -0.0291,
+            0.0005
+          ]
+        },
+        {
+          "geom_id": 55,
+          "geom_name": "robot0_g39_vis",
+          "type": "mesh",
+          "size": [
+            0.00099,
+            0.00165,
+            0.00151
+          ],
+          "pos": [
+            0.11444,
+            0.07094,
+            -0.0
+          ],
+          "quat": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.16479,
+            -0.07919,
+            0.79228
+          ],
+          "world_xmat": [
+            -0.0056,
+            -0.1771,
+            0.9842,
+            -0.0286,
+            -0.9838,
+            -0.1772,
+            0.9996,
+            -0.0291,
+            0.0005
+          ]
+        },
+        {
+          "geom_id": 56,
+          "geom_name": "robot0_g40_vis",
+          "type": "mesh",
+          "size": [
+            0.00039,
+            0.01643,
+            0.01711
+          ],
+          "pos": [
+            -0.00073,
+            -0.0001,
+            0.05254
+          ],
+          "quat": [
+            0.00417,
+            0.67018,
+            -0.00462,
+            0.74217
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.04254,
+            -0.10844,
+            0.71969
+          ],
+          "world_xmat": [
+            -0.2762,
+            -0.0063,
+            0.9611,
+            -0.9607,
+            0.032,
+            -0.2759,
+            -0.029,
+            -0.9995,
+            -0.0149
+          ]
+        },
+        {
+          "geom_id": 57,
+          "geom_name": "robot0_g41_vis",
+          "type": "mesh",
+          "size": [
+            0.00505,
+            0.03011,
+            0.03359
+          ],
+          "pos": [
+            0.09153,
+            0.07575,
+            -6e-05
+          ],
+          "quat": [
+            0.54321,
+            0.56005,
+            0.44874,
+            0.43577
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.14222,
+            -0.07521,
+            0.79708
+          ],
+          "world_xmat": [
+            0.2084,
+            -0.1482,
+            0.9667,
+            -0.067,
+            -0.9883,
+            -0.1371,
+            0.9757,
+            -0.0362,
+            -0.2159
+          ]
+        },
+        {
+          "geom_id": 58,
+          "geom_name": "robot0_link6_collision",
+          "type": "mesh",
+          "size": [
+            9e-05,
+            0.00501,
+            0.00501
+          ],
+          "pos": [
+            0.08805,
+            0.07681,
+            -1e-05
+          ],
+          "quat": [
+            0.76613,
+            0.0,
+            0.0,
+            0.64269
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.13879,
+            -0.07467,
+            0.79813
+          ],
+          "world_xmat": [
+            0.1656,
+            -0.9702,
+            -0.1771,
+            -0.0589,
+            0.1695,
+            -0.9838,
+            0.9844,
+            0.1734,
+            -0.0291
+          ]
+        },
+        {
+          "geom_id": 59,
+          "geom_name": "robot0_g42_vis",
+          "type": "mesh",
+          "size": [
+            0.00034,
+            0.00144,
+            0.00171
+          ],
+          "pos": [
+            0.0883,
+            0.07749,
+            -0.02487
+          ],
+          "quat": [
+            0.70711,
+            0.0,
+            0.0,
+            0.70711
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.14343,
+            -0.05028,
+            0.79954
+          ],
+          "world_xmat": [
+            -0.0056,
+            -0.9842,
+            -0.1771,
+            -0.0286,
+            0.1772,
+            -0.9838,
+            0.9996,
+            -0.0005,
+            -0.0291
+          ]
+        },
+        {
+          "geom_id": 60,
+          "geom_name": "robot0_g43_vis",
+          "type": "mesh",
+          "size": [
+            0.00053,
+            0.00161,
+            0.00162
+          ],
+          "pos": [
+            0.08817,
+            0.07746,
+            0.02503
+          ],
+          "quat": [
+            0.70711,
+            0.0,
+            0.0,
+            0.70711
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.13447,
+            -0.09935,
+            0.79805
+          ],
+          "world_xmat": [
+            -0.0056,
+            -0.9842,
+            -0.1771,
+            -0.0286,
+            0.1772,
+            -0.9838,
+            0.9996,
+            -0.0005,
+            -0.0291
+          ]
+        },
+        {
+          "geom_id": 61,
+          "geom_name": "robot0_g44_vis",
+          "type": "mesh",
+          "size": [
+            0.01203,
+            0.04326,
+            0.05625
+          ],
+          "pos": [
+            0.00741,
+            0.00012,
+            0.04372
+          ],
+          "quat": [
+            -0.00316,
+            0.67098,
+            0.00478,
+            0.74146
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.05211,
+            -0.10122,
+            0.72017
+          ],
+          "world_xmat": [
+            -0.2742,
+            0.0161,
+            0.9615,
+            -0.9613,
+            0.0238,
+            -0.2745,
+            -0.0273,
+            -0.9996,
+            0.0089
+          ]
+        },
+        {
+          "geom_id": 62,
+          "geom_name": "robot0_g45_vis",
+          "type": "mesh",
+          "size": [
+            0.00444,
+            0.03408,
+            0.03587
+          ],
+          "pos": [
+            0.08955,
+            0.0742,
+            -3e-05
+          ],
+          "quat": [
+            0.559,
+            0.54475,
+            0.4363,
+            0.44766
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.14027,
+            -0.07485,
+            0.79553
+          ],
+          "world_xmat": [
+            0.2095,
+            -0.2018,
+            0.9568,
+            -0.0665,
+            -0.9791,
+            -0.1919,
+            0.9755,
+            -0.0234,
+            -0.2186
+          ]
+        },
+        {
+          "geom_id": 63,
+          "geom_name": "robot0_g46_vis",
+          "type": "mesh",
+          "size": [
+            0.04701,
+            0.07669,
+            0.10708
+          ],
+          "pos": [
+            0.0584,
+            0.00352,
+            0.00837
+          ],
+          "quat": [
+            0.02217,
+            0.79144,
+            0.01211,
+            0.61073
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.10853,
+            -0.07557,
+            0.72462
+          ],
+          "world_xmat": [
+            0.0784,
+            -0.011,
+            0.9969,
+            -0.9968,
+            -0.0191,
+            0.0781,
+            0.0182,
+            -0.9998,
+            -0.0125
+          ]
+        },
+        {
+          "geom_id": 64,
+          "geom_name": "robot0_g47_vis",
+          "type": "mesh",
+          "size": [
+            0.04744,
+            0.07281,
+            0.10055
+          ],
+          "pos": [
+            0.051,
+            0.00693,
+            0.00617
+          ],
+          "quat": [
+            -0.04608,
+            0.75436,
+            0.04449,
+            0.65333
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.10162,
+            -0.07219,
+            0.72809
+          ],
+          "world_xmat": [
+            -0.0352,
+            0.1329,
+            0.9905,
+            -0.9991,
+            0.017,
+            -0.0378,
+            -0.0218,
+            -0.991,
+            0.1322
+          ]
+        }
+      ]
+    },
+    "mug": {
+      "red_coffee_mug_obstacle_1_main": [
+        {
+          "geom_id": 201,
+          "geom_name": "red_coffee_mug_obstacle_1_g6",
+          "type": "mesh",
+          "size": [
+            0.04567,
+            0.0731,
+            0.07458
+          ],
+          "pos": [
+            -0.01326,
+            -0.00046,
+            0.06403
+          ],
+          "quat": [
+            0.69485,
+            0.04032,
+            0.03985,
+            0.71692
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.02045,
+            -0.1132,
+            0.57849
+          ],
+          "world_xmat": [
+            -0.9995,
+            0.0312,
+            -0.0011,
+            -0.0311,
+            -0.9931,
+            0.1132,
+            0.0024,
+            0.1132,
+            0.9936
+          ]
+        },
+        {
+          "geom_id": 202,
+          "geom_name": "red_coffee_mug_obstacle_1_g7",
+          "type": "box",
+          "size": [
+            0.00251,
+            0.02354,
+            0.02686
+          ],
+          "pos": [
+            -0.01531,
+            -0.00301,
+            0.00526
+          ],
+          "quat": [
+            0.70711,
+            0.0,
+            0.70711,
+            0.0
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.023,
+            -0.11526,
+            0.51973
+          ],
+          "world_xmat": [
+            -0.0,
+            -1.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            1.0,
+            -1.0,
+            0.0,
+            -0.0
+          ]
+        },
+        {
+          "geom_id": 203,
+          "geom_name": "red_coffee_mug_obstacle_1_g8",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            0.00784,
+            -0.01707,
+            0.0645
+          ],
+          "quat": [
+            0.01829,
+            -0.94542,
+            0.32085,
+            0.05388
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.03706,
+            -0.09211,
+            0.57897
+          ],
+          "world_xmat": [
+            0.6047,
+            0.7934,
+            -0.0692,
+            0.7883,
+            -0.6086,
+            -0.0901,
+            -0.1136,
+            -0.0,
+            -0.9935
+          ]
+        },
+        {
+          "geom_id": 204,
+          "geom_name": "red_coffee_mug_obstacle_1_g9",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            -0.01551,
+            -0.03478,
+            0.0645
+          ],
+          "quat": [
+            0.04024,
+            -0.70596,
+            -0.70596,
+            -0.04024
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.05477,
+            -0.11546,
+            0.57897
+          ],
+          "world_xmat": [
+            -0.9935,
+            -0.0,
+            -0.1136,
+            -0.0,
+            1.0,
+            -0.0,
+            0.1136,
+            -0.0,
+            -0.9935
+          ]
+        },
+        {
+          "geom_id": 205,
+          "geom_name": "red_coffee_mug_obstacle_1_g10",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            0.01023,
+            0.00559,
+            0.0645
+          ],
+          "quat": [
+            0.98871,
+            -0.0079,
+            0.05635,
+            0.13863
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.0144,
+            -0.08972,
+            0.57897
+          ],
+          "world_xmat": [
+            -0.2732,
+            -0.9614,
+            -0.0312,
+            0.9552,
+            -0.275,
+            0.1092,
+            -0.1136,
+            0.0,
+            0.9935
+          ]
+        },
+        {
+          "geom_id": 206,
+          "geom_name": "red_coffee_mug_obstacle_1_g11",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            -0.00677,
+            0.02828,
+            0.0645
+          ],
+          "quat": [
+            0.80894,
+            -0.03335,
+            0.0461,
+            0.58513
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            -0.00829,
+            -0.10672,
+            0.57897
+          ],
+          "world_xmat": [
+            -0.9436,
+            -0.313,
+            -0.1079,
+            0.311,
+            -0.9497,
+            0.0356,
+            -0.1136,
+            -0.0,
+            0.9935
+          ]
+        },
+        {
+          "geom_id": 207,
+          "geom_name": "yellow_book_obstacle_1_g0",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            -0.03366,
+            0.02452,
+            0.0645
+          ],
+          "quat": [
+            0.05122,
+            0.43474,
+            0.89876,
+            -0.02478
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            -0.00453,
+            -0.13361,
+            0.57897
+          ],
+          "world_xmat": [
+            -0.7789,
+            -0.6208,
+            0.0891,
+            -0.6168,
+            0.784,
+            0.0705,
+            -0.1136,
+            -0.0,
+            -0.9935
+          ]
+        },
+        {
+          "geom_id": 208,
+          "geom_name": "yellow_book_obstacle_1_g1",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            -0.04726,
+            -0.00246,
+            0.0645
+          ],
+          "quat": [
+            0.05689,
+            -0.02366,
+            0.9981,
+            0.00135
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.02245,
+            -0.14721,
+            0.57897
+          ],
+          "world_xmat": [
+            0.0471,
+            -0.9989,
+            -0.0054,
+            -0.9924,
+            -0.0474,
+            0.1135,
+            -0.1136,
+            0.0,
+            -0.9935
+          ]
+        },
+        {
+          "geom_id": 209,
+          "geom_name": "box_small_base_1_g0",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            -0.03828,
+            -0.02489,
+            0.0645
+          ],
+          "quat": [
+            0.38651,
+            0.05247,
+            0.02203,
+            -0.92053
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.04488,
+            -0.13823,
+            0.57897
+          ],
+          "world_xmat": [
+            0.7093,
+            0.7002,
+            0.0811,
+            -0.6957,
+            0.7139,
+            -0.0796,
+            -0.1136,
+            0.0,
+            0.9935
+          ]
+        },
+        {
+          "geom_id": 210,
+          "geom_name": "box_small_base_1_g1",
+          "type": "box",
+          "size": [
+            0.00292,
+            0.00757,
+            0.03425
+          ],
+          "pos": [
+            0.03685,
+            0.00109,
+            0.05041
+          ],
+          "quat": [
+            0.93181,
+            -0.0,
+            0.36295,
+            -0.0
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.0189,
+            -0.0631,
+            0.56488
+          ],
+          "world_xmat": [
+            -0.0,
+            -1.0,
+            -0.0,
+            0.7365,
+            -0.0,
+            0.6764,
+            -0.6764,
+            0.0,
+            0.7365
+          ]
+        },
+        {
+          "geom_id": 211,
+          "geom_name": "box_small_base_1_g2",
+          "type": "box",
+          "size": [
+            0.00266,
+            0.00692,
+            0.01924
+          ],
+          "pos": [
+            0.05474,
+            0.00109,
+            0.09435
+          ],
+          "quat": [
+            0.99869,
+            0.0,
+            -0.05124,
+            0.0
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.0189,
+            -0.04521,
+            0.60882
+          ],
+          "world_xmat": [
+            -0.0,
+            -1.0,
+            0.0,
+            0.9947,
+            -0.0,
+            -0.1023,
+            0.1023,
+            0.0,
+            0.9947
+          ]
+        },
+        {
+          "geom_id": 212,
+          "geom_name": "box_small_base_1_g3",
+          "type": "box",
+          "size": [
+            0.00266,
+            0.00692,
+            0.01822
+          ],
+          "pos": [
+            0.03457,
+            0.00109,
+            0.11162
+          ],
+          "quat": [
+            0.75578,
+            -0.0,
+            0.65483,
+            -0.0
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.0189,
+            -0.06538,
+            0.62609
+          ],
+          "world_xmat": [
+            -0.0,
+            -1.0,
+            -0.0,
+            0.1424,
+            -0.0,
+            0.9898,
+            -0.9898,
+            0.0,
+            0.1424
+          ]
+        }
+      ]
+    },
+    "contacts": [
+      {
+        "geom1": 8,
+        "geom2": 109,
+        "body1": "floor",
+        "body2": "tomato_sauce_1_main",
+        "name1": "floor",
+        "name2": "tomato_sauce_1_g9",
+        "dist": -2.616023374604759e-06,
+        "pos": [
+          -10.10879,
+          -0.2455,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 114,
+        "body1": "floor",
+        "body2": "tomato_sauce_1_main",
+        "name1": "floor",
+        "name2": "tomato_sauce_1_g14",
+        "dist": -1.2751219630000032e-05,
+        "pos": [
+          -10.10454,
+          -0.25599,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 123,
+        "body1": "floor",
+        "body2": "tomato_sauce_1_main",
+        "name1": "floor",
+        "name2": "tomato_sauce_1_g23",
+        "dist": -2.052135994109333e-05,
+        "pos": [
+          -10.16247,
+          -0.26317,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 123,
+        "body1": "floor",
+        "body2": "tomato_sauce_1_main",
+        "name1": "floor",
+        "name2": "tomato_sauce_1_g23",
+        "dist": -1.1303153968890423e-05,
+        "pos": [
+          -10.16043,
+          -0.2769,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 124,
+        "body1": "floor",
+        "body2": "tomato_sauce_1_main",
+        "name1": "floor",
+        "name2": "tomato_sauce_1_g24",
+        "dist": -1.089724234080297e-05,
+        "pos": [
+          -10.10458,
+          -0.25699,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 152,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g8",
+        "dist": -2.183097570690462e-06,
+        "pos": [
+          -10.025,
+          -0.02469,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 152,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g8",
+        "dist": -2.193444198300698e-06,
+        "pos": [
+          -9.975,
+          -0.02469,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 152,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g8",
+        "dist": -1.952674068494975e-06,
+        "pos": [
+          -10.025,
+          0.02531,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 152,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g8",
+        "dist": -1.963020696105211e-06,
+        "pos": [
+          -9.975,
+          0.02531,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 153,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g9",
+        "dist": -1.935415960538367e-06,
+        "pos": [
+          -9.975,
+          0.0313,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 153,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g9",
+        "dist": -1.981961507982466e-06,
+        "pos": [
+          -9.975,
+          0.0212,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 153,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g9",
+        "dist": -1.925069332928131e-06,
+        "pos": [
+          -10.025,
+          0.0313,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 153,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g9",
+        "dist": -1.97161488037223e-06,
+        "pos": [
+          -10.025,
+          0.0212,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 154,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g10",
+        "dist": -2.191139963289568e-06,
+        "pos": [
+          -9.975,
+          -0.02419,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 154,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g10",
+        "dist": -2.237685510733667e-06,
+        "pos": [
+          -9.975,
+          -0.03429,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 154,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g10",
+        "dist": -2.180793335679332e-06,
+        "pos": [
+          -10.025,
+          -0.02419,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 154,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g10",
+        "dist": -2.227338883123431e-06,
+        "pos": [
+          -10.025,
+          -0.03429,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 155,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g11",
+        "dist": -2.056533453614895e-06,
+        "pos": [
+          -10.04059,
+          0.00207,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 155,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g11",
+        "dist": -2.043427135098308e-06,
+        "pos": [
+          -10.03282,
+          0.00527,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 155,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g11",
+        "dist": -2.2057852501894404e-06,
+        "pos": [
+          -10.02752,
+          -0.02973,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 155,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g11",
+        "dist": -2.1926789316728534e-06,
+        "pos": [
+          -10.01975,
+          -0.02653,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 156,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g12",
+        "dist": -2.0825464387835835e-06,
+        "pos": [
+          -9.96024,
+          4e-05,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 156,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g12",
+        "dist": -2.0956527573001704e-06,
+        "pos": [
+          -9.96801,
+          -0.00316,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 156,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g12",
+        "dist": -1.933294642209038e-06,
+        "pos": [
+          -9.97331,
+          0.03184,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 156,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g12",
+        "dist": -1.946400960725625e-06,
+        "pos": [
+          -9.98108,
+          0.02864,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 157,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g13",
+        "dist": -2.081306576709463e-06,
+        "pos": [
+          -10.03328,
+          -0.00297,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 157,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g13",
+        "dist": -2.0629802039984213e-06,
+        "pos": [
+          -10.04085,
+          0.00066,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 157,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g13",
+        "dist": -1.9415657089849603e-06,
+        "pos": [
+          -10.01839,
+          0.02802,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 157,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g13",
+        "dist": -1.9232393362739186e-06,
+        "pos": [
+          -10.02597,
+          0.03165,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 158,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g14",
+        "dist": -2.2277059676667488e-06,
+        "pos": [
+          -9.97432,
+          -0.03209,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 158,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g14",
+        "dist": -2.209379594955707e-06,
+        "pos": [
+          -9.98189,
+          -0.02846,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 158,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g14",
+        "dist": -2.087965099942246e-06,
+        "pos": [
+          -9.95943,
+          -0.0011,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 158,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g14",
+        "dist": -2.0696387272312045e-06,
+        "pos": [
+          -9.96701,
+          0.00253,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 168,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g2",
+        "dist": -3.631424919887938e-06,
+        "pos": [
+          10.07049,
+          -0.13719,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 168,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g2",
+        "dist": -3.631424919887938e-06,
+        "pos": [
+          10.05791,
+          -0.13719,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 168,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g2",
+        "dist": -3.6314249197630377e-06,
+        "pos": [
+          10.07049,
+          -0.00619,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 168,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g2",
+        "dist": -3.6314249197630377e-06,
+        "pos": [
+          10.05791,
+          -0.00619,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 169,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g3",
+        "dist": -3.63142491987406e-06,
+        "pos": [
+          9.93527,
+          -0.14235,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 169,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g3",
+        "dist": -3.6314249198601822e-06,
+        "pos": [
+          9.93517,
+          -0.12977,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 169,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g3",
+        "dist": -3.6314249198601822e-06,
+        "pos": [
+          10.06627,
+          -0.14131,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 169,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g3",
+        "dist": -3.6314249198463044e-06,
+        "pos": [
+          10.06617,
+          -0.12873,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 170,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g4",
+        "dist": -3.631424919756099e-06,
+        "pos": [
+          9.93527,
+          -0.01577,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 170,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g4",
+        "dist": -3.631424919742221e-06,
+        "pos": [
+          9.93517,
+          -0.00319,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 170,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g4",
+        "dist": -3.631424919742221e-06,
+        "pos": [
+          10.06627,
+          -0.01473,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 170,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g4",
+        "dist": -3.6314249197283432e-06,
+        "pos": [
+          10.06617,
+          -0.00215,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 171,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g0",
+        "dist": -3.63142491987406e-06,
+        "pos": [
+          9.94237,
+          -0.13719,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 171,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g0",
+        "dist": -3.63142491987406e-06,
+        "pos": [
+          9.92979,
+          -0.13719,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 171,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g0",
+        "dist": -3.63142491974916e-06,
+        "pos": [
+          9.94237,
+          -0.00619,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 171,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g0",
+        "dist": -3.63142491974916e-06,
+        "pos": [
+          9.92979,
+          -0.00619,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 173,
+        "body1": "floor",
+        "body2": "milk_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g2",
+        "dist": -1.4529813246198786e-05,
+        "pos": [
+          19.97413,
+          0.02625,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 173,
+        "body1": "floor",
+        "body2": "milk_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g2",
+        "dist": -1.4513196307623655e-05,
+        "pos": [
+          20.02663,
+          0.02625,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 173,
+        "body1": "floor",
+        "body2": "milk_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g2",
+        "dist": -1.4531966469603919e-05,
+        "pos": [
+          19.97413,
+          -0.02625,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 173,
+        "body1": "floor",
+        "body2": "milk_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g2",
+        "dist": -1.4515349531028787e-05,
+        "pos": [
+          20.02663,
+          -0.02625,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 180,
+        "body1": "floor",
+        "body2": "wine_bottle_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g9",
+        "dist": -1.4697416236622574e-05,
+        "pos": [
+          -0.01503,
+          10.01503,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 180,
+        "body1": "floor",
+        "body2": "wine_bottle_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g9",
+        "dist": -1.4324426280638847e-05,
+        "pos": [
+          -0.01503,
+          9.98497,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 180,
+        "body1": "floor",
+        "body2": "wine_bottle_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g9",
+        "dist": -1.4720733199725944e-05,
+        "pos": [
+          0.01503,
+          10.01503,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 180,
+        "body1": "floor",
+        "body2": "wine_bottle_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g9",
+        "dist": -1.4347743243742217e-05,
+        "pos": [
+          0.01503,
+          9.98497,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 214,
+        "body1": "floor",
+        "body2": "yellow_book_obstacle_1_main",
+        "name1": "floor",
+        "name2": "geom214",
+        "dist": -1.4522581391882006e-05,
+        "pos": [
+          -19.98613,
+          -0.06734,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 214,
+        "body1": "floor",
+        "body2": "yellow_book_obstacle_1_main",
+        "name1": "floor",
+        "name2": "geom214",
+        "dist": -1.4522581391882006e-05,
+        "pos": [
+          -20.01481,
+          -0.06734,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 214,
+        "body1": "floor",
+        "body2": "yellow_book_obstacle_1_main",
+        "name1": "floor",
+        "name2": "geom214",
+        "dist": -1.4522581391882006e-05,
+        "pos": [
+          -19.98613,
+          0.04304,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 214,
+        "body1": "floor",
+        "body2": "yellow_book_obstacle_1_main",
+        "name1": "floor",
+        "name2": "geom214",
+        "dist": -1.4522581391882006e-05,
+        "pos": [
+          -20.01481,
+          0.04304,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 90,
+        "body1": "living_room_table_col",
+        "body2": "alphabet_soup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "alphabet_soup_1_g14",
+        "dist": -1.429593832064091e-07,
+        "pos": [
+          0.16369,
+          -0.05395,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 99,
+        "body1": "living_room_table_col",
+        "body2": "alphabet_soup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "cream_cheese_1_g1",
+        "dist": -1.2554365612371665e-07,
+        "pos": [
+          0.10626,
+          -0.06254,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 99,
+        "body1": "living_room_table_col",
+        "body2": "alphabet_soup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "cream_cheese_1_g1",
+        "dist": -4.541696098973381e-08,
+        "pos": [
+          0.10829,
+          -0.07627,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 105,
+        "body1": "living_room_table_col",
+        "body2": "cream_cheese_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "tomato_sauce_1_g5",
+        "dist": -7.848000008713052e-08,
+        "pos": [
+          -0.1846,
+          0.0829,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 105,
+        "body1": "living_room_table_col",
+        "body2": "cream_cheese_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "tomato_sauce_1_g5",
+        "dist": -7.848000008713052e-08,
+        "pos": [
+          -0.10338,
+          0.0829,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 105,
+        "body1": "living_room_table_col",
+        "body2": "cream_cheese_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "tomato_sauce_1_g5",
+        "dist": -7.848000008713052e-08,
+        "pos": [
+          -0.1846,
+          0.04023,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 105,
+        "body1": "living_room_table_col",
+        "body2": "cream_cheese_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "tomato_sauce_1_g5",
+        "dist": -7.848000008713052e-08,
+        "pos": [
+          -0.10338,
+          0.04023,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 132,
+        "body1": "living_room_table_col",
+        "body2": "ketchup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "ketchup_1_g7",
+        "dist": -7.861261572261746e-08,
+        "pos": [
+          -0.20954,
+          -0.15266,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 132,
+        "body1": "living_room_table_col",
+        "body2": "ketchup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "ketchup_1_g7",
+        "dist": -7.852123133566229e-08,
+        "pos": [
+          -0.17564,
+          -0.15266,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 132,
+        "body1": "living_room_table_col",
+        "body2": "ketchup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "ketchup_1_g7",
+        "dist": -7.843876903097155e-08,
+        "pos": [
+          -0.20954,
+          -0.09644,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 132,
+        "body1": "living_room_table_col",
+        "body2": "ketchup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "ketchup_1_g7",
+        "dist": -7.834738464401638e-08,
+        "pos": [
+          -0.17564,
+          -0.09644,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 145,
+        "body1": "living_room_table_col",
+        "body2": "basket_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "moka_pot_small_obstacle_1_g1",
+        "dist": -7.961987883728483e-08,
+        "pos": [
+          -0.07359,
+          0.19234,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 145,
+        "body1": "living_room_table_col",
+        "body2": "basket_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "moka_pot_small_obstacle_1_g1",
+        "dist": -7.940827568492904e-08,
+        "pos": [
+          0.07121,
+          0.19234,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 145,
+        "body1": "living_room_table_col",
+        "body2": "basket_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "moka_pot_small_obstacle_1_g1",
+        "dist": -7.755172450147507e-08,
+        "pos": [
+          -0.07359,
+          0.3455,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 145,
+        "body1": "living_room_table_col",
+        "body2": "basket_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "moka_pot_small_obstacle_1_g1",
+        "dist": -7.734012134911927e-08,
+        "pos": [
+          0.07121,
+          0.3455,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 218,
+        "body1": "living_room_table_col",
+        "body2": "box_small_base_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "geom218",
+        "dist": -1.5662957835338712e-07,
+        "pos": [
+          0.05342,
+          -0.1583,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 218,
+        "body1": "living_room_table_col",
+        "body2": "box_small_base_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "geom218",
+        "dist": -1.2542024385492878e-07,
+        "pos": [
+          0.05342,
+          -0.0417,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 218,
+        "body1": "living_room_table_col",
+        "body2": "box_small_base_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "geom218",
+        "dist": -1.5142456459006798e-07,
+        "pos": [
+          -0.01208,
+          -0.1583,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 218,
+        "body1": "living_room_table_col",
+        "body2": "box_small_base_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "geom218",
+        "dist": -1.2021523009160964e-07,
+        "pos": [
+          -0.01208,
+          -0.0417,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 203,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "red_coffee_mug_obstacle_1_g8",
+        "name2": "geom217",
+        "dist": -1.485494768790896e-07,
+        "pos": [
+          0.05097,
+          -0.10789,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 204,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "red_coffee_mug_obstacle_1_g9",
+        "name2": "geom217",
+        "dist": -2.8623559737706028e-08,
+        "pos": [
+          0.05071,
+          -0.09482,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 204,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "red_coffee_mug_obstacle_1_g9",
+        "name2": "geom217",
+        "dist": -1.724121421133846e-08,
+        "pos": [
+          0.05071,
+          -0.1361,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 205,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "red_coffee_mug_obstacle_1_g10",
+        "name2": "geom217",
+        "dist": -6.562833221313014e-08,
+        "pos": [
+          0.03536,
+          -0.08794,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 206,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "red_coffee_mug_obstacle_1_g11",
+        "name2": "geom217",
+        "dist": -7.774622746981041e-08,
+        "pos": [
+          -0.0109,
+          -0.12759,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 207,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "yellow_book_obstacle_1_g0",
+        "name2": "geom217",
+        "dist": -1.4238446503656872e-07,
+        "pos": [
+          -0.01258,
+          -0.11691,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 208,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "yellow_book_obstacle_1_g1",
+        "name2": "geom217",
+        "dist": -4.604211933240121e-08,
+        "pos": [
+          0.04287,
+          -0.14218,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 209,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "box_small_base_1_g0",
+        "name2": "geom217",
+        "dist": -1.246574493783222e-08,
+        "pos": [
+          0.05292,
+          -0.12424,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 209,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "box_small_base_1_g0",
+        "name2": "geom217",
+        "dist": -1.5008477502465034e-08,
+        "pos": [
+          0.02753,
+          -0.15012,
+          0.51263
+        ]
+      }
+    ]
+  },
+  "59": {
+    "link6": {
+      "robot0_link6": [
+        {
+          "geom_id": 47,
+          "geom_name": "robot0_g31_vis",
+          "type": "mesh",
+          "size": [
+            0.04231,
+            0.04906,
+            0.10797
+          ],
+          "pos": [
+            0.02539,
+            -0.01552,
+            -0.00514
+          ],
+          "quat": [
+            0.18717,
+            0.66653,
+            -0.17158,
+            0.7009
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.07229,
+            -0.05617,
+            0.6811
+          ],
+          "world_xmat": [
+            -0.2258,
+            -0.4859,
+            0.8443,
+            -0.9742,
+            0.1077,
+            -0.1985,
+            0.0056,
+            -0.8673,
+            -0.4977
+          ]
+        },
+        {
+          "geom_id": 48,
+          "geom_name": "robot0_g32_vis",
+          "type": "mesh",
+          "size": [
+            0.00042,
+            0.01071,
+            0.01328
+          ],
+          "pos": [
+            0.0001,
+            0.00149,
+            0.05297
+          ],
+          "quat": [
+            0.52029,
+            0.42259,
+            -0.57623,
+            0.46762
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.0367,
+            -0.10906,
+            0.69664
+          ],
+          "world_xmat": [
+            -0.2841,
+            -0.9379,
+            -0.1988,
+            -0.9584,
+            0.2718,
+            0.0874,
+            -0.0279,
+            0.2154,
+            -0.9761
+          ]
+        },
+        {
+          "geom_id": 49,
+          "geom_name": "robot0_g33_vis",
+          "type": "mesh",
+          "size": [
+            0.00254,
+            0.03769,
+            0.05079
+          ],
+          "pos": [
+            0.10335,
+            0.06819,
+            -0.00058
+          ],
+          "quat": [
+            0.59164,
+            0.51259,
+            0.40266,
+            0.47442
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.14822,
+            -0.07754,
+            0.76408
+          ],
+          "world_xmat": [
+            0.2217,
+            -0.3293,
+            0.9178,
+            -0.08,
+            -0.9442,
+            -0.3194,
+            0.9718,
+            -0.0027,
+            -0.2357
+          ]
+        },
+        {
+          "geom_id": 50,
+          "geom_name": "robot0_g34_vis",
+          "type": "mesh",
+          "size": [
+            0.00067,
+            0.00106,
+            0.0022
+          ],
+          "pos": [
+            0.08821,
+            0.07773,
+            -0.0106
+          ],
+          "quat": [
+            0.70711,
+            0.0,
+            0.0,
+            0.70711
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.13522,
+            -0.06517,
+            0.774
+          ],
+          "world_xmat": [
+            0.0019,
+            -0.9827,
+            -0.1854,
+            -0.0293,
+            0.1853,
+            -0.9822,
+            0.9996,
+            0.0073,
+            -0.0284
+          ]
+        },
+        {
+          "geom_id": 51,
+          "geom_name": "robot0_g35_vis",
+          "type": "mesh",
+          "size": [
+            0.00042,
+            0.001,
+            0.0022
+          ],
+          "pos": [
+            0.09867,
+            0.07588,
+            -0.0
+          ],
+          "quat": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.14353,
+            -0.07747,
+            0.77178
+          ],
+          "world_xmat": [
+            0.0019,
+            -0.1854,
+            0.9827,
+            -0.0293,
+            -0.9822,
+            -0.1853,
+            0.9996,
+            -0.0284,
+            -0.0073
+          ]
+        },
+        {
+          "geom_id": 52,
+          "geom_name": "robot0_g36_vis",
+          "type": "mesh",
+          "size": [
+            0.00067,
+            0.00107,
+            0.00218
+          ],
+          "pos": [
+            0.0882,
+            0.07773,
+            0.01062
+          ],
+          "quat": [
+            0.70711,
+            0.0,
+            0.0,
+            0.70711
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.13128,
+            -0.08602,
+            0.7734
+          ],
+          "world_xmat": [
+            0.0019,
+            -0.9827,
+            -0.1854,
+            -0.0293,
+            0.1853,
+            -0.9822,
+            0.9996,
+            0.0073,
+            -0.0284
+          ]
+        },
+        {
+          "geom_id": 53,
+          "geom_name": "robot0_g37_vis",
+          "type": "mesh",
+          "size": [
+            0.00094,
+            0.001,
+            0.00217
+          ],
+          "pos": [
+            0.07776,
+            0.07957,
+            -0.0
+          ],
+          "quat": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.12299,
+            -0.0737,
+            0.77562
+          ],
+          "world_xmat": [
+            0.0019,
+            -0.1854,
+            0.9827,
+            -0.0293,
+            -0.9822,
+            -0.1853,
+            0.9996,
+            -0.0284,
+            -0.0073
+          ]
+        },
+        {
+          "geom_id": 54,
+          "geom_name": "robot0_g38_vis",
+          "type": "mesh",
+          "size": [
+            6e-05,
+            0.00135,
+            0.00142
+          ],
+          "pos": [
+            0.06339,
+            0.08161,
+            -0.0
+          ],
+          "quat": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.10887,
+            -0.0711,
+            0.77776
+          ],
+          "world_xmat": [
+            0.0019,
+            -0.1854,
+            0.9827,
+            -0.0293,
+            -0.9822,
+            -0.1853,
+            0.9996,
+            -0.0284,
+            -0.0073
+          ]
+        },
+        {
+          "geom_id": 55,
+          "geom_name": "robot0_g39_vis",
+          "type": "mesh",
+          "size": [
+            0.00099,
+            0.00165,
+            0.00151
+          ],
+          "pos": [
+            0.11444,
+            0.07094,
+            -0.0
+          ],
+          "quat": [
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.15901,
+            -0.08025,
+            0.76672
+          ],
+          "world_xmat": [
+            0.0019,
+            -0.1854,
+            0.9827,
+            -0.0293,
+            -0.9822,
+            -0.1853,
+            0.9996,
+            -0.0284,
+            -0.0073
+          ]
+        },
+        {
+          "geom_id": 56,
+          "geom_name": "robot0_g40_vis",
+          "type": "mesh",
+          "size": [
+            0.00039,
+            0.01643,
+            0.01711
+          ],
+          "pos": [
+            -0.00073,
+            -0.0001,
+            0.05254
+          ],
+          "quat": [
+            0.00417,
+            0.67018,
+            -0.00462,
+            0.74217
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.03597,
+            -0.10843,
+            0.69507
+          ],
+          "world_xmat": [
+            -0.2844,
+            -0.0139,
+            0.9586,
+            -0.9583,
+            0.0328,
+            -0.2838,
+            -0.0275,
+            -0.9994,
+            -0.0226
+          ]
+        },
+        {
+          "geom_id": 57,
+          "geom_name": "robot0_g41_vis",
+          "type": "mesh",
+          "size": [
+            0.00505,
+            0.03011,
+            0.03359
+          ],
+          "pos": [
+            0.09153,
+            0.07575,
+            -6e-05
+          ],
+          "quat": [
+            0.54321,
+            0.56005,
+            0.44874,
+            0.43577
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.13652,
+            -0.07608,
+            0.77171
+          ],
+          "world_xmat": [
+            0.2155,
+            -0.1567,
+            0.9639,
+            -0.0694,
+            -0.987,
+            -0.1449,
+            0.974,
+            -0.0357,
+            -0.2236
+          ]
+        },
+        {
+          "geom_id": 58,
+          "geom_name": "robot0_link6_collision",
+          "type": "mesh",
+          "size": [
+            9e-05,
+            0.00501,
+            0.00501
+          ],
+          "pos": [
+            0.08805,
+            0.07681,
+            -1e-05
+          ],
+          "quat": [
+            0.76613,
+            0.0,
+            0.0,
+            0.64269
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.1331,
+            -0.07552,
+            0.77278
+          ],
+          "world_xmat": [
+            0.1728,
+            -0.9673,
+            -0.1854,
+            -0.061,
+            0.1774,
+            -0.9822,
+            0.9831,
+            0.181,
+            -0.0284
+          ]
+        },
+        {
+          "geom_id": 59,
+          "geom_name": "robot0_g42_vis",
+          "type": "mesh",
+          "size": [
+            0.00034,
+            0.00144,
+            0.00171
+          ],
+          "pos": [
+            0.0883,
+            0.07749,
+            -0.02487
+          ],
+          "quat": [
+            0.70711,
+            0.0,
+            0.0,
+            0.70711
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.13796,
+            -0.05117,
+            0.77417
+          ],
+          "world_xmat": [
+            0.0019,
+            -0.9827,
+            -0.1854,
+            -0.0293,
+            0.1853,
+            -0.9822,
+            0.9996,
+            0.0073,
+            -0.0284
+          ]
+        },
+        {
+          "geom_id": 60,
+          "geom_name": "robot0_g43_vis",
+          "type": "mesh",
+          "size": [
+            0.00053,
+            0.00161,
+            0.00162
+          ],
+          "pos": [
+            0.08817,
+            0.07746,
+            0.02503
+          ],
+          "quat": [
+            0.70711,
+            0.0,
+            0.0,
+            0.70711
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.12857,
+            -0.10016,
+            0.77272
+          ],
+          "world_xmat": [
+            0.0019,
+            -0.9827,
+            -0.1854,
+            -0.0293,
+            0.1853,
+            -0.9822,
+            0.9996,
+            0.0073,
+            -0.0284
+          ]
+        },
+        {
+          "geom_id": 61,
+          "geom_name": "robot0_g44_vis",
+          "type": "mesh",
+          "size": [
+            0.01203,
+            0.04326,
+            0.05625
+          ],
+          "pos": [
+            0.00741,
+            0.00012,
+            0.04372
+          ],
+          "quat": [
+            -0.00316,
+            0.67098,
+            0.00478,
+            0.74146
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.0456,
+            -0.10129,
+            0.69548
+          ],
+          "world_xmat": [
+            -0.2823,
+            0.0085,
+            0.9593,
+            -0.959,
+            0.0244,
+            -0.2825,
+            -0.0258,
+            -0.9997,
+            0.0012
+          ]
+        },
+        {
+          "geom_id": 62,
+          "geom_name": "robot0_g45_vis",
+          "type": "mesh",
+          "size": [
+            0.00444,
+            0.03408,
+            0.03587
+          ],
+          "pos": [
+            0.08955,
+            0.0742,
+            -3e-05
+          ],
+          "quat": [
+            0.559,
+            0.54475,
+            0.4363,
+            0.44766
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.13456,
+            -0.0757,
+            0.77017
+          ],
+          "world_xmat": [
+            0.2166,
+            -0.2101,
+            0.9534,
+            -0.069,
+            -0.9774,
+            -0.1997,
+            0.9738,
+            -0.0225,
+            -0.2262
+          ]
+        },
+        {
+          "geom_id": 63,
+          "geom_name": "robot0_g46_vis",
+          "type": "mesh",
+          "size": [
+            0.04701,
+            0.07669,
+            0.10708
+          ],
+          "pos": [
+            0.0584,
+            0.00352,
+            0.00837
+          ],
+          "quat": [
+            0.02217,
+            0.79144,
+            0.01211,
+            0.61073
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.10227,
+            -0.07611,
+            0.6995
+          ],
+          "world_xmat": [
+            0.0703,
+            -0.0189,
+            0.9973,
+            -0.9974,
+            -0.0183,
+            0.0699,
+            0.0169,
+            -0.9997,
+            -0.0202
+          ]
+        },
+        {
+          "geom_id": 64,
+          "geom_name": "robot0_g47_vis",
+          "type": "mesh",
+          "size": [
+            0.04744,
+            0.07281,
+            0.10055
+          ],
+          "pos": [
+            0.051,
+            0.00693,
+            0.00617
+          ],
+          "quat": [
+            -0.04608,
+            0.75436,
+            0.04449,
+            0.65333
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.09541,
+            -0.07268,
+            0.70303
+          ],
+          "world_xmat": [
+            -0.0436,
+            0.1253,
+            0.9912,
+            -0.9988,
+            0.0166,
+            -0.0461,
+            -0.0222,
+            -0.992,
+            0.1245
+          ]
+        }
+      ]
+    },
+    "mug": {
+      "red_coffee_mug_obstacle_1_main": [
+        {
+          "geom_id": 201,
+          "geom_name": "red_coffee_mug_obstacle_1_g6",
+          "type": "mesh",
+          "size": [
+            0.04567,
+            0.0731,
+            0.07458
+          ],
+          "pos": [
+            -0.01326,
+            -0.00046,
+            0.06403
+          ],
+          "quat": [
+            0.69485,
+            0.04032,
+            0.03985,
+            0.71692
+          ],
+          "contype": 0,
+          "conaffinity": 0,
+          "group": 1,
+          "is_collision": false,
+          "world_xpos": [
+            0.02045,
+            -0.1132,
+            0.57849
+          ],
+          "world_xmat": [
+            -0.9995,
+            0.0312,
+            -0.0011,
+            -0.0311,
+            -0.9931,
+            0.1132,
+            0.0024,
+            0.1132,
+            0.9936
+          ]
+        },
+        {
+          "geom_id": 202,
+          "geom_name": "red_coffee_mug_obstacle_1_g7",
+          "type": "box",
+          "size": [
+            0.00251,
+            0.02354,
+            0.02686
+          ],
+          "pos": [
+            -0.01531,
+            -0.00301,
+            0.00526
+          ],
+          "quat": [
+            0.70711,
+            0.0,
+            0.70711,
+            0.0
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.023,
+            -0.11526,
+            0.51973
+          ],
+          "world_xmat": [
+            -0.0,
+            -1.0,
+            -0.0,
+            -0.0,
+            -0.0,
+            1.0,
+            -1.0,
+            0.0,
+            -0.0
+          ]
+        },
+        {
+          "geom_id": 203,
+          "geom_name": "red_coffee_mug_obstacle_1_g8",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            0.00784,
+            -0.01707,
+            0.0645
+          ],
+          "quat": [
+            0.01829,
+            -0.94542,
+            0.32085,
+            0.05388
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.03706,
+            -0.09211,
+            0.57897
+          ],
+          "world_xmat": [
+            0.6047,
+            0.7934,
+            -0.0692,
+            0.7883,
+            -0.6086,
+            -0.0901,
+            -0.1136,
+            -0.0,
+            -0.9935
+          ]
+        },
+        {
+          "geom_id": 204,
+          "geom_name": "red_coffee_mug_obstacle_1_g9",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            -0.01551,
+            -0.03478,
+            0.0645
+          ],
+          "quat": [
+            0.04024,
+            -0.70596,
+            -0.70596,
+            -0.04024
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.05477,
+            -0.11546,
+            0.57897
+          ],
+          "world_xmat": [
+            -0.9935,
+            -0.0,
+            -0.1136,
+            -0.0,
+            1.0,
+            -0.0,
+            0.1136,
+            -0.0,
+            -0.9935
+          ]
+        },
+        {
+          "geom_id": 205,
+          "geom_name": "red_coffee_mug_obstacle_1_g10",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            0.01023,
+            0.00559,
+            0.0645
+          ],
+          "quat": [
+            0.98871,
+            -0.0079,
+            0.05635,
+            0.13863
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.0144,
+            -0.08972,
+            0.57897
+          ],
+          "world_xmat": [
+            -0.2732,
+            -0.9614,
+            -0.0312,
+            0.9552,
+            -0.275,
+            0.1092,
+            -0.1136,
+            0.0,
+            0.9935
+          ]
+        },
+        {
+          "geom_id": 206,
+          "geom_name": "red_coffee_mug_obstacle_1_g11",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            -0.00677,
+            0.02828,
+            0.0645
+          ],
+          "quat": [
+            0.80894,
+            -0.03335,
+            0.0461,
+            0.58513
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            -0.00829,
+            -0.10672,
+            0.57897
+          ],
+          "world_xmat": [
+            -0.9436,
+            -0.313,
+            -0.1079,
+            0.311,
+            -0.9497,
+            0.0356,
+            -0.1136,
+            -0.0,
+            0.9935
+          ]
+        },
+        {
+          "geom_id": 207,
+          "geom_name": "yellow_book_obstacle_1_g0",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            -0.03366,
+            0.02452,
+            0.0645
+          ],
+          "quat": [
+            0.05122,
+            0.43474,
+            0.89876,
+            -0.02478
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            -0.00453,
+            -0.13361,
+            0.57897
+          ],
+          "world_xmat": [
+            -0.7789,
+            -0.6208,
+            0.0891,
+            -0.6168,
+            0.784,
+            0.0705,
+            -0.1136,
+            -0.0,
+            -0.9935
+          ]
+        },
+        {
+          "geom_id": 208,
+          "geom_name": "yellow_book_obstacle_1_g1",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            -0.04726,
+            -0.00246,
+            0.0645
+          ],
+          "quat": [
+            0.05689,
+            -0.02366,
+            0.9981,
+            0.00135
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.02245,
+            -0.14721,
+            0.57897
+          ],
+          "world_xmat": [
+            0.0471,
+            -0.9989,
+            -0.0054,
+            -0.9924,
+            -0.0474,
+            0.1135,
+            -0.1136,
+            0.0,
+            -0.9935
+          ]
+        },
+        {
+          "geom_id": 209,
+          "geom_name": "box_small_base_1_g0",
+          "type": "box",
+          "size": [
+            0.00351,
+            0.02064,
+            0.06637
+          ],
+          "pos": [
+            -0.03828,
+            -0.02489,
+            0.0645
+          ],
+          "quat": [
+            0.38651,
+            0.05247,
+            0.02203,
+            -0.92053
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.04488,
+            -0.13823,
+            0.57897
+          ],
+          "world_xmat": [
+            0.7093,
+            0.7002,
+            0.0811,
+            -0.6957,
+            0.7139,
+            -0.0796,
+            -0.1136,
+            0.0,
+            0.9935
+          ]
+        },
+        {
+          "geom_id": 210,
+          "geom_name": "box_small_base_1_g1",
+          "type": "box",
+          "size": [
+            0.00292,
+            0.00757,
+            0.03425
+          ],
+          "pos": [
+            0.03685,
+            0.00109,
+            0.05041
+          ],
+          "quat": [
+            0.93181,
+            -0.0,
+            0.36295,
+            -0.0
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.0189,
+            -0.0631,
+            0.56488
+          ],
+          "world_xmat": [
+            -0.0,
+            -1.0,
+            -0.0,
+            0.7365,
+            -0.0,
+            0.6764,
+            -0.6764,
+            0.0,
+            0.7365
+          ]
+        },
+        {
+          "geom_id": 211,
+          "geom_name": "box_small_base_1_g2",
+          "type": "box",
+          "size": [
+            0.00266,
+            0.00692,
+            0.01924
+          ],
+          "pos": [
+            0.05474,
+            0.00109,
+            0.09435
+          ],
+          "quat": [
+            0.99869,
+            0.0,
+            -0.05124,
+            0.0
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.0189,
+            -0.04521,
+            0.60882
+          ],
+          "world_xmat": [
+            -0.0,
+            -1.0,
+            0.0,
+            0.9947,
+            -0.0,
+            -0.1023,
+            0.1023,
+            0.0,
+            0.9947
+          ]
+        },
+        {
+          "geom_id": 212,
+          "geom_name": "box_small_base_1_g3",
+          "type": "box",
+          "size": [
+            0.00266,
+            0.00692,
+            0.01822
+          ],
+          "pos": [
+            0.03457,
+            0.00109,
+            0.11162
+          ],
+          "quat": [
+            0.75578,
+            -0.0,
+            0.65483,
+            -0.0
+          ],
+          "contype": 1,
+          "conaffinity": 1,
+          "group": 0,
+          "is_collision": true,
+          "world_xpos": [
+            0.0189,
+            -0.06538,
+            0.62609
+          ],
+          "world_xmat": [
+            -0.0,
+            -1.0,
+            -0.0,
+            0.1424,
+            -0.0,
+            0.9898,
+            -0.9898,
+            0.0,
+            0.1424
+          ]
+        }
+      ]
+    },
+    "contacts": [
+      {
+        "geom1": 8,
+        "geom2": 109,
+        "body1": "floor",
+        "body2": "tomato_sauce_1_main",
+        "name1": "floor",
+        "name2": "tomato_sauce_1_g9",
+        "dist": -2.616023374604759e-06,
+        "pos": [
+          -10.10879,
+          -0.2455,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 114,
+        "body1": "floor",
+        "body2": "tomato_sauce_1_main",
+        "name1": "floor",
+        "name2": "tomato_sauce_1_g14",
+        "dist": -1.2751219630000032e-05,
+        "pos": [
+          -10.10454,
+          -0.25599,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 123,
+        "body1": "floor",
+        "body2": "tomato_sauce_1_main",
+        "name1": "floor",
+        "name2": "tomato_sauce_1_g23",
+        "dist": -2.052135994109333e-05,
+        "pos": [
+          -10.16247,
+          -0.26317,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 123,
+        "body1": "floor",
+        "body2": "tomato_sauce_1_main",
+        "name1": "floor",
+        "name2": "tomato_sauce_1_g23",
+        "dist": -1.1303153968890423e-05,
+        "pos": [
+          -10.16043,
+          -0.2769,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 124,
+        "body1": "floor",
+        "body2": "tomato_sauce_1_main",
+        "name1": "floor",
+        "name2": "tomato_sauce_1_g24",
+        "dist": -1.089724234080297e-05,
+        "pos": [
+          -10.10458,
+          -0.25699,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 152,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g8",
+        "dist": -2.183097570690462e-06,
+        "pos": [
+          -10.025,
+          -0.02469,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 152,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g8",
+        "dist": -2.193444198300698e-06,
+        "pos": [
+          -9.975,
+          -0.02469,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 152,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g8",
+        "dist": -1.952674068494975e-06,
+        "pos": [
+          -10.025,
+          0.02531,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 152,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g8",
+        "dist": -1.963020696105211e-06,
+        "pos": [
+          -9.975,
+          0.02531,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 153,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g9",
+        "dist": -1.935415960538367e-06,
+        "pos": [
+          -9.975,
+          0.0313,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 153,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g9",
+        "dist": -1.981961507982466e-06,
+        "pos": [
+          -9.975,
+          0.0212,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 153,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g9",
+        "dist": -1.925069332928131e-06,
+        "pos": [
+          -10.025,
+          0.0313,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 153,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g9",
+        "dist": -1.97161488037223e-06,
+        "pos": [
+          -10.025,
+          0.0212,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 154,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g10",
+        "dist": -2.191139963289568e-06,
+        "pos": [
+          -9.975,
+          -0.02419,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 154,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g10",
+        "dist": -2.237685510733667e-06,
+        "pos": [
+          -9.975,
+          -0.03429,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 154,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g10",
+        "dist": -2.180793335679332e-06,
+        "pos": [
+          -10.025,
+          -0.02419,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 154,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g10",
+        "dist": -2.227338883123431e-06,
+        "pos": [
+          -10.025,
+          -0.03429,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 155,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g11",
+        "dist": -2.056533453614895e-06,
+        "pos": [
+          -10.04059,
+          0.00207,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 155,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g11",
+        "dist": -2.043427135098308e-06,
+        "pos": [
+          -10.03282,
+          0.00527,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 155,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g11",
+        "dist": -2.2057852501894404e-06,
+        "pos": [
+          -10.02752,
+          -0.02973,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 155,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g11",
+        "dist": -2.1926789316728534e-06,
+        "pos": [
+          -10.01975,
+          -0.02653,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 156,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g12",
+        "dist": -2.0825464387835835e-06,
+        "pos": [
+          -9.96024,
+          4e-05,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 156,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g12",
+        "dist": -2.0956527573001704e-06,
+        "pos": [
+          -9.96801,
+          -0.00316,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 156,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g12",
+        "dist": -1.933294642209038e-06,
+        "pos": [
+          -9.97331,
+          0.03184,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 156,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g12",
+        "dist": -1.946400960725625e-06,
+        "pos": [
+          -9.98108,
+          0.02864,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 157,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g13",
+        "dist": -2.081306576695585e-06,
+        "pos": [
+          -10.03328,
+          -0.00297,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 157,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g13",
+        "dist": -2.0629802039845435e-06,
+        "pos": [
+          -10.04085,
+          0.00066,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 157,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g13",
+        "dist": -1.9415657089710825e-06,
+        "pos": [
+          -10.01839,
+          0.02802,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 157,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g13",
+        "dist": -1.923239336260041e-06,
+        "pos": [
+          -10.02597,
+          0.03165,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 158,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g14",
+        "dist": -2.2277059676667488e-06,
+        "pos": [
+          -9.97432,
+          -0.03209,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 158,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g14",
+        "dist": -2.209379594955707e-06,
+        "pos": [
+          -9.98189,
+          -0.02846,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 158,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g14",
+        "dist": -2.087965099942246e-06,
+        "pos": [
+          -9.95943,
+          -0.0011,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 158,
+        "body1": "floor",
+        "body2": "moka_pot_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "moka_pot_small_obstacle_1_g14",
+        "dist": -2.0696387272312045e-06,
+        "pos": [
+          -9.96701,
+          0.00253,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 168,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g2",
+        "dist": -3.631424919887938e-06,
+        "pos": [
+          10.07049,
+          -0.13719,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 168,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g2",
+        "dist": -3.631424919887938e-06,
+        "pos": [
+          10.05791,
+          -0.13719,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 168,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g2",
+        "dist": -3.6314249197630377e-06,
+        "pos": [
+          10.07049,
+          -0.00619,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 168,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g2",
+        "dist": -3.6314249197630377e-06,
+        "pos": [
+          10.05791,
+          -0.00619,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 169,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g3",
+        "dist": -3.63142491987406e-06,
+        "pos": [
+          9.93527,
+          -0.14235,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 169,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g3",
+        "dist": -3.6314249198601822e-06,
+        "pos": [
+          9.93517,
+          -0.12977,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 169,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g3",
+        "dist": -3.6314249198601822e-06,
+        "pos": [
+          10.06627,
+          -0.14131,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 169,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g3",
+        "dist": -3.6314249198463044e-06,
+        "pos": [
+          10.06617,
+          -0.12873,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 170,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g4",
+        "dist": -3.631424919756099e-06,
+        "pos": [
+          9.93527,
+          -0.01577,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 170,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g4",
+        "dist": -3.631424919742221e-06,
+        "pos": [
+          9.93517,
+          -0.00319,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 170,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g4",
+        "dist": -3.631424919742221e-06,
+        "pos": [
+          10.06627,
+          -0.01473,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 170,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "milk_small_obstacle_1_g4",
+        "dist": -3.6314249197283432e-06,
+        "pos": [
+          10.06617,
+          -0.00215,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 171,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g0",
+        "dist": -3.63142491987406e-06,
+        "pos": [
+          9.94237,
+          -0.13719,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 171,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g0",
+        "dist": -3.63142491987406e-06,
+        "pos": [
+          9.92979,
+          -0.13719,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 171,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g0",
+        "dist": -3.63142491974916e-06,
+        "pos": [
+          9.94237,
+          -0.00619,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 171,
+        "body1": "floor",
+        "body2": "white_storage_box_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g0",
+        "dist": -3.63142491974916e-06,
+        "pos": [
+          9.92979,
+          -0.00619,
+          -0.0
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 173,
+        "body1": "floor",
+        "body2": "milk_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g2",
+        "dist": -1.4529813246198786e-05,
+        "pos": [
+          19.97413,
+          0.02625,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 173,
+        "body1": "floor",
+        "body2": "milk_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g2",
+        "dist": -1.4513196307630594e-05,
+        "pos": [
+          20.02663,
+          0.02625,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 173,
+        "body1": "floor",
+        "body2": "milk_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g2",
+        "dist": -1.453196646959698e-05,
+        "pos": [
+          19.97413,
+          -0.02625,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 173,
+        "body1": "floor",
+        "body2": "milk_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g2",
+        "dist": -1.4515349531028787e-05,
+        "pos": [
+          20.02663,
+          -0.02625,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 180,
+        "body1": "floor",
+        "body2": "wine_bottle_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g9",
+        "dist": -1.4697416236615635e-05,
+        "pos": [
+          -0.01503,
+          10.01503,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 180,
+        "body1": "floor",
+        "body2": "wine_bottle_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g9",
+        "dist": -1.4324426280638847e-05,
+        "pos": [
+          -0.01503,
+          9.98497,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 180,
+        "body1": "floor",
+        "body2": "wine_bottle_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g9",
+        "dist": -1.4720733199725944e-05,
+        "pos": [
+          0.01503,
+          10.01503,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 180,
+        "body1": "floor",
+        "body2": "wine_bottle_small_obstacle_1_main",
+        "name1": "floor",
+        "name2": "wine_bottle_small_obstacle_1_g9",
+        "dist": -1.4347743243749156e-05,
+        "pos": [
+          0.01503,
+          9.98497,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 214,
+        "body1": "floor",
+        "body2": "yellow_book_obstacle_1_main",
+        "name1": "floor",
+        "name2": "geom214",
+        "dist": -1.4522581391882006e-05,
+        "pos": [
+          -19.98613,
+          -0.06734,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 214,
+        "body1": "floor",
+        "body2": "yellow_book_obstacle_1_main",
+        "name1": "floor",
+        "name2": "geom214",
+        "dist": -1.4522581391882006e-05,
+        "pos": [
+          -20.01481,
+          -0.06734,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 214,
+        "body1": "floor",
+        "body2": "yellow_book_obstacle_1_main",
+        "name1": "floor",
+        "name2": "geom214",
+        "dist": -1.4522581391882006e-05,
+        "pos": [
+          -19.98613,
+          0.04304,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 8,
+        "geom2": 214,
+        "body1": "floor",
+        "body2": "yellow_book_obstacle_1_main",
+        "name1": "floor",
+        "name2": "geom214",
+        "dist": -1.4522581391882006e-05,
+        "pos": [
+          -20.01481,
+          0.04304,
+          -1e-05
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 90,
+        "body1": "living_room_table_col",
+        "body2": "alphabet_soup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "alphabet_soup_1_g14",
+        "dist": -1.429593832064091e-07,
+        "pos": [
+          0.16369,
+          -0.05395,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 99,
+        "body1": "living_room_table_col",
+        "body2": "alphabet_soup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "cream_cheese_1_g1",
+        "dist": -1.2554365612371665e-07,
+        "pos": [
+          0.10626,
+          -0.06254,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 99,
+        "body1": "living_room_table_col",
+        "body2": "alphabet_soup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "cream_cheese_1_g1",
+        "dist": -4.541696098974434e-08,
+        "pos": [
+          0.10829,
+          -0.07627,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 105,
+        "body1": "living_room_table_col",
+        "body2": "cream_cheese_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "tomato_sauce_1_g5",
+        "dist": -7.848000008713052e-08,
+        "pos": [
+          -0.1846,
+          0.0829,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 105,
+        "body1": "living_room_table_col",
+        "body2": "cream_cheese_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "tomato_sauce_1_g5",
+        "dist": -7.848000008713052e-08,
+        "pos": [
+          -0.10338,
+          0.0829,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 105,
+        "body1": "living_room_table_col",
+        "body2": "cream_cheese_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "tomato_sauce_1_g5",
+        "dist": -7.848000008713052e-08,
+        "pos": [
+          -0.1846,
+          0.04023,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 105,
+        "body1": "living_room_table_col",
+        "body2": "cream_cheese_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "tomato_sauce_1_g5",
+        "dist": -7.848000008713052e-08,
+        "pos": [
+          -0.10338,
+          0.04023,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 132,
+        "body1": "living_room_table_col",
+        "body2": "ketchup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "ketchup_1_g7",
+        "dist": -7.861261572261746e-08,
+        "pos": [
+          -0.20954,
+          -0.15266,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 132,
+        "body1": "living_room_table_col",
+        "body2": "ketchup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "ketchup_1_g7",
+        "dist": -7.852123133566229e-08,
+        "pos": [
+          -0.17564,
+          -0.15266,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 132,
+        "body1": "living_room_table_col",
+        "body2": "ketchup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "ketchup_1_g7",
+        "dist": -7.843876903097155e-08,
+        "pos": [
+          -0.20954,
+          -0.09644,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 132,
+        "body1": "living_room_table_col",
+        "body2": "ketchup_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "ketchup_1_g7",
+        "dist": -7.834738464401638e-08,
+        "pos": [
+          -0.17564,
+          -0.09644,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 145,
+        "body1": "living_room_table_col",
+        "body2": "basket_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "moka_pot_small_obstacle_1_g1",
+        "dist": -7.961987883728483e-08,
+        "pos": [
+          -0.07359,
+          0.19234,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 145,
+        "body1": "living_room_table_col",
+        "body2": "basket_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "moka_pot_small_obstacle_1_g1",
+        "dist": -7.940827568492904e-08,
+        "pos": [
+          0.07121,
+          0.19234,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 145,
+        "body1": "living_room_table_col",
+        "body2": "basket_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "moka_pot_small_obstacle_1_g1",
+        "dist": -7.755172450147507e-08,
+        "pos": [
+          -0.07359,
+          0.3455,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 145,
+        "body1": "living_room_table_col",
+        "body2": "basket_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "moka_pot_small_obstacle_1_g1",
+        "dist": -7.734012134911927e-08,
+        "pos": [
+          0.07121,
+          0.3455,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 218,
+        "body1": "living_room_table_col",
+        "body2": "box_small_base_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "geom218",
+        "dist": -1.5662957835345994e-07,
+        "pos": [
+          0.05342,
+          -0.1583,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 218,
+        "body1": "living_room_table_col",
+        "body2": "box_small_base_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "geom218",
+        "dist": -1.2542024385485593e-07,
+        "pos": [
+          0.05342,
+          -0.0417,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 218,
+        "body1": "living_room_table_col",
+        "body2": "box_small_base_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "geom218",
+        "dist": -1.514245645901408e-07,
+        "pos": [
+          -0.01208,
+          -0.1583,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 10,
+        "geom2": 218,
+        "body1": "living_room_table_col",
+        "body2": "box_small_base_1_main",
+        "name1": "robot0_g0_vis",
+        "name2": "geom218",
+        "dist": -1.202152300915368e-07,
+        "pos": [
+          -0.01208,
+          -0.0417,
+          0.43676
+        ]
+      },
+      {
+        "geom1": 203,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "red_coffee_mug_obstacle_1_g8",
+        "name2": "geom217",
+        "dist": -1.485494768790896e-07,
+        "pos": [
+          0.05097,
+          -0.10789,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 204,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "red_coffee_mug_obstacle_1_g9",
+        "name2": "geom217",
+        "dist": -2.8623559737706028e-08,
+        "pos": [
+          0.05071,
+          -0.09482,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 204,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "red_coffee_mug_obstacle_1_g9",
+        "name2": "geom217",
+        "dist": -1.7241214210118954e-08,
+        "pos": [
+          0.05071,
+          -0.1361,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 205,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "red_coffee_mug_obstacle_1_g10",
+        "name2": "geom217",
+        "dist": -6.562833215761898e-08,
+        "pos": [
+          0.03536,
+          -0.08794,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 206,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "red_coffee_mug_obstacle_1_g11",
+        "name2": "geom217",
+        "dist": -7.774622746287152e-08,
+        "pos": [
+          -0.0109,
+          -0.12759,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 207,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "yellow_book_obstacle_1_g0",
+        "name2": "geom217",
+        "dist": -1.42384464924823e-07,
+        "pos": [
+          -0.01258,
+          -0.11691,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 208,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "yellow_book_obstacle_1_g1",
+        "name2": "geom217",
+        "dist": -4.604211933240121e-08,
+        "pos": [
+          0.04287,
+          -0.14218,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 209,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "box_small_base_1_g0",
+        "name2": "geom217",
+        "dist": -1.2465744896595565e-08,
+        "pos": [
+          0.05292,
+          -0.12424,
+          0.51263
+        ]
+      },
+      {
+        "geom1": 209,
+        "geom2": 217,
+        "body1": "red_coffee_mug_obstacle_1_main",
+        "body2": "box_small_base_1_main",
+        "name1": "box_small_base_1_g0",
+        "name2": "geom217",
+        "dist": -1.500847746083167e-08,
+        "pos": [
+          0.02753,
+          -0.15012,
+          0.51263
+        ]
+      }
+    ]
+  }
+}

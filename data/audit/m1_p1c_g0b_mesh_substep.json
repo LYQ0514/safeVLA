@@ -1,0 +1,78 @@
+{
+  "link6_mesh": {
+    "geom_id": 64,
+    "mesh_id": 9,
+    "nvert": "102",
+    "nface": "200",
+    "rbound": 0.13289889722014273,
+    "geom_size": [
+      0.04744,
+      0.07281,
+      0.10055
+    ]
+  },
+  "mug_box_geoms": [
+    202,
+    203,
+    204,
+    205,
+    206
+  ],
+  "link6_geom_ids": [
+    64
+  ],
+  "mug_geom_ids": [
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    208,
+    209,
+    210,
+    211,
+    212
+  ],
+  "step59_link6_mug_contacts": [
+    {
+      "substep": 22,
+      "geom1": 204,
+      "geom2": 64,
+      "name1": "red_coffee_mug_obstacle_1_g9",
+      "name2": "robot0_g47_vis",
+      "dist": -2.7628793806110603e-05,
+      "pos": [
+        0.06579,
+        -0.09482,
+        0.64449
+      ]
+    },
+    {
+      "substep": 23,
+      "geom1": 204,
+      "geom2": 64,
+      "name1": "red_coffee_mug_obstacle_1_g9",
+      "name2": "robot0_g47_vis",
+      "dist": -0.00021416891698629664,
+      "pos": [
+        0.06577,
+        -0.09484,
+        0.6444
+      ]
+    },
+    {
+      "substep": 24,
+      "geom1": 204,
+      "geom2": 64,
+      "name1": "red_coffee_mug_obstacle_1_g9",
+      "name2": "robot0_g47_vis",
+      "dist": -0.00039944906421029736,
+      "pos": [
+        0.06575,
+        -0.09485,
+        0.64431
+      ]
+    }
+  ]
+}
