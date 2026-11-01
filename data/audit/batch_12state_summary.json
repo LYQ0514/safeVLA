@@ -1,0 +1,1082 @@
+{
+  "start_episode": 4,
+  "n_episodes_scanned": 30,
+  "target_states": 12,
+  "n_states_collected": 12,
+  "category_counts": {
+    "neither": 4,
+    "source_only": 2,
+    "action_only": 1,
+    "both": 5
+  },
+  "collected": [
+    {
+      "episode": 4,
+      "query": 14,
+      "obstacle": "red_coffee_mug_obstacle_1",
+      "category": "neither",
+      "nominal_native_mm": -4.133932079390919,
+      "snapshot_sha256": "7a2c2cb565e81ee11f482d9b03af34767890eb3f2adea845390d5af55a763f73",
+      "obs_sha256": "109cf6bb448d64467174c95526fc2d233461de8e1dd148d2d16e1f2f2a8627dd",
+      "source_pass": false,
+      "action_pass": false,
+      "source_min_passing": null,
+      "action_min_passing": null
+    },
+    {
+      "episode": 6,
+      "query": 28,
+      "obstacle": "moka_pot_obstacle_1",
+      "category": "source_only",
+      "nominal_native_mm": -0.7507632403311524,
+      "snapshot_sha256": "9cc611ef85136b69d76d37a9cd1e6998c68ef88fef94992f7f37a915d7a311d0",
+      "obs_sha256": "dae3dc081f9e7b99711ffe8b589c37fb0ef63fe8a78c76cdaeb1a2a00ef8b147",
+      "source_pass": true,
+      "action_pass": false,
+      "source_min_passing": {
+        "key": "source_b0.25",
+        "beta": 0.25,
+        "delta_norm": 3.0,
+        "c_act": 1.440488991928944,
+        "c_act_weighted": 0.02263902515976232,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "action_min_passing": null
+    },
+    {
+      "episode": 7,
+      "query": 18,
+      "obstacle": "white_storage_box_obstacle_1",
+      "category": "source_only",
+      "nominal_native_mm": -1.2772437311656861,
+      "snapshot_sha256": "fd3aa19a7fff157adf81048b114095b994266730aacb947b4efc2f4e185d8f6c",
+      "obs_sha256": "4132823a0e29dc6db4a84ad6fffc431776ac5fb4ea5386718c4ef27c78f4e019",
+      "source_pass": true,
+      "action_pass": false,
+      "source_min_passing": {
+        "key": "source_b1.0",
+        "beta": 1.0,
+        "delta_norm": 12.0,
+        "c_act": 0.7575547378363635,
+        "c_act_weighted": 0.014183537941598722,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "action_min_passing": null
+    },
+    {
+      "episode": 9,
+      "query": 27,
+      "obstacle": "wine_bottle_obstacle_1",
+      "category": "neither",
+      "nominal_native_mm": -0.07971587743197944,
+      "snapshot_sha256": "cac5353689b3a613b522ae87c1c8599ebb2ba2c640048905d35d6956ce6d7e7b",
+      "obs_sha256": "6461df823bc71f9fc1141ec2b027d0bc68c164fc2fd73d7ae6cfa6dc0ebaeb43",
+      "source_pass": false,
+      "action_pass": false,
+      "source_min_passing": null,
+      "action_min_passing": null
+    },
+    {
+      "episode": 10,
+      "query": 15,
+      "obstacle": "red_coffee_mug_obstacle_1",
+      "category": "action_only",
+      "nominal_native_mm": -2.266612864385038,
+      "snapshot_sha256": "0618dd67c473f9e39ce57ae587526d3557782ed7306b0cb1c13dfaedd4bc6d29",
+      "obs_sha256": "92b77ec829b3ab7981f0972f08db809ce103d2e66ea5d21e44dcf11d87a96048",
+      "source_pass": false,
+      "action_pass": true,
+      "source_min_passing": null,
+      "action_min_passing": {
+        "key": "action_b0.75",
+        "beta": 0.75,
+        "delta_norm": 3.305209558058791,
+        "c_act": 2.2348641482112233,
+        "c_act_weighted": 0.20292610339571732,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "episode": 12,
+      "query": 19,
+      "obstacle": "moka_pot_obstacle_1",
+      "category": "both",
+      "nominal_native_mm": -0.21598710566318036,
+      "snapshot_sha256": "b6811c2fc4adb663536ba2c7b04676c2c20929a0be97542bc6aa4313f39daf4a",
+      "obs_sha256": "23d32a03d9010c6195c9fc817d09a07878ad24c008b5a3cd097686287441face",
+      "source_pass": true,
+      "action_pass": true,
+      "source_min_passing": {
+        "key": "source_b0.5",
+        "beta": 0.5,
+        "delta_norm": 6.0,
+        "c_act": 0.32850620846030815,
+        "c_act_weighted": 0.007346086810282207,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "action_min_passing": {
+        "key": "action_b0.25",
+        "beta": 0.25,
+        "delta_norm": 0.0793822747831114,
+        "c_act": 0.07938227598017736,
+        "c_act_weighted": 0.0023755966339096945,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "episode": 15,
+      "query": 10,
+      "obstacle": "wine_bottle_obstacle_1",
+      "category": "both",
+      "nominal_native_mm": -0.010835735291896225,
+      "snapshot_sha256": "830c536d4cba30d1312a468dc70b46965b9dcd2504fc92db1c18d62ca7c75205",
+      "obs_sha256": "d76bf891f9dd380793a05cb8af376474c807b09d69acdb93463f0088e825bd99",
+      "source_pass": true,
+      "action_pass": true,
+      "source_min_passing": {
+        "key": "source_b0.75",
+        "beta": 0.75,
+        "delta_norm": 9.0,
+        "c_act": 0.7367922850924175,
+        "c_act_weighted": 0.019911400263290503,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "action_min_passing": {
+        "key": "action_b0.5",
+        "beta": 0.5,
+        "delta_norm": 0.5264293215113149,
+        "c_act": 0.5264293322874163,
+        "c_act_weighted": 0.05993555206550549,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "episode": 16,
+      "query": 16,
+      "obstacle": "red_coffee_mug_obstacle_1",
+      "category": "neither",
+      "nominal_native_mm": -0.28466358547842163,
+      "snapshot_sha256": "0427361b4a43e6e9c49db3caad2b14a0ab8b17aa3561f8af692d77f7b9c15788",
+      "obs_sha256": "b624addb35c408f935faea408bdd2a9a20b8b0e8503d043fc7172e7511eaedf8",
+      "source_pass": false,
+      "action_pass": false,
+      "source_min_passing": null,
+      "action_min_passing": null
+    },
+    {
+      "episode": 17,
+      "query": 19,
+      "obstacle": "yellow_book_obstacle_1",
+      "category": "both",
+      "nominal_native_mm": -0.23316909565737706,
+      "snapshot_sha256": "844b169d9f7cf176192c681d9e0ce5a7b975da95147d6407111ce5708251e188",
+      "obs_sha256": "11694eb372b8a6de8c47a10586c1f199a013ef7ed26c4e67ff6b84cc24979604",
+      "source_pass": true,
+      "action_pass": true,
+      "source_min_passing": {
+        "key": "source_b1.0",
+        "beta": 1.0,
+        "delta_norm": 12.0,
+        "c_act": 0.9398925016523567,
+        "c_act_weighted": 0.008714947537330911,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "action_min_passing": {
+        "key": "action_b0.75",
+        "beta": 0.75,
+        "delta_norm": 0.5003626773358775,
+        "c_act": 0.5003626788168626,
+        "c_act_weighted": 0.0032331446986145437,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "episode": 18,
+      "query": 21,
+      "obstacle": "moka_pot_obstacle_1",
+      "category": "neither",
+      "nominal_native_mm": -0.2372381464375269,
+      "snapshot_sha256": "376d311cd91d8900987bb2b2c01b8455654b4073333ea9315468167c719ab03e",
+      "obs_sha256": "e9df814a73ee81fb753dae2922cba9505bfab56dcd9b5dd5a3a1218d38c5bde6",
+      "source_pass": false,
+      "action_pass": false,
+      "source_min_passing": null,
+      "action_min_passing": null
+    },
+    {
+      "episode": 19,
+      "query": 26,
+      "obstacle": "white_storage_box_obstacle_1",
+      "category": "both",
+      "nominal_native_mm": -0.7159133876395065,
+      "snapshot_sha256": "bab5f42be09ae261d39ef843747dec2465d08a606da8bc8eb6f5165a4e1f4cbf",
+      "obs_sha256": "321edd0ddefcc31f51a49c32e080ea550ac66dc97b5a1a8c2a4c327a1fbd79cc",
+      "source_pass": true,
+      "action_pass": true,
+      "source_min_passing": {
+        "key": "source_b0.25",
+        "beta": 0.25,
+        "delta_norm": 3.0,
+        "c_act": 1.7117912403118383,
+        "c_act_weighted": 0.01418103387599023,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "action_min_passing": {
+        "key": "action_b1.0",
+        "beta": 1.0,
+        "delta_norm": 0.3566736825023073,
+        "c_act": 0.3566736808457775,
+        "c_act_weighted": 0.006054135388493536,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "episode": 20,
+      "query": 19,
+      "obstacle": "milk_obstacle_1",
+      "category": "both",
+      "nominal_native_mm": -0.20128046558653886,
+      "snapshot_sha256": "a108d5c5c2f9c394d937271d9c8252c6089c710fb50dde7ddf4ebb3caa475fd0",
+      "obs_sha256": "91fdf7030c996419b77904cc4b015883475cb039c30ad8e392a248defc093ced",
+      "source_pass": true,
+      "action_pass": true,
+      "source_min_passing": {
+        "key": "source_b0.25",
+        "beta": 0.25,
+        "delta_norm": 3.0,
+        "c_act": 0.10118904819436943,
+        "c_act_weighted": 0.003685726495777408,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
+      "action_min_passing": {
+        "key": "action_b0.25",
+        "beta": 0.25,
+        "delta_norm": 0.1571374580669339,
+        "c_act": 0.15713745556399122,
+        "c_act_weighted": 0.00045811997195438074,
+        "native_dists": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      }
+    }
+  ],
+  "failures": [
+    {
+      "episode": 5,
+      "reason": "无合格危险状态",
+      "query_failures": []
+    },
+    {
+      "episode": 8,
+      "reason": "无合格危险状态",
+      "query_failures": [
+        {
+          "state_id": 8,
+          "query": 23,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 5,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.00032970825864458433,
+          "l1_native_dists": [
+            -0.00032970825864469085,
+            -0.00032970825864469085,
+            -0.00032970825864469085,
+            -0.00032970825864469085,
+            -0.00032970825864469085
+          ],
+          "l2_native_dists": [
+            -0.00032970825864469085,
+            -0.00032970825864469085,
+            -0.00032970825864469085,
+            -0.00032970825864469085,
+            -0.00032970825864469085
+          ]
+        },
+        {
+          "state_id": 8,
+          "query": 24,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": true,
+          "native_dist_quick": -0.000496319330400272,
+          "l1_native_dists": [
+            -0.0004963193303956249,
+            -0.0004963193303956249,
+            -0.0004963193303956249,
+            -0.0004963193303956249,
+            -0.0004963193303956249
+          ],
+          "l2_native_dists": [
+            -0.0004963193303956249,
+            -0.0004963193303956249,
+            -0.0004963193303956249,
+            -0.0004963193303956249,
+            -0.0004963193303956249
+          ]
+        },
+        {
+          "state_id": 8,
+          "query": 25,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -6.595555977609543e-05,
+          "l1_native_dists": [
+            -6.559724534963215e-05,
+            -6.559724534963215e-05,
+            -6.559724534963215e-05,
+            -6.559724534963215e-05,
+            -6.559724534963215e-05
+          ],
+          "l2_native_dists": [
+            -6.559724534963215e-05,
+            -6.559724534963215e-05,
+            -6.559724534963215e-05,
+            -6.559724534963215e-05,
+            -6.559724534963215e-05
+          ]
+        },
+        {
+          "state_id": 8,
+          "query": 26,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0005368583732803711,
+          "l1_native_dists": [
+            -0.0005368131057288291,
+            -0.0005368131057288291,
+            -0.0005368131057288291,
+            -0.0005368131057288291,
+            -0.0005368131057288291
+          ],
+          "l2_native_dists": [
+            -0.0005368131057288291,
+            -0.0005368131057288291,
+            -0.0005368131057288291,
+            -0.0005368131057288291,
+            -0.0005368131057288291
+          ]
+        },
+        {
+          "state_id": 8,
+          "query": 27,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.00042463825294393714,
+          "l1_native_dists": [
+            -0.0004246856480023225,
+            -0.0004246856480023225,
+            -0.0004246856480023225,
+            -0.0004246856480023225,
+            -0.0004246856480023225
+          ],
+          "l2_native_dists": [
+            -0.0004246856480023225,
+            -0.0004246856480023225,
+            -0.0004246856480023225,
+            -0.0004246856480023225,
+            -0.0004246856480023225
+          ]
+        },
+        {
+          "state_id": 8,
+          "query": 28,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0007170089504074868,
+          "l1_native_dists": [
+            -0.0007171371804826624,
+            -0.0007171371804826624,
+            -0.0007171371804826624,
+            -0.0007171371804826624,
+            -0.0007171371804826624
+          ],
+          "l2_native_dists": [
+            -0.0007171371804826624,
+            -0.0007171371804826624,
+            -0.0007171371804826624,
+            -0.0007171371804826624,
+            -0.0007171371804826624
+          ]
+        },
+        {
+          "state_id": 8,
+          "query": 29,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.000573296633504368,
+          "l1_native_dists": [
+            -0.0005736271271057701,
+            -0.0005736271271057701,
+            -0.0005736271271057701,
+            -0.0005736271271057701,
+            -0.0005736271271057701
+          ],
+          "l2_native_dists": [
+            -0.0005736271271057701,
+            -0.0005736271271057701,
+            -0.0005736271271057701,
+            -0.0005736271271057701,
+            -0.0005736271271057701
+          ]
+        }
+      ]
+    },
+    {
+      "episode": 11,
+      "reason": "无合格危险状态",
+      "query_failures": [
+        {
+          "state_id": 11,
+          "query": 17,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 5,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.003967886990035687,
+          "l1_native_dists": [
+            -0.0039678869882790865,
+            -0.0039678869882790865,
+            -0.0039678869882790865,
+            -0.0039678869882790865,
+            -0.0039678869882790865
+          ],
+          "l2_native_dists": [
+            -0.0039678869882790865,
+            -0.0039678869882790865,
+            -0.0039678869882790865,
+            -0.0039678869882790865,
+            -0.0039678869882790865
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 18,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0051938799700163,
+          "l1_native_dists": [
+            -0.00519408988811874,
+            -0.00519408988811874,
+            -0.00519408988811874,
+            -0.00519408988811874,
+            -0.00519408988811874
+          ],
+          "l2_native_dists": [
+            -0.00519408988811874,
+            -0.00519408988811874,
+            -0.00519408988811874,
+            -0.00519408988811874,
+            -0.00519408988811874
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 19,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0047325387386191985,
+          "l1_native_dists": [
+            -0.004788089425105867,
+            -0.004788089425105867,
+            -0.004788089425105867,
+            -0.004788089425105867,
+            -0.004788089425105867
+          ],
+          "l2_native_dists": [
+            -0.004788089425105867,
+            -0.004788089425105867,
+            -0.004788089425105867,
+            -0.004788089425105867,
+            -0.004788089425105867
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 20,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.003229937861075668,
+          "l1_native_dists": [
+            -0.0031273632056322306,
+            -0.0031273632056322306,
+            -0.0031273632056322306,
+            -0.0031273632056322306,
+            -0.0031273632056322306
+          ],
+          "l2_native_dists": [
+            -0.0031273632056322306,
+            -0.0031273632056322306,
+            -0.0031273632056322306,
+            -0.0031273632056322306,
+            -0.0031273632056322306
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 21,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0035287764465200136,
+          "l1_native_dists": [
+            -0.003451923396349305,
+            -0.003451923396349305,
+            -0.003451923396349305,
+            -0.003451923396349305,
+            -0.003451923396349305
+          ],
+          "l2_native_dists": [
+            -0.003451923396349305,
+            -0.003451923396349305,
+            -0.003451923396349305,
+            -0.003451923396349305,
+            -0.003451923396349305
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 22,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.003890291781232516,
+          "l1_native_dists": [
+            -0.003890327202683209,
+            -0.003890327202683209,
+            -0.003890327202683209,
+            -0.003890327202683209,
+            -0.003890327202683209
+          ],
+          "l2_native_dists": [
+            -0.003890327202683209,
+            -0.003890327202683209,
+            -0.003890327202683209,
+            -0.003890327202683209,
+            -0.003890327202683209
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 23,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.004355763300220939,
+          "l1_native_dists": [
+            -0.004355773974090547,
+            -0.004355773974090547,
+            -0.004355773974090547,
+            -0.004355773974090547,
+            -0.004355773974090547
+          ],
+          "l2_native_dists": [
+            -0.004355773974090547,
+            -0.004355773974090547,
+            -0.004355773974090547,
+            -0.004355773974090547,
+            -0.004355773974090547
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 24,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.004134144848849916,
+          "l1_native_dists": [
+            -0.004134127668971802,
+            -0.004134127668971802,
+            -0.004134127668971802,
+            -0.004134127668971802,
+            -0.004134127668971802
+          ],
+          "l2_native_dists": [
+            -0.004134127668971802,
+            -0.004134127668971802,
+            -0.004134127668971802,
+            -0.004134127668971802,
+            -0.004134127668971802
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 25,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0037023138844859116,
+          "l1_native_dists": [
+            -0.003702047599281315,
+            -0.003702047599281315,
+            -0.003702047599281315,
+            -0.003702047599281315,
+            -0.003702047599281315
+          ],
+          "l2_native_dists": [
+            -0.003702047599281315,
+            -0.003702047599281315,
+            -0.003702047599281315,
+            -0.003702047599281315,
+            -0.003702047599281315
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 26,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0034049893479953896,
+          "l1_native_dists": [
+            -0.0034045512011991897,
+            -0.0034045512011991897,
+            -0.0034045512011991897,
+            -0.0034045512011991897,
+            -0.0034045512011991897
+          ],
+          "l2_native_dists": [
+            -0.0034045512011991897,
+            -0.0034045512011991897,
+            -0.0034045512011991897,
+            -0.0034045512011991897,
+            -0.0034045512011991897
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 27,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0034883667189391813,
+          "l1_native_dists": [
+            -0.0034881267178305106,
+            -0.0034881267178305106,
+            -0.0034881267178305106,
+            -0.0034881267178305106,
+            -0.0034881267178305106
+          ],
+          "l2_native_dists": [
+            -0.0034881267178305106,
+            -0.0034881267178305106,
+            -0.0034881267178305106,
+            -0.0034881267178305106,
+            -0.0034881267178305106
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 28,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0035754277691029393,
+          "l1_native_dists": [
+            -0.0035750918462187143,
+            -0.0035750918462187143,
+            -0.0035750918462187143,
+            -0.0035750918462187143,
+            -0.0035750918462187143
+          ],
+          "l2_native_dists": [
+            -0.0035750918462187143,
+            -0.0035750918462187143,
+            -0.0035750918462187143,
+            -0.0035750918462187143,
+            -0.0035750918462187143
+          ]
+        },
+        {
+          "state_id": 11,
+          "query": 29,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0029281862867441455,
+          "l1_native_dists": [
+            -0.00292805285333464,
+            -0.00292805285333464,
+            -0.00292805285333464,
+            -0.00292805285333464,
+            -0.00292805285333464
+          ],
+          "l2_native_dists": [
+            -0.00292805285333464,
+            -0.00292805285333464,
+            -0.00292805285333464,
+            -0.00292805285333464,
+            -0.00292805285333464
+          ]
+        }
+      ]
+    },
+    {
+      "episode": 13,
+      "reason": "无合格危险状态",
+      "query_failures": [
+        {
+          "state_id": 13,
+          "query": 19,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 5,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.00015869375042501518,
+          "l1_native_dists": [
+            -0.00015871792530213348,
+            -0.00015871792530213348,
+            -0.00015871792530213348,
+            -0.00015871792530213348,
+            -0.00015871792530213348
+          ],
+          "l2_native_dists": [
+            -0.00015871792530213348,
+            -0.00015871792530213348,
+            -0.00015871792530213348,
+            -0.00015871792530213348,
+            -0.00015871792530213348
+          ]
+        },
+        {
+          "state_id": 13,
+          "query": 20,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0005226159842130593,
+          "l1_native_dists": [
+            -0.0005226146333277357,
+            -0.0005226146333277357,
+            -0.0005226146333277357,
+            -0.0005226146333277357,
+            -0.0005226146333277357
+          ],
+          "l2_native_dists": [
+            -0.0005226146333277357,
+            -0.0005226146333277357,
+            -0.0005226146333277357,
+            -0.0005226146333277357,
+            -0.0005226146333277357
+          ]
+        },
+        {
+          "state_id": 13,
+          "query": 21,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": true,
+          "native_dist_quick": -0.0010594315878186364,
+          "l1_native_dists": [
+            -0.001059434137155247,
+            -0.001059434137155247,
+            -0.001059434137155247,
+            -0.001059434137155247,
+            -0.001059434137155247
+          ],
+          "l2_native_dists": [
+            -0.001059434137155247,
+            -0.001059434137155247,
+            -0.001059434137155247,
+            -0.001059434137155247,
+            -0.001059434137155247
+          ]
+        },
+        {
+          "state_id": 13,
+          "query": 22,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0019984731391363467,
+          "l1_native_dists": [
+            -0.0019984516054536963,
+            -0.0019984516054536963,
+            -0.0019984516054536963,
+            -0.0019984516054536963,
+            -0.0019984516054536963
+          ],
+          "l2_native_dists": [
+            -0.0019984516054536963,
+            -0.0019984516054536963,
+            -0.0019984516054536963,
+            -0.0019984516054536963,
+            -0.0019984516054536963
+          ]
+        },
+        {
+          "state_id": 13,
+          "query": 23,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0022173009457529497,
+          "l1_native_dists": [
+            -0.0022172638491089742,
+            -0.0022172638491089742,
+            -0.0022172638491089742,
+            -0.0022172638491089742,
+            -0.0022172638491089742
+          ],
+          "l2_native_dists": [
+            -0.0022172638491089742,
+            -0.0022172638491089742,
+            -0.0022172638491089742,
+            -0.0022172638491089742,
+            -0.0022172638491089742
+          ]
+        },
+        {
+          "state_id": 13,
+          "query": 24,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0019296201305373597,
+          "l1_native_dists": [
+            -0.0019296544063345357,
+            -0.0019296544063345357,
+            -0.0019296544063345357,
+            -0.0019296544063345357,
+            -0.0019296544063345357
+          ],
+          "l2_native_dists": [
+            -0.0019296544063345357,
+            -0.0019296544063345357,
+            -0.0019296544063345357,
+            -0.0019296544063345357,
+            -0.0019296544063345357
+          ]
+        },
+        {
+          "state_id": 13,
+          "query": 25,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.002322259370819241,
+          "l1_native_dists": [
+            -0.0023223605409168186,
+            -0.0023223605409168186,
+            -0.0023223605409168186,
+            -0.0023223605409168186,
+            -0.0023223605409168186
+          ],
+          "l2_native_dists": [
+            -0.0023223605409168186,
+            -0.0023223605409168186,
+            -0.0023223605409168186,
+            -0.0023223605409168186,
+            -0.0023223605409168186
+          ]
+        },
+        {
+          "state_id": 13,
+          "query": 26,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": true,
+          "native_dist_quick": -0.0011840542939900785,
+          "l1_native_dists": [
+            -0.0011836844871877046,
+            -0.0011836844871877046,
+            -0.0011836844871877046,
+            -0.0011836844871877046,
+            -0.0011836844871877046
+          ],
+          "l2_native_dists": [
+            -0.0011836844871877046,
+            -0.0011836844871877046,
+            -0.0011836844871877046,
+            -0.0011836844871877046,
+            -0.0011836844871877046
+          ]
+        },
+        {
+          "state_id": 13,
+          "query": 27,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": true,
+          "native_dist_quick": -0.001481321763832685,
+          "l1_native_dists": [
+            -0.0014810575779615374,
+            -0.0014810575779615374,
+            -0.0014810575779615374,
+            -0.0014810575779615374,
+            -0.0014810575779615374
+          ],
+          "l2_native_dists": [
+            -0.0014810575779615374,
+            -0.0014810575779615374,
+            -0.0014810575779615374,
+            -0.0014810575779615374,
+            -0.0014810575779615374
+          ]
+        },
+        {
+          "state_id": 13,
+          "query": 28,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": true,
+          "native_dist_quick": -0.0007491631038521128,
+          "l1_native_dists": [
+            -0.0007483731156226987,
+            -0.0007483731156226987,
+            -0.0007483731156226987,
+            -0.0007483731156226987,
+            -0.0007483731156226987
+          ],
+          "l2_native_dists": [
+            -0.0007483731156226987,
+            -0.0007483731156226987,
+            -0.0007483731156226987,
+            -0.0007483731156226987,
+            -0.0007483731156226987
+          ]
+        },
+        {
+          "state_id": 13,
+          "query": 29,
+          "reason": "稳定性门未通过",
+          "layer1_danger": 0,
+          "layer2_danger": 5,
+          "zero_action_stable": false,
+          "native_dist_quick": -0.0010208293844736656,
+          "l1_native_dists": [
+            -0.0010199018480810543,
+            -0.0010199018480810543,
+            -0.0010199018480810543,
+            -0.0010199018480810543,
+            -0.0010199018480810543
+          ],
+          "l2_native_dists": [
+            -0.0010199018480810543,
+            -0.0010199018480810543,
+            -0.0010199018480810543,
+            -0.0010199018480810543,
+            -0.0010199018480810543
+          ]
+        }
+      ]
+    },
+    {
+      "episode": 14,
+      "reason": "无合格危险状态",
+      "query_failures": []
+    }
+  ]
+}

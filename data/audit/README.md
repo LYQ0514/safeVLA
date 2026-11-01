@@ -44,3 +44,27 @@
 | 候选族 | Nominal + Source β∈{0.25,0.5,0.75,1.0} + Action β∈{0.25,0.5,0.75,1.0} |
 | r_budget | 12.0 |
 | 重复 | 5 独立进程 × 9 候选 = 45 次两步 C_2 认证 |
+
+## 12 状态固定批次（deployment，2026-11-01）
+
+汇总：`batch_12state_summary.json`；结果文档 `docs/testing/pnsg_batch12_result.md`。
+
+| episode/query | 障碍物 | 分类 | snapshot_sha256 |
+|---|---|---|---|
+| ep04/q14 | red_coffee_mug_obstacle_1 | neither | `7a2c2cb5…` |
+| ep06/q28 | moka_pot_obstacle_1 | source_only | `9cc611ef…` |
+| ep07/q18 | white_storage_box_obstacle_1 | source_only | `fd3aa19a…` |
+| ep09/q27 | wine_bottle_obstacle_1 | neither | `cac53536…` |
+| ep10/q15 | red_coffee_mug_obstacle_1 | action_only | `0618dd67…` |
+| ep12/q19 | moka_pot_obstacle_1 | both | `b6811c2f…` |
+| ep15/q10 | wine_bottle_obstacle_1 | both | `830c536d…` |
+| ep16/q16 | red_coffee_mug_obstacle_1 | neither | `0427361b…` |
+| ep17/q19 | yellow_book_obstacle_1 | both | `844b169d…` |
+| ep18/q21 | moka_pot_obstacle_1 | neither | `376d311c…` |
+| ep19/q26 | white_storage_box_obstacle_1 | both | `bab5f42b…` |
+| ep20/q19 | milk_obstacle_1 | both | `a108d5c5…` |
+
+每个状态目录 `stable_dangerous_state_batch_{ep}/` 含 snapshot/z0/nominal/obs.npz + meta；
+候选评估 `candidate_repro_batch_s{ep}.json`（+`_rep{0..4}.json`）；连续进度
+`progress_batch_s{ep}.json`。筛选失败（无合格状态的 episode）见 summary 的 `failures`。
+

@@ -1,0 +1,84 @@
+{
+  "state_id": 18,
+  "query": 21,
+  "prompt": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+  "obstacle": "moka_pot_obstacle_1",
+  "layer1_danger": 5,
+  "layer2_danger": 5,
+  "zero_action_stable": true,
+  "obs_protocol": "deployment",
+  "obs_sha256": "e9df814a73ee81fb753dae2922cba9505bfab56dcd9b5dd5a3a1218d38c5bde6",
+  "sensing_lag": {
+    "eef_lag_m": 0.00011304495723932528,
+    "obs_eef": [
+      0.014635539896758441,
+      0.11473598551347555,
+      1.117467535109799
+    ],
+    "true_eef": [
+      0.014734217848516671,
+      0.1146969467661985,
+      1.117428576151842
+    ]
+  },
+  "layer1_results": [
+    {
+      "initial_contact": false,
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "native_dist": -0.0002372381464375269
+    },
+    {
+      "initial_contact": false,
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "native_dist": -0.0002372381464375269
+    },
+    {
+      "initial_contact": false,
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "native_dist": -0.0002372381464375269
+    },
+    {
+      "initial_contact": false,
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "native_dist": -0.0002372381464375269
+    },
+    {
+      "initial_contact": false,
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "native_dist": -0.0002372381464375269
+    }
+  ],
+  "layer2_results": [
+    {
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "native_dist": -0.0002372381464375269
+    },
+    {
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "native_dist": -0.0002372381464375269
+    },
+    {
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "native_dist": -0.0002372381464375269
+    },
+    {
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "native_dist": -0.0002372381464375269
+    },
+    {
+      "c2_pass": false,
+      "c2_reason": "robot-obstacle 接触 @ step 0",
+      "native_dist": -0.0002372381464375269
+    }
+  ],
+  "nominal_sha256": "2f84bc2ea127fdc48fe90bacea8c40c5464891f284bbd4fb245159a98a978c5d"
+}
