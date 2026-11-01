@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+### 2026-11-01 — AEGIS 任务类型失败表型分析（描述性，非因果）
+
+- **新增**：`docs/explanation/aegis_task_failure_modes.md`。
+- **核心发现**：long-I vs long-II 任务失败率仅差 1pp（86.5% vs 87.5%），但失败任务
+  中碰撞比例 P(C|F) 差 23.6pp（35.3% vs 58.9%）。相似失败率、不同安全构成。
+- **三失败表型**：无碰撞无成功 / 早期碰撞 / 中后期碰撞（表型 ≠ 机制）。
+- 修正两处过强表述：550/550 超时 ≠ 持续有效尝试；后期碰撞多 ≠ 时间退化（需按
+  暴露时间/风险中 episode 数归一化，区分首次与重复碰撞）。
+- 概念性成果：Failure-Conditioned Safety Analysis（诊断工具，非算法名）。
+- 科学状态 INCONCLUSIVE + 执行状态 PAUSED 维持不变，不触发新采集。
+
 ### 2026-11-01 — 干预后可恢复性因果审计（P0-A，INCONCLUSIVE + PAUSED）
 
 - **新增**：协议 `docs/reference/intervention_recoverability_audit_protocol.md` v1
