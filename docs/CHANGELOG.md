@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+### 2026-11-01 — 方法论规范 + 安全真值门禁测试（研究线收口）
+
+- **新增**：`docs/reference/safety_causal_experiment_protocol.md`
+  （P1 安全评价时间身份 / P2 反事实因果归因 / P3 物理真值来源）。
+- **新增**：`tools/pnsg_safety_gt_gate.py`
+  （SAFETY_GROUND_TRUTH_CONSISTENCY 门禁，6/6 PASS）。
+  - T1 物理真值一致性（sim.data vs 观测缓存）
+  - T2 快照恢复一致性（同快照同动作重复一致）
+  - T3 缓存隔离性（用 375mm 伪影现场回归验证读缓存会错）
+- 沉淀两条数学约束：历史违规不可逆（$D_{t+1}\ge D_t$）；反事实效果须指定比较对象
+  （$\Delta_H(a,b|x)$，为 0 时不得扩大为「所有动作无控制力」）。
+- 本条研究线正式收口。
+
 ### 2026-11-01 — step330 反事实动力学归因（历史惯性，终止案例）
 
 - **新增**：`docs/testing/step330_counterfactual_attribution.md`、
