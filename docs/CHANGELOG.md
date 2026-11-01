@@ -2,14 +2,16 @@
 
 ## [Unreleased]
 
-### 2026-11-01 — 干预后可恢复性因果审计（P0-A，INCONCLUSIVE）
+### 2026-11-01 — 干预后可恢复性因果审计（P0-A，INCONCLUSIVE + PAUSED）
 
 - **新增**：协议 `docs/reference/intervention_recoverability_audit_protocol.md` v1
-  （四类失败机制 / G1-G3 门槛 / 轨迹级 vs 局部状态分支 / GO-INCONCLUSIVE-STOP 判决）。
+  （四类失败机制 / G1-G3 门槛 / 轨迹级 vs 局部状态分支 / GO-INCONCLUSIVE-STOP 判决 /
+  科学结论与执行状态分离 / 条件选择注意事项）。
 - **新增**：审计 `docs/testing/p0a_evidence_audit.md`（6 条 long 轨迹逐条证据）。
-- **判决 INCONCLUSIVE**：观测缺口（前缀 4 步干预未记录）+ 反向证据（5/6 策略在
-  cream 后不转向 soup），不足以支撑继续投入。原则上暂停。
-- 低成本补全方案：采集器记录执行前缀全程 5 步干预（仅记录，不自动启动）。
+- **判决**：科学结论 INCONCLUSIVE，执行状态 PAUSED。观测缺口（前缀 4 步干预未记录）
+  + 「未观察到过滤」+ 无法识别 Policy Deficiency 与 Induced Degradation 相对贡献。
+- 证据边界：不支持「即时过滤直接造成所有 long 失败」；「历史干预导致退化」未识别，
+  不肯定也不否定。
 
 ### 2026-11-01 — Source→AEGIS 串接实现（归档，停止规模扩展）
 
