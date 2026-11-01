@@ -1,0 +1,138 @@
+[
+  {
+    "episode": 6,
+    "query": 28,
+    "obstacle": "moka_pot_obstacle_1",
+    "source_candidate": "source_b0.25",
+    "target_c_act": 1.440488991928944,
+    "c_act_src_per_rep": [
+      1.436810043137471,
+      1.436810043137471,
+      1.443616179644683,
+      1.4426043468625478,
+      1.4426043468625478
+    ],
+    "saturation_c_act": 8.877895855638597,
+    "reachable": true,
+    "outcome": "action_success",
+    "match_s": 9.962,
+    "c_act_match_mean": 1.4405039288585166,
+    "residual": 1.4936929572550994e-05,
+    "n_pass": 5,
+    "results": [
+      {
+        "rep": 0,
+        "c2_pass": true,
+        "c2_reason": "C_2 pass",
+        "native_dist": null,
+        "progress": 0.0,
+        "time_s": 0.03800249099731445,
+        "c_act": 1.4405039288585166
+      },
+      {
+        "rep": 1,
+        "c2_pass": true,
+        "c2_reason": "C_2 pass",
+        "native_dist": null,
+        "progress": 0.0,
+        "time_s": 0.03854632377624512,
+        "c_act": 1.4405039288585166
+      },
+      {
+        "rep": 2,
+        "c2_pass": true,
+        "c2_reason": "C_2 pass",
+        "native_dist": null,
+        "progress": 0.0,
+        "time_s": 0.03823113441467285,
+        "c_act": 1.4405039288585166
+      },
+      {
+        "rep": 3,
+        "c2_pass": true,
+        "c2_reason": "C_2 pass",
+        "native_dist": null,
+        "progress": 0.0,
+        "time_s": 0.039691925048828125,
+        "c_act": 1.4405039288585166
+      },
+      {
+        "rep": 4,
+        "c2_pass": true,
+        "c2_reason": "C_2 pass",
+        "native_dist": null,
+        "progress": 0.0,
+        "time_s": 0.039388418197631836,
+        "c_act": 1.4405039288585166
+      }
+    ]
+  },
+  {
+    "episode": 7,
+    "query": 18,
+    "obstacle": "white_storage_box_obstacle_1",
+    "source_candidate": "source_b1.0",
+    "target_c_act": 0.7575547378363635,
+    "c_act_src_per_rep": [
+      0.7585805344563041,
+      0.7584261876312806,
+      0.7556809437255261,
+      0.7556809437255261,
+      0.7594050796431807
+    ],
+    "saturation_c_act": 7.941388200324295,
+    "reachable": true,
+    "outcome": "action_success",
+    "match_s": 1.073,
+    "c_act_match_mean": 0.7572297913050362,
+    "residual": 0.0003249465313273081,
+    "n_pass": 5,
+    "results": [
+      {
+        "rep": 0,
+        "c2_pass": true,
+        "c2_reason": "C_2 pass",
+        "native_dist": null,
+        "progress": 0.0,
+        "time_s": 0.0274350643157959,
+        "c_act": 0.7572297913050362
+      },
+      {
+        "rep": 1,
+        "c2_pass": true,
+        "c2_reason": "C_2 pass",
+        "native_dist": null,
+        "progress": 0.0,
+        "time_s": 0.028110027313232422,
+        "c_act": 0.7572297913050362
+      },
+      {
+        "rep": 2,
+        "c2_pass": true,
+        "c2_reason": "C_2 pass",
+        "native_dist": null,
+        "progress": 0.0,
+        "time_s": 0.027805328369140625,
+        "c_act": 0.7572297913050362
+      },
+      {
+        "rep": 3,
+        "c2_pass": true,
+        "c2_reason": "C_2 pass",
+        "native_dist": null,
+        "progress": 0.0,
+        "time_s": 0.029141902923583984,
+        "c_act": 0.7572297913050362
+      },
+      {
+        "rep": 4,
+        "c2_pass": true,
+        "c2_reason": "C_2 pass",
+        "native_dist": null,
+        "progress": 0.0,
+        "time_s": 0.028025388717651367,
+        "c_act": 0.7572297913050362
+      }
+    ]
+  }
+]
