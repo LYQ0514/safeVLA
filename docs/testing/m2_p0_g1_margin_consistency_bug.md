@@ -16,39 +16,48 @@
 
 ## 1. 证据
 
-S01 的 21 个 `classify_ik` 判 SAFE 的解中，3 个经 `min_gap_full`（margin=0.05）
-查询发现 gap < 0（真实穿透 −2.7 至 −14mm）。
+修复（正 margin + 排除相邻 body 自碰撞）前后 S01 的 `classify_ik` 判定对比：
 
-| 状态 | classify_ik SAFE | min_gap_full<0 真碰撞 |
+| 判定 | 修复前（margin=0）| 修复后（margin=0.05）|
 |---|---|---|
-| S01 | 21 | **3（14%）** |
+| SAFE_PREGRASP | 21 | **5** |
+| PROTECTED_OBJECT_COLLISION | 0（漏检）| 7 |
+| SELF_COLLISION（非相邻）| 0（漏检）| 3 |
+| IK_NONCONVERGED | 其余 | 63 |
 
-## 2. 根因
+**实际影响比最初估计严重**：21 个「SAFE」里只有 5 个是真的，**约 76% 是假安全**
+（7 个 robot-mug 碰撞 + 3 个真自碰撞被 margin=0 漏检，其余为 IK 未收敛误判）。
 
-`classify_ik` 里 `mj_collision(m, d)` 未设置 `geom_margin`，用默认 margin=0。
-`min_gap_full` 先设 `geom_margin=0.05` 再 `mj_collision`。
+## 2. 根因（两处）
 
-margin 扩大宽相位检测范围，使 `contact.dist` 报告「接近 + 穿透」的完整几何关系；
-margin=0 时凸网格（convex mesh）之间的浅穿透可能因宽相位不触发而漏检。
+1. **margin=0 宽相位漏检**：`mj_collision` 默认 margin=0，凸网格（convex mesh）
+   之间的浅穿透 / 接近因宽相位不触发而漏检，`contact.dist` 不报告；
+2. **修复后自碰撞误报**：正 margin 下，相邻连杆（父-子 body）的正常关节连接接触
+   被误判为 SELF_COLLISION。修复需排除相邻 body（`body_parentid` 判断），且只保留
+   真实穿透（dist < -1mm）。
 
-## 3. 影响范围
+## 3. 影响范围（重大）
 
-- P0r2 的「安全预抓取解」数量被高估约 14%；
-- P0e-r 的「安全路径」里可能有同样比例的假安全（因选路径时用了同样的 `classify_ik`）；
-- **但这不推翻 P0e-r 的核心结论**：P0e-r 的最终验收（Dmax=0、forbidden=0）用的是
-  `monitor_contacts`（margin=0 但读 `mjData.contact`），而执行阶段的真实物理接触
-  由 `mj_step` 的约束求解器产生，比几何查询更可靠。P0e-r 的「真实执行安全」结论
-  不受影响；受影响的是「候选搜索阶段」的 SAFE 判定。
+- P0r2 的「安全预抓取解」数量被**严重高估约 76%**（S01 的 20 安全解实际仅约 5 真）；
+- P0e-r 的「安全路径」主路径选取（gap 排序）同样受影响——它选的「gap=50mm 最大
+  裕度」路径可能实际是碰撞的；
+- **但 P0e-r 的最终验收不受影响**：P0e-r 的 E2 验收（Dmax=0、forbidden=0）用的是
+  `monitor_contacts` 读 `mj_step` 约束求解器的真实物理接触，比几何查询可靠。
+  P0e-r 报告的「真实执行安全」仍是真值；受影响的是「候选搜索 + 路径选取」环节
+  的 SAFE 判定，它可能选到了并非真正无碰撞的路径。
 
 ## 4. 修复
 
-`classify_ik` 的碰撞判定必须与 `min_gap_full` 一致：用正 margin 查询确认无碰撞。
-即：SAFE_PREGRASP 的判定条件是「margin=0.05 查询下 robot↔forbidden 无接触」。
+`classify_ik` 的碰撞判定改为：
+1. 正 margin（0.05）查询，与 `min_gap_full` 一致；
+2. 自碰撞判定排除相邻 body（`body_parentid` 判断父-子），只保留非相邻 + dist<-1mm
+   的真自碰撞。
 
 ## 5. 对 M2-P0 的含义
 
-G1 候选注册表的「物理安全」判定必须用修复后的 `classify_ik`（正 margin），
-否则候选注册表会混入假安全候选，污染 M2-P0 的接管状态区分实验。
+G1 候选注册表的「物理安全」判定必须用修复后的 `classify_ik`。修复后 S01 的安全
+解从 21 降到 5，候选注册表的候选池大幅缩小——这是**更诚实**的结果，避免了假安全
+候选污染 M2-P0 的接管状态区分实验。
 
 ## 6. 与之前两个缺陷的关系
 

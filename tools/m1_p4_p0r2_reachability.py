@@ -92,7 +92,13 @@ def classify_ik(env, q, ok, perr, rg, fg):
             is_r1 = g1 in rg
             is_r2 = g2 in rg
             if is_r1 and is_r2:
-                return "SELF_COLLISION"
+                # 自碰撞：排除相邻 body（父-子关系）的正常关节连接接触。
+                # 只保留「非相邻 + 真实穿透(dist < -1mm)」的真自碰撞。
+                bid1 = m.geom_bodyid[g1]
+                bid2 = m.geom_bodyid[g2]
+                is_adjacent = (m.body_parentid[bid1] == bid2) or (m.body_parentid[bid2] == bid1)
+                if not is_adjacent and d.contact[c].dist < -0.001:
+                    return "SELF_COLLISION"
             elif is_r1 or is_r2:
                 env_body = b1 if is_r2 else b2
                 role, _ = classify_body(env_body)
