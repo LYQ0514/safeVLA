@@ -172,6 +172,8 @@ class AegisSafetyLayer:
         self.intent_len = int(intent_len)
         # 供外部每步注入的 6D 任务方向（世界系）；None = 未注入 → 退化为欧氏
         self._task_direction_z = None
+        # E0 审计：是否在 info 里记录 QP 快照（u_nom/A_row/r/d_y/u_sol），默认关
+        self.record_qp_snapshot = False
 
     def reset(self, obs, task_language=""):
         """episode 开始：定位障碍物、算初始椭球与 z 方向。"""
@@ -269,6 +271,7 @@ class AegisSafetyLayer:
         # ---- CCA-ASF：白化各向异性低秩更新（仅替换目标二次项） ----
         W_used = W
         beta = 0.0
+        d_y = None
         if self.filter_mode == "cca_asf" and self._task_direction_z is not None:
             d_y = map_dz_to_dy(self._task_direction_z, R1)
             if d_y is not None:
@@ -287,6 +290,14 @@ class AegisSafetyLayer:
             None if self._task_direction_z is None
             else np.asarray(self._task_direction_z, dtype=np.float64).copy()
         )
+        if self.record_qp_snapshot:
+            info["qp_snapshot"] = {
+                "u_nom": np.asarray(u_ref_vec, dtype=np.float64).copy(),
+                "A_row": np.hstack([a_u_v, a_u_omega, a_uz]).copy(),
+                "r": float(-QP_H_GAIN * h),
+                "d_y": (None if d_y is None else d_y.copy()),
+                "beta": float(beta),
+            }
 
         objective = cp.Minimize(cp.quad_form(u - u_ref_vec, W_used))
         constraints = [a_u_v @ u[:3] + a_u_omega @ u[3:6] + a_uz @ u[6:] + QP_H_GAIN * h >= 0]
@@ -305,6 +316,8 @@ class AegisSafetyLayer:
             u_omega = u.value[3:6]
             u_z = u.value[6:]
             info["feasible"] = True
+            if self.record_qp_snapshot:
+                info["qp_snapshot"]["u_sol"] = np.asarray(u.value, dtype=np.float64).copy()
             # 判断是否真的介入了（与参考解不同）
             if np.linalg.norm(u_v - u_v_ref) > 1e-3:
                 self.intervene_count += 1
