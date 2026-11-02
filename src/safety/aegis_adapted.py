@@ -35,6 +35,11 @@ from utils import compute_h_coeffs_3d, compute_h_ij, project_matrix  # noqa: E40
 
 import cvxpy as cp  # noqa: E402
 
+# CCA-ASF 白化度量复用（避免与 metric.py 重复实现，保持一致）
+from src.safety.cca_asf.metric import (  # noqa: E402
+    B_DIAG, compute_conflict_beta, map_dz_to_dy,
+)
+
 # ---------------------------------------------------------------------------
 # 上游超参数，原样保留（见 main_aegis.py 顶部常量）
 # ---------------------------------------------------------------------------
@@ -146,7 +151,8 @@ class AegisSafetyLayer:
       action_out[:3] = 0.2 * R1 @ u_v ; [:6] = 0.2 * u_omega ; [6] 保持夹爪
     """
 
-    def __init__(self, env, verbose=False):
+    def __init__(self, env, verbose=False, filter_mode="euclidean",
+                 beta_max=4.0, eta=0.8, intent_len=5):
         self.env = env
         self.verbose = verbose
         self.obstacle_name = None
@@ -158,9 +164,19 @@ class AegisSafetyLayer:
         self.feasible_count = 0
         self.infeasible_count = 0
         self.intervene_count = 0
+        # CCA-ASF 配置（filter_mode ∈ {euclidean, cca_asf}）
+        assert filter_mode in ("euclidean", "cca_asf"), f"未知 filter_mode: {filter_mode}"
+        self.filter_mode = filter_mode
+        self.beta_max = float(beta_max)
+        self.eta = float(eta)
+        self.intent_len = int(intent_len)
+        # 供外部每步注入的 6D 任务方向（世界系）；None = 未注入 → 退化为欧氏
+        self._task_direction_z = None
 
     def reset(self, obs, task_language=""):
         """episode 开始：定位障碍物、算初始椭球与 z 方向。"""
+        # CCA-ASF：每次 reset 清除注入的任务方向
+        self._task_direction_z = None
         # 末端椭球半轴按任务类型选（上游同款规则）
         lang = task_language.lower()
         if _USE_SMALL_EEF:
@@ -203,6 +219,24 @@ class AegisSafetyLayer:
         R1 = _quat_wxyz_to_rot(np.asarray(obs["robot0_eef_quat"], dtype=np.float64))
         return eef_pos + R1 @ EEF_OFFSET_LOCAL
 
+    def set_task_direction(self, d_z):
+        """注入 6D 任务方向（世界系，单位向量或 None）。
+
+        d_z = [d_p(世界系平移, 3), d_omega(axis-angle姿态, 3)]。
+        None = 清除注入，下一 filter 退化为欧氏。
+        """
+        if d_z is None:
+            self._task_direction_z = None
+            return
+        d_z = np.asarray(d_z, dtype=np.float64).reshape(-1)
+        if d_z.shape[0] != 6:
+            raise ValueError(f"d_z 必须 6 维，得到 {d_z.shape[0]}")
+        n = float(np.linalg.norm(d_z))
+        if n <= 1e-12:
+            self._task_direction_z = None
+            return
+        self._task_direction_z = (d_z / n).copy()
+
     def filter(self, action, obs):
         """把策略动作投影到安全集内。返回 (safe_action, info)。"""
         action = np.asarray(action, dtype=np.float64).reshape(-1)
@@ -231,7 +265,30 @@ class AegisSafetyLayer:
         u = cp.Variable(9)
         W = np.diag([1.0 / 25] * 6 + [1.0, 1.0, 1.0])
         u_ref_vec = np.hstack([u_v_ref, u_omega_ref, u_z_nom])
-        objective = cp.Minimize(cp.quad_form(u - u_ref_vec, W))
+
+        # ---- CCA-ASF：白化各向异性低秩更新（仅替换目标二次项） ----
+        W_used = W
+        beta = 0.0
+        if self.filter_mode == "cca_asf" and self._task_direction_z is not None:
+            d_y = map_dz_to_dy(self._task_direction_z, R1)
+            if d_y is not None:
+                # 冲突门控（白化空间）
+                A_row = np.hstack([a_u_v, a_u_omega, a_uz])[None, :]  # (1,9)
+                r_val = np.array([-QP_H_GAIN * h])
+                beta = compute_conflict_beta(A_row, r_val, u_ref_vec, d_y,
+                                             beta_max=self.beta_max)
+                if beta > 0.0:
+                    Bd = B_DIAG * d_y
+                    DeltaP = beta * np.outer(Bd, Bd)
+                    W_used = W + DeltaP
+
+        info["beta"] = float(beta)
+        info["task_direction"] = (
+            None if self._task_direction_z is None
+            else np.asarray(self._task_direction_z, dtype=np.float64).copy()
+        )
+
+        objective = cp.Minimize(cp.quad_form(u - u_ref_vec, W_used))
         constraints = [a_u_v @ u[:3] + a_u_omega @ u[3:6] + a_uz @ u[6:] + QP_H_GAIN * h >= 0]
         prob = cp.Problem(objective, constraints)
         try:
