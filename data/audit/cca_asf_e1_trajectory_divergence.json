@@ -1,0 +1,892 @@
+{
+  "answer": {
+    "Q1_euclidean_avoids_base": {
+      "euclidean_contact_base_in_window": false,
+      "cca_contact_base_in_window": false,
+      "euclidean_min_gap_lower_mm": null,
+      "cca_min_gap_lower_mm": 12.02828000695369
+    },
+    "Q2_first_control_divergence_beta": {
+      "cca_first_base_contact_step": null,
+      "cca_first_base_contact_beta": null,
+      "note": "首次实质控制分叉在 step0（TASK B 已记录），β 非零从早期就出现"
+    },
+    "Q3_contact_to_mug_disp": {
+      "cca_mug_disp_window_mm": [
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085,
+        12.5085
+      ],
+      "cca_mug_disp_final_mm": 23.86547383308899,
+      "euclidean_mug_disp_final_mm": 2.211976782295899e-08
+    }
+  },
+  "euclidean_window": [
+    {
+      "step": 270,
+      "eef": [
+        -0.0502648566816727,
+        0.22816263503936318,
+        0.652305015505691
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 1.9915648991064572e-08,
+      "mug_disp_after": 1.9989145755294757e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 271,
+      "eef": [
+        -0.05332330839174129,
+        0.2209774641200172,
+        0.6534990074056053
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 1.9989145755294757e-08,
+      "mug_disp_after": 2.006263905007799e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 272,
+      "eef": [
+        -0.05657981086834914,
+        0.21330366589294378,
+        0.6545136864191293
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.006263905007799e-08,
+      "mug_disp_after": 2.013612540596732e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 273,
+      "eef": [
+        -0.06000855568849985,
+        0.2052324068844988,
+        0.6553669443501425
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.013612540596732e-08,
+      "mug_disp_after": 2.020961176185665e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 274,
+      "eef": [
+        -0.06356290668443461,
+        0.19686869897055626,
+        0.6560629139202477
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.020961176185665e-08,
+      "mug_disp_after": 2.0283094648299027e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 275,
+      "eef": [
+        -0.06724944775024705,
+        0.18835457285097615,
+        0.6559296871541989
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.0283094648299027e-08,
+      "mug_disp_after": 2.0356574065294453e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 276,
+      "eef": [
+        -0.07101656304351715,
+        0.179629454142865,
+        0.6547197137469725
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.0356574065294453e-08,
+      "mug_disp_after": 2.0430046543395974e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 277,
+      "eef": [
+        -0.07484410394347087,
+        0.17067199982594736,
+        0.652628534618834
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.0430046543395974e-08,
+      "mug_disp_after": 2.0503515552050544e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 278,
+      "eef": [
+        -0.07868124827892486,
+        0.1615181369765267,
+        0.6498204533229903
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.0503515552050544e-08,
+      "mug_disp_after": 2.0576984560705114e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 279,
+      "eef": [
+        -0.08244314587886643,
+        0.15215260105585757,
+        0.6464998170208268
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.0576984560705114e-08,
+      "mug_disp_after": 2.065045009991273e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 280,
+      "eef": [
+        -0.08542527273909863,
+        0.14239057383388817,
+        0.6431067405233892
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.065045009991273e-08,
+      "mug_disp_after": 2.072391563912035e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 281,
+      "eef": [
+        -0.08748641425834999,
+        0.13215280443733407,
+        0.6396970440259855
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.072391563912035e-08,
+      "mug_disp_after": 2.0797381178327967e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 282,
+      "eef": [
+        -0.08911059204660232,
+        0.12184724683015084,
+        0.636222569688071
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.0797381178327967e-08,
+      "mug_disp_after": 2.0870846717535585e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 283,
+      "eef": [
+        -0.09062845011265414,
+        0.11179771692611144,
+        0.6326196890776126
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.0870846717535585e-08,
+      "mug_disp_after": 2.0944312256743203e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 284,
+      "eef": [
+        -0.0921043066401783,
+        0.10209357314553587,
+        0.628722342590987
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.0944312256743203e-08,
+      "mug_disp_after": 2.101777779595082e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 285,
+      "eef": [
+        -0.09361995452887131,
+        0.09272592430353202,
+        0.6242583708020928
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.101777779595082e-08,
+      "mug_disp_after": 2.1091243335158438e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 286,
+      "eef": [
+        -0.09499253238943979,
+        0.0839218808648737,
+        0.6192825350483917
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.1091243335158438e-08,
+      "mug_disp_after": 2.1164708874366056e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 287,
+      "eef": [
+        -0.09623784340918984,
+        0.07598088072905752,
+        0.6137137817763325
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.1164708874366056e-08,
+      "mug_disp_after": 2.1238174413573674e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 288,
+      "eef": [
+        -0.09774590744121506,
+        0.06919372571481072,
+        0.6072588342991687
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.1238174413573674e-08,
+      "mug_disp_after": 2.131163995278129e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 289,
+      "eef": [
+        -0.10011882235381125,
+        0.06387903628382863,
+        0.5996198731292325
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.131163995278129e-08,
+      "mug_disp_after": 2.138510549198891e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 290,
+      "eef": [
+        -0.10267346345337237,
+        0.05977267362840608,
+        0.5907573416935882
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.138510549198891e-08,
+      "mug_disp_after": 2.1458571031196527e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 291,
+      "eef": [
+        -0.10536464134634331,
+        0.05662139454989632,
+        0.5810090689574721
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.1458571031196527e-08,
+      "mug_disp_after": 2.1532036570404145e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 292,
+      "eef": [
+        -0.1083750395422463,
+        0.05436796353785098,
+        0.5709620138678493
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.1532036570404145e-08,
+      "mug_disp_after": 2.1605502109611763e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 293,
+      "eef": [
+        -0.1116432771388275,
+        0.05289325421422638,
+        0.5609286633928559
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.1605502109611763e-08,
+      "mug_disp_after": 2.167896764881938e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 294,
+      "eef": [
+        -0.11520660635391893,
+        0.05195718692551671,
+        0.5510183555164748
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.167896764881938e-08,
+      "mug_disp_after": 2.1752433188026998e-08,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 295,
+      "eef": [
+        -0.11872955573438157,
+        0.05138329935224077,
+        0.5412444868002655
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 2.1752433188026998e-08,
+      "mug_disp_after": 2.182590566612852e-08,
+      "soup_dist": 5.842546275527248e-09
+    }
+  ],
+  "cca_window": [
+    {
+      "step": 270,
+      "eef": [
+        -0.045108968674851015,
+        0.058891207749352886,
+        0.48804947405470434
+      ],
+      "gripper_base_gap_lower": 12.02828000695369,
+      "gap_pair": [
+        "box_small_base_1_main",
+        "gripper0_right_gripper"
+      ],
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 12.508531458529616,
+      "mug_disp_after": 12.508531458594419,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 271,
+      "eef": [
+        -0.04616805672494666,
+        0.06050458529084836,
+        0.48782580695549027
+      ],
+      "gripper_base_gap_lower": 12.742048704265818,
+      "gap_pair": [
+        "box_small_base_1_main",
+        "gripper0_right_gripper"
+      ],
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.8109535302046784,
+      "mug_disp_before": 12.508531458594419,
+      "mug_disp_after": 12.50853145865922,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 272,
+      "eef": [
+        -0.04741392633129063,
+        0.061734663708001555,
+        0.4885362161748922
+      ],
+      "gripper_base_gap_lower": 14.593405469716256,
+      "gap_pair": [
+        "box_small_base_1_main",
+        "gripper0_right_gripper"
+      ],
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.6465282256245586,
+      "mug_disp_before": 12.50853145865922,
+      "mug_disp_after": 12.508531458724022,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 273,
+      "eef": [
+        -0.049063823306807086,
+        0.06257319907213743,
+        0.4902514781333265
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.39865244971423,
+      "mug_disp_before": 12.508531458724022,
+      "mug_disp_after": 12.50853145878882,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 274,
+      "eef": [
+        -0.05154709735863148,
+        0.06302005283144466,
+        0.4927882928585844
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.072401034498454,
+      "mug_disp_before": 12.50853145878882,
+      "mug_disp_after": 12.50853145885362,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 275,
+      "eef": [
+        -0.053552153071403666,
+        0.06360991085723726,
+        0.49303932162772746
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 2.4542127778137304,
+      "mug_disp_before": 12.50853145885362,
+      "mug_disp_after": 12.508531458918416,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 276,
+      "eef": [
+        -0.0545738934967945,
+        0.06240950428151518,
+        0.49149685918217834
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 2.8352294712644794,
+      "mug_disp_before": 12.508531458918416,
+      "mug_disp_after": 12.508531458983212,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 277,
+      "eef": [
+        -0.05537013507256198,
+        0.05936929871840894,
+        0.49015721823523517
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.224054113269177,
+      "mug_disp_before": 12.508531458983212,
+      "mug_disp_after": 12.508531459048006,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 278,
+      "eef": [
+        -0.05623188153497621,
+        0.0554141641906507,
+        0.48918320398216264
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.550182613496543,
+      "mug_disp_before": 12.508531459048006,
+      "mug_disp_after": 12.508531459112797,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 279,
+      "eef": [
+        -0.057227767821300186,
+        0.05099527713415662,
+        0.4884955318333395
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.7627140183031433,
+      "mug_disp_before": 12.508531459112797,
+      "mug_disp_after": 12.508531459177588,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 280,
+      "eef": [
+        -0.05588016312928207,
+        0.04758393707027462,
+        0.4876637984840322
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.8834933174562027,
+      "mug_disp_before": 12.508531459177588,
+      "mug_disp_after": 12.508531459242379,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 281,
+      "eef": [
+        -0.054254832190459866,
+        0.045168507810825695,
+        0.4859701063226779
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.99608822576766,
+      "mug_disp_before": 12.508531459242379,
+      "mug_disp_after": 12.508531459307168,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 282,
+      "eef": [
+        -0.05354402179433191,
+        0.04281439611990299,
+        0.4842037973705062
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.4486956718090678,
+      "mug_disp_before": 12.508531459307168,
+      "mug_disp_after": 12.508531459371957,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 283,
+      "eef": [
+        -0.05323138772962132,
+        0.04055633643239362,
+        0.48279202158838175
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.3503594686592653,
+      "mug_disp_before": 12.508531459371957,
+      "mug_disp_after": 12.508531459436746,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 284,
+      "eef": [
+        -0.05308928230874601,
+        0.03886622362916468,
+        0.4817773828247152
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.5965206945316095,
+      "mug_disp_before": 12.508531459436746,
+      "mug_disp_after": 12.508531459501539,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 285,
+      "eef": [
+        -0.05467491660094208,
+        0.037195686646731695,
+        0.4800777833469808
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 12.508531459501539,
+      "mug_disp_after": 12.508531459566335,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 286,
+      "eef": [
+        -0.05687721777202646,
+        0.03583928838211074,
+        0.4784854425942303
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 12.508531459566335,
+      "mug_disp_after": 12.508531459631127,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 287,
+      "eef": [
+        -0.05877612414352184,
+        0.034995103754705346,
+        0.4774474226151373
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 12.508531459631127,
+      "mug_disp_after": 12.50853145969593,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 288,
+      "eef": [
+        -0.06048243750795771,
+        0.03450542184300553,
+        0.4766847433079904
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 12.50853145969593,
+      "mug_disp_after": 12.508531459760729,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 289,
+      "eef": [
+        -0.06210010359301897,
+        0.0341569959484068,
+        0.4761196075806831
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 12.508531459760729,
+      "mug_disp_after": 12.50853145982553,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 290,
+      "eef": [
+        -0.06261161023894261,
+        0.03313581141952299,
+        0.47519603754163897
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.6547394136970643,
+      "mug_disp_before": 12.50853145982553,
+      "mug_disp_after": 12.508531459890328,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 291,
+      "eef": [
+        -0.06234078410263017,
+        0.03172882947743565,
+        0.47403775926016306
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 2.7942371806795743,
+      "mug_disp_before": 12.508531459890328,
+      "mug_disp_after": 12.508531459955128,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 292,
+      "eef": [
+        -0.061863094546204755,
+        0.03048590392272009,
+        0.47306788566209357
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 2.320843212261892,
+      "mug_disp_before": 12.508531459955128,
+      "mug_disp_after": 12.508531460019928,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 293,
+      "eef": [
+        -0.06121470363503366,
+        0.029429765077863344,
+        0.47219893125900614
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 2.532733279955892,
+      "mug_disp_before": 12.508531460019928,
+      "mug_disp_after": 12.50853146008473,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 294,
+      "eef": [
+        -0.060594736277611916,
+        0.028435560608562734,
+        0.47142547730943196
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 3.40988512643469,
+      "mug_disp_before": 12.50853146008473,
+      "mug_disp_after": 12.50853146014953,
+      "soup_dist": 5.842546275527248e-09
+    },
+    {
+      "step": 295,
+      "eef": [
+        -0.058647785723282324,
+        0.028331387016893434,
+        0.4704562738217577
+      ],
+      "gripper_base_gap_lower": null,
+      "gap_pair": null,
+      "contact_base": false,
+      "contact_mug": false,
+      "beta": 0.0,
+      "mug_disp_before": 12.50853146014953,
+      "mug_disp_after": 12.508531460214337,
+      "soup_dist": 5.842546275527248e-09
+    }
+  ]
+}
