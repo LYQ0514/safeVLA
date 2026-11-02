@@ -10,6 +10,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import os
 import sys
 
@@ -67,6 +68,11 @@ class Pi05Policy:
         )
         self._queue: list[np.ndarray] = []
         self.infer_count = 0
+        # 新增（CCA-ASF 只读访问）：最近一次推理的完整动作块 + 消费游标 + 元数据。
+        # 不影响 act() 的推理/缓存/重规划行为，仅额外记录。
+        self._chunk: np.ndarray | None = None
+        self._buffer_index: int = 0
+        self._chunk_meta: dict = {}
 
     @property
     def ready(self):
@@ -75,6 +81,9 @@ class Pi05Policy:
     def reset(self):
         """每个 episode 开始时丢弃上一段的动作队列。"""
         self._queue.clear()
+        self._chunk = None
+        self._buffer_index = 0
+        self._chunk_meta = {}
 
     def act(self, obs, prompt):
         """obs = robosuite 原始观测 dict；返回 7 维动作（已 clip 到 [-1,1]）。"""
@@ -88,10 +97,37 @@ class Pi05Policy:
                 np.clip(np.asarray(a, dtype=np.float32).reshape(-1)[:7], -1.0, 1.0)
                 for a in chunk
             ]
+            # 新增：在 replan 截断前保存完整动作块（只读访问用）
+            self._chunk = np.stack(self._queue).astype(np.float32)
+            self._buffer_index = 0
+            self._chunk_meta = {
+                "infer_count": self.infer_count,
+                "chunk_len": int(len(self._chunk)),
+                "replan_steps": self.replan_steps,
+                "chunk_hash": hashlib.sha256(self._chunk.tobytes()).hexdigest(),
+            }
             # closed-loop 重规划：只保留前 replan_steps 个，执行完立即重新推理
             if self.replan_steps:
                 self._queue = self._queue[: self.replan_steps]
-        return self._queue.pop(0)
+        action = self._queue.pop(0)
+        self._buffer_index += 1
+        return action
+
+    def get_current_chunk(self):
+        """返回最近一次推理的完整动作块副本（[K,7] float32）；无则 None。
+
+        CCA-ASF 只读访问，不触发额外推理。
+        """
+        return None if self._chunk is None else self._chunk.copy()
+
+    def get_chunk_metadata(self):
+        """返回动作块元数据副本（infer_count / chunk_len / replan_steps / chunk_hash）。"""
+        return dict(self._chunk_meta)
+
+    @property
+    def buffer_index(self):
+        """当前动作块已消费的步数（下一次 act 将消费 chunk[buffer_index]）。"""
+        return self._buffer_index
 
     def close(self):
         try:
