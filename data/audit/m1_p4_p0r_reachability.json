@@ -1,0 +1,437 @@
+{
+  "1/3": {
+    "nvs_step": 30,
+    "approaches": [
+      {
+        "desc": "正上方 z+0.14",
+        "offset": [
+          0.0,
+          0.0,
+          0.14
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 40,
+          "robot-底座接触": 20
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "正上方 z+0.09",
+        "offset": [
+          0.0,
+          0.0,
+          0.09
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 36,
+          "robot-底座接触": 24
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "+Y 侧向",
+        "offset": [
+          0.0,
+          0.06,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 44,
+          "robot-底座接触": 16
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "-Y 侧向(朝底座)",
+        "offset": [
+          0.0,
+          -0.06,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 46,
+          "robot-底座接触": 14
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "+X 侧向",
+        "offset": [
+          0.06,
+          0.0,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 60
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "-X 侧向",
+        "offset": [
+          -0.06,
+          0.0,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "robot-底座接触": 10,
+          "IK未收敛": 50
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "+Y 远更高",
+        "offset": [
+          0.0,
+          0.1,
+          0.14
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "robot-底座接触": 24,
+          "IK未收敛": 36
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "斜向抬升(+x+y+z)",
+        "offset": [
+          0.04,
+          0.08,
+          0.16
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 41,
+          "robot-底座接触": 19
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "斜向抬升(-x+y+z)",
+        "offset": [
+          -0.04,
+          0.08,
+          0.16
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 42,
+          "robot-底座接触": 18
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "高抬升 z+0.18",
+        "offset": [
+          0.0,
+          0.1,
+          0.18
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "robot-底座接触": 25,
+          "IK未收敛": 35
+        },
+        "best_gap_mm": null
+      }
+    ],
+    "n_free_ik_total": 0
+  },
+  "4/3": {
+    "nvs_step": 59,
+    "approaches": [
+      {
+        "desc": "正上方 z+0.14",
+        "offset": [
+          0.0,
+          0.0,
+          0.14
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 43,
+          "robot-底座接触": 17
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "正上方 z+0.09",
+        "offset": [
+          0.0,
+          0.0,
+          0.09
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 38,
+          "robot-底座接触": 22
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "+Y 侧向",
+        "offset": [
+          0.0,
+          0.06,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 43,
+          "robot-底座接触": 17
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "-Y 侧向(朝底座)",
+        "offset": [
+          0.0,
+          -0.06,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 44,
+          "robot-底座接触": 16
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "+X 侧向",
+        "offset": [
+          0.06,
+          0.0,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 60
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "-X 侧向",
+        "offset": [
+          -0.06,
+          0.0,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "robot-底座接触": 17,
+          "IK未收敛": 43
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "+Y 远更高",
+        "offset": [
+          0.0,
+          0.1,
+          0.14
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "robot-底座接触": 24,
+          "IK未收敛": 36
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "斜向抬升(+x+y+z)",
+        "offset": [
+          0.04,
+          0.08,
+          0.16
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 42,
+          "robot-底座接触": 18
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "斜向抬升(-x+y+z)",
+        "offset": [
+          -0.04,
+          0.08,
+          0.16
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "robot-底座接触": 24,
+          "IK未收敛": 36
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "高抬升 z+0.18",
+        "offset": [
+          0.0,
+          0.1,
+          0.18
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "robot-底座接触": 21,
+          "IK未收敛": 39
+        },
+        "best_gap_mm": null
+      }
+    ],
+    "n_free_ik_total": 0
+  },
+  "9/3": {
+    "nvs_step": 11,
+    "approaches": [
+      {
+        "desc": "正上方 z+0.14",
+        "offset": [
+          0.0,
+          0.0,
+          0.14
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 41,
+          "robot-底座接触": 19
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "正上方 z+0.09",
+        "offset": [
+          0.0,
+          0.0,
+          0.09
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 36,
+          "robot-底座接触": 24
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "+Y 侧向",
+        "offset": [
+          0.0,
+          0.06,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 44,
+          "robot-底座接触": 16
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "-Y 侧向(朝底座)",
+        "offset": [
+          0.0,
+          -0.06,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 48,
+          "robot-底座接触": 12
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "+X 侧向",
+        "offset": [
+          0.06,
+          0.0,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 60
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "-X 侧向",
+        "offset": [
+          -0.06,
+          0.0,
+          0.12
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "robot-底座接触": 8,
+          "IK未收敛": 52
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "+Y 远更高",
+        "offset": [
+          0.0,
+          0.1,
+          0.14
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "robot-底座接触": 24,
+          "IK未收敛": 36
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "斜向抬升(+x+y+z)",
+        "offset": [
+          0.04,
+          0.08,
+          0.16
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 42,
+          "robot-底座接触": 18
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "斜向抬升(-x+y+z)",
+        "offset": [
+          -0.04,
+          0.08,
+          0.16
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "IK未收敛": 41,
+          "robot-底座接触": 19
+        },
+        "best_gap_mm": null
+      },
+      {
+        "desc": "高抬升 z+0.18",
+        "offset": [
+          0.0,
+          0.1,
+          0.18
+        ],
+        "free_cnt": 0,
+        "fail_types": {
+          "robot-底座接触": 19,
+          "IK未收敛": 41
+        },
+        "best_gap_mm": null
+      }
+    ],
+    "n_free_ik_total": 0
+  }
+}
