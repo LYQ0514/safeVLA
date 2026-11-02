@@ -77,25 +77,33 @@ def classify_ik(env, q, ok, perr, rg, fg):
     mujoco.mj_forward(env.sim.model._model, env.sim.data._data)
     m = env.sim.model._model
     d = env.sim.data._data
-    mujoco.mj_collision(m, d)
-    names = env.sim.model.body_names
-    out = "SAFE_PREGRASP"
-    for c in range(d.ncon):
-        g1, g2 = d.contact[c].geom1, d.contact[c].geom2
-        b1 = names[m.geom_bodyid[g1]]
-        b2 = names[m.geom_bodyid[g2]]
-        is_r1 = g1 in rg
-        is_r2 = g2 in rg
-        if is_r1 and is_r2:
-            return "SELF_COLLISION"
-        elif is_r1 or is_r2:
-            env_body = b1 if is_r2 else b2
-            role, _ = classify_body(env_body)
-            if role == "PROTECTED_SUPPORT":
-                return "SUPPORT_COLLISION"
-            elif role == "PROTECTED":
-                return "PROTECTED_OBJECT_COLLISION"
-    return out
+    # 用正 margin 查询（与 min_gap_full 一致），避免 margin=0 的宽相位漏检
+    saved = {g: m.geom_margin[g] for g in list(rg) + list(fg)}
+    for g in list(rg) + list(fg):
+        m.geom_margin[g] = 0.05
+    try:
+        mujoco.mj_collision(m, d)
+        names = env.sim.model.body_names
+        out = "SAFE_PREGRASP"
+        for c in range(d.ncon):
+            g1, g2 = d.contact[c].geom1, d.contact[c].geom2
+            b1 = names[m.geom_bodyid[g1]]
+            b2 = names[m.geom_bodyid[g2]]
+            is_r1 = g1 in rg
+            is_r2 = g2 in rg
+            if is_r1 and is_r2:
+                return "SELF_COLLISION"
+            elif is_r1 or is_r2:
+                env_body = b1 if is_r2 else b2
+                role, _ = classify_body(env_body)
+                if role == "PROTECTED_SUPPORT":
+                    return "SUPPORT_COLLISION"
+                elif role == "PROTECTED":
+                    return "PROTECTED_OBJECT_COLLISION"
+        return out
+    finally:
+        for g, v in saved.items():
+            m.geom_margin[g] = v
 
 
 def min_gap_full(env, q, rg, fg):
