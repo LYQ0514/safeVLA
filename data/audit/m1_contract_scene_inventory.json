@@ -1,0 +1,480 @@
+{
+  "bodies": [
+    {
+      "bid": 0,
+      "name": "world",
+      "parent": "world",
+      "jnt": "-1",
+      "n_collision_geom": 0,
+      "n_visual_geom": 8,
+      "qpos_adr": -1,
+      "xpos": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "bid": 1,
+      "name": "floor",
+      "parent": "world",
+      "jnt": "-1",
+      "n_collision_geom": 1,
+      "n_visual_geom": 0,
+      "qpos_adr": -1,
+      "xpos": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "bid": 2,
+      "name": "living_room_table",
+      "parent": "world",
+      "jnt": "-1",
+      "n_collision_geom": 0,
+      "n_visual_geom": 0,
+      "qpos_adr": -1,
+      "xpos": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "bid": 3,
+      "name": "living_room_table_col",
+      "parent": "living_room_table",
+      "jnt": "-1",
+      "n_collision_geom": 6,
+      "n_visual_geom": 1,
+      "qpos_adr": -1,
+      "xpos": [
+        -0.25,
+        0.25,
+        0.0
+      ]
+    },
+    {
+      "bid": 4,
+      "name": "robot0_base",
+      "parent": "world",
+      "jnt": "-1",
+      "n_collision_geom": 0,
+      "n_visual_geom": 0,
+      "qpos_adr": -1,
+      "xpos": [
+        -0.51,
+        0.0,
+        0.42
+      ]
+    },
+    {
+      "bid": 5,
+      "name": "robot0_link0",
+      "parent": "robot0_base",
+      "jnt": "-1",
+      "n_collision_geom": 1,
+      "n_visual_geom": 12,
+      "qpos_adr": -1,
+      "xpos": [
+        -0.51,
+        0.0,
+        0.42
+      ]
+    },
+    {
+      "bid": 6,
+      "name": "robot0_link1",
+      "parent": "robot0_link0",
+      "jnt": "HINGE",
+      "n_collision_geom": 1,
+      "n_visual_geom": 1,
+      "qpos_adr": "0",
+      "xpos": [
+        -0.51,
+        0.0,
+        0.753
+      ]
+    },
+    {
+      "bid": 7,
+      "name": "robot0_link2",
+      "parent": "robot0_link1",
+      "jnt": "HINGE",
+      "n_collision_geom": 1,
+      "n_visual_geom": 1,
+      "qpos_adr": "1",
+      "xpos": [
+        -0.51,
+        0.0,
+        0.753
+      ]
+    },
+    {
+      "bid": 8,
+      "name": "robot0_link3",
+      "parent": "robot0_link2",
+      "jnt": "HINGE",
+      "n_collision_geom": 1,
+      "n_visual_geom": 4,
+      "qpos_adr": "2",
+      "xpos": [
+        -0.558,
+        -0.001,
+        1.065
+      ]
+    },
+    {
+      "bid": 9,
+      "name": "robot0_link4",
+      "parent": "robot0_link3",
+      "jnt": "HINGE",
+      "n_collision_geom": 1,
+      "n_visual_geom": 4,
+      "qpos_adr": "3",
+      "xpos": [
+        -0.476,
+        0.0,
+        1.078
+      ]
+    },
+    {
+      "bid": 10,
+      "name": "robot0_link5",
+      "parent": "robot0_link4",
+      "jnt": "HINGE",
+      "n_collision_geom": 1,
+      "n_visual_geom": 3,
+      "qpos_adr": "4",
+      "xpos": [
+        -0.134,
+        0.004,
+        0.886
+      ]
+    },
+    {
+      "bid": 11,
+      "name": "robot0_link6",
+      "parent": "robot0_link5",
+      "jnt": "HINGE",
+      "n_collision_geom": 1,
+      "n_visual_geom": 17,
+      "qpos_adr": "5",
+      "xpos": [
+        -0.134,
+        0.004,
+        0.886
+      ]
+    },
+    {
+      "bid": 12,
+      "name": "robot0_link7",
+      "parent": "robot0_link6",
+      "jnt": "HINGE",
+      "n_collision_geom": 1,
+      "n_visual_geom": 8,
+      "qpos_adr": "6",
+      "xpos": [
+        -0.046,
+        0.005,
+        0.881
+      ]
+    },
+    {
+      "bid": 13,
+      "name": "robot0_right_hand",
+      "parent": "robot0_link7",
+      "jnt": "-1",
+      "n_collision_geom": 0,
+      "n_visual_geom": 0,
+      "qpos_adr": -1,
+      "xpos": [
+        -0.052,
+        0.005,
+        0.775
+      ]
+    },
+    {
+      "bid": 14,
+      "name": "gripper0_right_gripper",
+      "parent": "robot0_right_hand",
+      "jnt": "-1",
+      "n_collision_geom": 1,
+      "n_visual_geom": 1,
+      "qpos_adr": -1,
+      "xpos": [
+        -0.052,
+        0.005,
+        0.775
+      ]
+    },
+    {
+      "bid": 15,
+      "name": "gripper0_eef",
+      "parent": "gripper0_right_gripper",
+      "jnt": "-1",
+      "n_collision_geom": 0,
+      "n_visual_geom": 0,
+      "qpos_adr": -1,
+      "xpos": [
+        -0.057,
+        0.005,
+        0.678
+      ]
+    },
+    {
+      "bid": 16,
+      "name": "gripper0_leftfinger",
+      "parent": "gripper0_right_gripper",
+      "jnt": "SLIDE",
+      "n_collision_geom": 0,
+      "n_visual_geom": 2,
+      "qpos_adr": "7",
+      "xpos": [
+        -0.055,
+        -0.033,
+        0.722
+      ]
+    },
+    {
+      "bid": 17,
+      "name": "gripper0_finger_joint1_tip",
+      "parent": "gripper0_leftfinger",
+      "jnt": "-1",
+      "n_collision_geom": 1,
+      "n_visual_geom": 0,
+      "qpos_adr": -1,
+      "xpos": [
+        -0.058,
+        -0.042,
+        0.667
+      ]
+    },
+    {
+      "bid": 18,
+      "name": "gripper0_rightfinger",
+      "parent": "gripper0_right_gripper",
+      "jnt": "SLIDE",
+      "n_collision_geom": 0,
+      "n_visual_geom": 2,
+      "qpos_adr": "8",
+      "xpos": [
+        -0.055,
+        0.044,
+        0.722
+      ]
+    },
+    {
+      "bid": 19,
+      "name": "gripper0_finger_joint2_tip",
+      "parent": "gripper0_rightfinger",
+      "jnt": "-1",
+      "n_collision_geom": 1,
+      "n_visual_geom": 0,
+      "qpos_adr": -1,
+      "xpos": [
+        -0.058,
+        0.052,
+        0.666
+      ]
+    },
+    {
+      "bid": 20,
+      "name": "mount0_base",
+      "parent": "robot0_base",
+      "jnt": "-1",
+      "n_collision_geom": 0,
+      "n_visual_geom": 0,
+      "qpos_adr": -1,
+      "xpos": [
+        -0.51,
+        0.0,
+        0.42
+      ]
+    },
+    {
+      "bid": 21,
+      "name": "alphabet_soup_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 21,
+      "n_visual_geom": 1,
+      "qpos_adr": "9",
+      "xpos": [
+        0.133,
+        -0.07,
+        0.475
+      ]
+    },
+    {
+      "bid": 22,
+      "name": "cream_cheese_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 1,
+      "n_visual_geom": 1,
+      "qpos_adr": "16",
+      "xpos": [
+        -0.168,
+        0.04,
+        0.446
+      ]
+    },
+    {
+      "bid": 23,
+      "name": "tomato_sauce_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 24,
+      "n_visual_geom": 1,
+      "qpos_adr": "23",
+      "xpos": [
+        -10.146,
+        -0.25,
+        0.038
+      ]
+    },
+    {
+      "bid": 24,
+      "name": "ketchup_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 12,
+      "n_visual_geom": 1,
+      "qpos_adr": "30",
+      "xpos": [
+        -0.212,
+        -0.132,
+        0.509
+      ]
+    },
+    {
+      "bid": 25,
+      "name": "basket_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 5,
+      "n_visual_geom": 1,
+      "qpos_adr": "37",
+      "xpos": [
+        -0.005,
+        0.254,
+        0.432
+      ]
+    },
+    {
+      "bid": 26,
+      "name": "moka_pot_small_obstacle_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 15,
+      "n_visual_geom": 2,
+      "qpos_adr": "44",
+      "xpos": [
+        -10.0,
+        0.0,
+        0.061
+      ]
+    },
+    {
+      "bid": 27,
+      "name": "white_storage_box_obstacle_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 4,
+      "n_visual_geom": 1,
+      "qpos_adr": "51",
+      "xpos": [
+        10.0,
+        -0.0,
+        0.058
+      ]
+    },
+    {
+      "bid": 28,
+      "name": "milk_small_obstacle_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 4,
+      "n_visual_geom": 1,
+      "qpos_adr": "58",
+      "xpos": [
+        20.0,
+        0.0,
+        0.078
+      ]
+    },
+    {
+      "bid": 29,
+      "name": "wine_bottle_small_obstacle_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 21,
+      "n_visual_geom": 3,
+      "qpos_adr": "65",
+      "xpos": [
+        -0.0,
+        10.0,
+        -0.001
+      ]
+    },
+    {
+      "bid": 30,
+      "name": "red_coffee_mug_obstacle_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 11,
+      "n_visual_geom": 1,
+      "qpos_adr": "72",
+      "xpos": [
+        0.02,
+        -0.1,
+        0.514
+      ]
+    },
+    {
+      "bid": 31,
+      "name": "yellow_book_obstacle_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 1,
+      "n_visual_geom": 1,
+      "qpos_adr": "79",
+      "xpos": [
+        -20.0,
+        0.0,
+        -0.002
+      ]
+    },
+    {
+      "bid": 32,
+      "name": "box_small_base_1_main",
+      "parent": "world",
+      "jnt": "FREE",
+      "n_collision_geom": 4,
+      "n_visual_geom": 1,
+      "qpos_adr": "86",
+      "xpos": [
+        0.02,
+        -0.1,
+        0.439
+      ]
+    }
+  ],
+  "free_env_bodies": [
+    "alphabet_soup_1_main",
+    "cream_cheese_1_main",
+    "tomato_sauce_1_main",
+    "ketchup_1_main",
+    "basket_1_main",
+    "moka_pot_small_obstacle_1_main",
+    "white_storage_box_obstacle_1_main",
+    "milk_small_obstacle_1_main",
+    "wine_bottle_small_obstacle_1_main",
+    "red_coffee_mug_obstacle_1_main",
+    "yellow_book_obstacle_1_main",
+    "box_small_base_1_main"
+  ]
+}
