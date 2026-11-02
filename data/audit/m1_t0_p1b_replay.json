@@ -1,0 +1,8 @@
+{
+  "soup_lift_step": 75,
+  "soup_lift_gripper": 0.06389873836221795,
+  "soup_lift_eef_dist_mm": 19.639210504950302,
+  "soup_grasp_contact": true,
+  "cream_lift_step": 232,
+  "verdict": "TASK_INTEGRITY_FAIL（gripper=False eef_close=True contact=True）"
+}

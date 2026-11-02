@@ -1,0 +1,52 @@
+{
+  "1/3": {
+    "state": "1/3",
+    "task_integrity_ok": true,
+    "disps_mm": {
+      "alphabet_soup_1_main": 0.0,
+      "cream_cheese_1_main": 0.0
+    },
+    "first_violation": null,
+    "success_predicate_after_exec": "False",
+    "verdict": "PREGRASP_VALID"
+  },
+  "4/3": {
+    "state": "4/3",
+    "task_integrity_ok": false,
+    "disps_mm": {
+      "alphabet_soup_1_main": 247.848,
+      "cream_cheese_1_main": 0.0
+    },
+    "first_violation": {
+      "substep": 150,
+      "disps_mm": {
+        "alphabet_soup_1_main": 8.329524209870376,
+        "cream_cheese_1_main": 0.0
+      }
+    },
+    "success_predicate_after_exec": "False",
+    "verdict": "TASK_INTEGRITY_FAIL"
+  },
+  "9/3": {
+    "state": "9/3",
+    "task_integrity_ok": true,
+    "disps_mm": {
+      "alphabet_soup_1_main": 0.0,
+      "cream_cheese_1_main": 0.0
+    },
+    "first_violation": null,
+    "success_predicate_after_exec": "False",
+    "verdict": "PREGRASP_VALID"
+  },
+  "2/0": {
+    "state": "2/0",
+    "task_integrity_ok": true,
+    "disps_mm": {
+      "alphabet_soup_1_main": 0.0,
+      "cream_cheese_1_main": 0.006
+    },
+    "first_violation": null,
+    "success_predicate_after_exec": true,
+    "verdict": "PREGRASP_VALID"
+  }
+}

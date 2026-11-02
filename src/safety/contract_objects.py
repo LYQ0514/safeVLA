@@ -176,3 +176,89 @@ def has_forbidden_contact(env):
     """是否存在 robot↔受保护物体/支撑物/摆设 的接触（含未分类，保守）。"""
     m = monitor_contacts(env)
     return len(m["forbidden"]) > 0 or len(m["unclassified"]) > 0
+
+
+# ---------------------------------------------------------------------------
+# TASK 物体操作完整性监控（M1-T0）
+#
+# 目的：区分「合法抓取」与「非预期推动」。LIBERO 的 check_success 只判断
+# 最终位置谓词 in(obj, basket_contain_region)，不检查物体「如何」到达目标区域。
+# State02 的假成功 = 预抓取路径把 soup/cream 撞进 basket → 谓词成立。
+#
+# 阶段语义（预注册，不按结果调）：
+#   PLANNING / PREGRASP：禁止 robot 未经授权推动 TASK 物体；
+#   GRASP：允许夹爪接触目标物体，以夹持 + 抬升验证真实抓取；
+#   TRANSPORT / PLACE：物体随机器人运输、在目标区域释放并稳定。
+# ---------------------------------------------------------------------------
+
+# TASK 物体在「非抓取阶段」的位移阈值（米）。抓取/运输阶段物体本应大幅移动，
+# 规划/预抓取阶段物体应近似静止。阈值取 5mm，远大于自由物体数值噪声（<1e-6mm）。
+TASK_STILL_DISP_THRESHOLD = 0.005  # 5mm
+
+
+class TaskIntegrityMonitor:
+    """跟踪 TASK 物体（soup/cream）在规划/预抓取阶段的位置完整性。
+
+    用法：
+        tim = TaskIntegrityMonitor(env)
+        # 规划/预抓取阶段逐 substep：
+        tim.record("PLANNING")   # 记录当前 soup/cream 位置，检测位移
+        # 抓取/运输阶段：
+        tim.record("GRASP")
+    """
+
+    def __init__(self, env, task_bodies=("alphabet_soup_1_main", "cream_cheese_1_main")):
+        self.env = env
+        self.task_bodies = list(task_bodies)
+        self._baseline = {b: self._pos(b) for b in self.task_bodies}
+        self.violations = []  # (stage, body, disp_mm, event)
+
+    def _pos(self, body_name):
+        from tools.g1a_soup_trace import body_state
+        return body_state(self.env, body_name)["pos"].copy()
+
+    def reset_baseline(self):
+        """在进入新阶段前重置基线（例如从 PLANNING 切换到 GRASP）。"""
+        self._baseline = {b: self._pos(b) for b in self.task_bodies}
+
+    def record(self, stage):
+        """记录当前阶段。若在 PLANNING/PREGRASP 阶段检测到位移超阈值，记录违规。
+
+        返回本步的违规列表。
+        """
+        step_violations = []
+        for b in self.task_bodies:
+            cur = self._pos(b)
+            disp = float(np.sum(np.abs(cur - self._baseline[b])))
+            if stage in ("PLANNING", "PREGRASP") and disp > TASK_STILL_DISP_THRESHOLD:
+                step_violations.append({
+                    "stage": stage, "body": b, "disp_mm": disp * 1000,
+                })
+                self.violations.append(step_violations[-1])
+        return step_violations
+
+    def check_preplanning_integrity(self):
+        """一次性检查：规划/预抓取阶段 TASK 物体是否被推动。
+
+        返回 (integrity_ok, max_disp_mm, violated_bodies)。
+        """
+        max_disp = {}
+        for b in self.task_bodies:
+            cur = self._pos(b)
+            max_disp[b] = float(np.sum(np.abs(cur - self._baseline[b])))
+        violated = {b: d for b, d in max_disp.items() if d > TASK_STILL_DISP_THRESHOLD}
+        return len(violated) == 0, max_disp, violated
+
+
+def task_integrity_ok(env, baseline_positions, task_bodies=("alphabet_soup_1_main", "cream_cheese_1_main")):
+    """无状态检查：TASK 物体相对基线位移是否在阈值内。
+
+    baseline_positions: {body_name: pos_array}。返回 (ok, {body: disp_mm})。
+    """
+    from tools.g1a_soup_trace import body_state
+    disps = {}
+    for b in task_bodies:
+        cur = body_state(env, b)["pos"]
+        disps[b] = float(np.sum(np.abs(cur - np.asarray(baseline_positions[b]))))
+    ok = all(d <= TASK_STILL_DISP_THRESHOLD for d in disps.values())
+    return ok, {b: d * 1000 for b, d in disps.items()}
