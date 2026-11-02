@@ -37,6 +37,7 @@ def _make_layer(filter_mode, beta_max=4.0):
     layer.eta = 0.8
     layer.intent_len = 5
     layer._task_direction_z = None
+    layer.record_qp_snapshot = False
     layer._last_p1 = np.zeros(3)
     return layer
 

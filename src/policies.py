@@ -85,6 +85,37 @@ class Pi05Policy:
         self._buffer_index = 0
         self._chunk_meta = {}
 
+    def inject_initial_chunk(self, chunk, metadata=None):
+        """注入首动作块（E1 严格配对用），不触发 worker 推理。
+
+        chunk: [K,7] float32（已 clip 到 [-1,1] 的名义动作块）。
+        metadata: 可选 dict（chunk_hash / infer_count 等），用于身份记录。
+
+        走与正常推理完成时相同的状态转换路径：填充 _queue/_chunk/_buffer_index/
+        _chunk_meta，并按 replan_steps 截断。infer_count 不增加（未推理）。
+        """
+        if self._queue:
+            raise RuntimeError("inject_initial_chunk 只能在 reset 后、首次 act 前调用")
+        chunk = np.asarray(chunk, dtype=np.float32)
+        if chunk.ndim != 2 or chunk.shape[1] != 7:
+            raise ValueError(f"chunk 必须 [K,7]，得到 {chunk.shape}")
+        self._queue = [np.clip(chunk[i], -1.0, 1.0).copy() for i in range(len(chunk))]
+        # 完整 chunk 保存（只读访问用，含被 replan 截断的尾部）
+        self._chunk = chunk.copy()
+        self._buffer_index = 0
+        self._chunk_meta = {
+            "infer_count": self.infer_count,  # 注入未推理，保持原值
+            "chunk_len": int(len(chunk)),
+            "replan_steps": self.replan_steps,
+            "chunk_hash": hashlib.sha256(chunk.tobytes()).hexdigest(),
+            "injected": True,
+        }
+        if metadata:
+            self._chunk_meta.update({k: v for k, v in metadata.items() if k != "infer_count"})
+        # replan 截断（与正常推理一致）
+        if self.replan_steps:
+            self._queue = self._queue[: self.replan_steps]
+
     def act(self, obs, prompt):
         """obs = robosuite 原始观测 dict；返回 7 维动作（已 clip 到 [-1,1]）。"""
         if not self._queue:
