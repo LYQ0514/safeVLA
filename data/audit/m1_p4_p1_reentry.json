@@ -122,5 +122,22 @@
     "n_generate": 1,
     "wall_s": 841.5062959194183,
     "done": true
+  },
+  "2/0/P-H": {
+    "branch": "P-H",
+    "state": "2/0",
+    "success": true,
+    "success_step": 0,
+    "soup_done": 0,
+    "Dmax": 4.925258118015918e-11,
+    "car_ok": true,
+    "n_forbidden_events": 0,
+    "first_forbidden": null,
+    "forbidden_pair_types": {},
+    "n_nvs": 0,
+    "nvs_step": null,
+    "n_generate": 1,
+    "wall_s": 709.4852411746979,
+    "done": true
   }
 }
