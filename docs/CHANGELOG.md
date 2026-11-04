@@ -2,6 +2,22 @@
 
 ## [Unreleased]
 
+### 2026-11-04 — AEGIS 复现 bug 修复 + 全部 AEGIS 结论作废重做（重大）
+
+- **发现严重 bug**：`src/safety/aegis_adapted.py` 的 `_quat_wxyz_to_rot` 把
+  `robot0_eef_quat`（实为 xyzw）误当 wxyz，导致末端姿态 R1 的 y/z 轴符号翻转、
+  末端椭球中心 p1 偏移方向反了 **16cm**（正确 z=0.748 末端下方，错误 z=0.588 上方）。
+  权威依据：robosuite `single_arm.py: convert_quat(..., to="xyzw")`。
+- **影响**：bug 从最早提交就存在，污染所有 AEGIS 复现（`aegis_1024` 全量、CCA-ASF、
+  circulation、grasp-aware、分离约束、支撑感知的 AEGIS 相关实验）。
+- **修复**：`_quat_wxyz_to_rot` 改为 `R.from_quat`（xyzw 直通）。
+- **修复后实测（long task0 level I）**：TSR 从 bug 时代的 0.0% → **45.0%**（20ep），
+  碰撞率 24% → 55%。
+- **作废**：之前所有「AEGIS 指标低」的归因（`aegis_metric_attribution.md` 的
+  「任务-安全空间冲突」）、circulation/grasp-aware/分离约束的结论，均基于错误 p1，
+  需在修复后重做。
+- 详见 `docs/research/aegis_reproduction_audit.md`。
+
 ### 2026-11-01 — 方法论规范 + 安全真值门禁测试（研究线收口）
 
 - **新增**：`docs/reference/safety_causal_experiment_protocol.md`

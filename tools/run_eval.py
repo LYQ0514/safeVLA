@@ -64,17 +64,20 @@ def parse_args():
     ap.add_argument("--episodes", type=int, nargs="+", default=[0])
     ap.add_argument("--max-steps", type=int, default=None,
                     help="步数上限；默认按套件取（short 套件 300，long 550）")
-    ap.add_argument("--num-steps-wait", type=int, default=10)
+    ap.add_argument("--num-steps-wait", type=int, default=20,
+                    help="空转步数（上游 AEGIS 默认 20，对齐）")
     ap.add_argument("--out", default=None, help="输出目录，默认 data/eval/<时间戳>/")
     ap.add_argument("--no-policy", action="store_true", help="零动作，只验证链路")
     ap.add_argument("--no-video", action="store_true")
     ap.add_argument("--all", action="store_true", help="全量：4 套件 x 2 等级 x 4 任务 x 50 episode")
     ap.add_argument("--resume", action="store_true",
                     help="断点续跑：跳过 out 目录里已完成的 (场景, episode)")
-    ap.add_argument("--replan-steps", type=int, default=None,
-                    help="每 N 步重新推理（AEGIS 用 5）；默认执行完整 action chunk")
-    ap.add_argument("--resolution", type=int, default=256,
-                    help="相机渲染分辨率。AEGIS 原文用 1024，对比时两边须一致")
+    ap.add_argument("--replan-steps", type=int, default=5,
+                    help="每 N 步重新推理（与 AEGIS 对齐用 5；None=执行完整 action chunk）")
+    ap.add_argument("--resolution", type=int, default=1024,
+                    help="渲染分辨率（上游 AEGIS LIBERO_ENV_RESOLUTION=1024）")
+    ap.add_argument("--policy-resize", type=int, default=224,
+                    help="策略输入分辨率（π0.5 训练分辨率 224，对齐上游 resize_size）")
     return ap.parse_args()
 
 
@@ -114,7 +117,7 @@ def main():
 
         print("[eval] 加载 π0.5 策略（首次含 JAX 编译，约 1~3 分钟）…")
         policy = Pi05Policy(verbose=True, replan_steps=args.replan_steps,
-                            image_size=args.resolution)
+                            image_size=args.policy_resize)
         if args.replan_steps:
             print(f"[eval] closed-loop 重规划：每 {args.replan_steps} 步重新推理")
 

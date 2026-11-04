@@ -101,11 +101,15 @@ model = "glm-4.5v"
 
 这两处**偏离上游**，但方向是修 bug，需在报告中说明：
 
-### ① 障碍物位姿每步刷新
+### ① 障碍物位姿每步刷新（⚠️ 已回退，见下）
 
 上游只在 episode 开头算一次 `p2`（障碍物中心）。障碍物一旦被碰动，椭球就是错的。
 
-我们的 `filter()` 末尾会更新 `self.p2 = obs[f"{name}_pos"]`。
+~~我们的 `filter()` 末尾会更新 `self.p2 = obs[f"{name}_pos"]`。~~
+
+**2026-11-04 更新**：为**严格复现上游**，此改动已回退——`filter()` 不再每步刷新 `p2`，
+与上游一致（fit_ellipse 一次，episode 内固定）。见
+`docs/research/aegis_reproduction_audit.md` 与 `docs/research/aegis_strict_reproduction_gaps.md`。
 
 ### ② 记录 QP 不可行率
 
@@ -119,3 +123,19 @@ u_v = action[:3]      # 回退到原始动作 —— 即最危险的动作
 
 为保持"复现"，我们**保留该行为**，但统计 `infeasible_rate` 并在输出里打印，
 以便量化这一缺陷。若要改成"急停"回退，属改进而非复现，需单列实验。
+
+### ③ 四元数约定 bug（已修复，2026-11-04）
+
+**发现**：`aegis_adapted.py` 的 `_quat_wxyz_to_rot` 曾把 `robot0_eef_quat`（实为
+**xyzw**，robosuite `convert_quat(to="xyzw")`）误当 wxyz，做 `[x,y,z,w]=[q1,q2,q3,q0]`
+重排，导致末端姿态 R1 的 y/z 轴符号翻转、末端椭球中心 p1 偏移方向反了 **16cm**。
+
+**影响**：污染所有 AEGIS 复现（TSR 被严重低估，long task0 从错误的 0% 修复为 45%）。
+
+**修复**：改为 `R.from_quat`（xyzw 直通）。详见
+`docs/research/aegis_reproduction_audit.md`。
+
+### ④ 策略输入分辨率对齐（2026-11-04）
+
+上游「渲染 1024 + resize 224 喂策略」，π0.5 训练分辨率 224。此前评测曾用 256/1024
+直接喂策略（OOD），已对齐为「渲染 1024 + 策略输入 224」（新增 `--policy-resize 224`）。

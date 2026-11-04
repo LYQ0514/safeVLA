@@ -86,9 +86,12 @@ def main():
     ap.add_argument("--tasks", type=int, nargs="+", default=[0])
     ap.add_argument("--episodes", type=int, nargs="+", default=[0])
     ap.add_argument("--max-steps", type=int, default=None)
-    ap.add_argument("--num-steps-wait", type=int, default=10)
+    ap.add_argument("--num-steps-wait", type=int, default=20,
+                    help="空转步数（上游 AEGIS 默认 20，对齐）")
     ap.add_argument("--resolution", type=int, default=1024,
-                    help="AEGIS 原文用 1024；与基线对比时须一致")
+                    help="渲染分辨率（上游 LIBERO_ENV_RESOLUTION=1024）")
+    ap.add_argument("--policy-resize", type=int, default=224,
+                    help="策略输入分辨率（上游 resize_size=224，π0.5 训练分辨率）")
     ap.add_argument("--replan-steps", type=int, default=5,
                     help="AEGIS 原文默认 5")
     ap.add_argument("--out", default=None)
@@ -134,9 +137,10 @@ def main():
     if not args.no_video:
         video_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"[aegis] 加载 π0.5（分辨率 {args.resolution}, replan={args.replan_steps}）…")
+    print(f"[aegis] 加载 π0.5（渲染 {args.resolution}, 策略输入 {args.policy_resize}, "
+          f"replan={args.replan_steps}）…")
     base = Pi05Policy(verbose=True, replan_steps=args.replan_steps,
-                      image_size=args.resolution)
+                      image_size=args.policy_resize)
 
     if args.all:
         combos = [(s, l, list(range(4)), list(range(50))) for s in SUITES for l in LEVELS]

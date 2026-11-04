@@ -65,12 +65,14 @@ class CollisionTracker:
         self.max_displacement = 0.0
 
     def update(self, obs, step):
-        if self.name is None or self.collided:
+        if self.name is None:
             return
         curr = np.asarray(obs[self.name + "_pos"], dtype=np.float64)
         disp = float(np.sum(np.abs(curr - self.initial_pos)))
         self.max_displacement = max(self.max_displacement, disp)
-        if disp > COLLISION_DISPLACEMENT_EPS:
+        # 修复（2026-11-04）：首次超过阈值后仍继续追踪最大位移，
+        # 否则「轻碰后撞飞」的 episode 会被误判为「轻碰」（CAR_severe 统计错误）。
+        if not self.collided and disp > COLLISION_DISPLACEMENT_EPS:
             self.collided = True
             self.collision_step = step
 

@@ -80,11 +80,17 @@ def set_use_small_eef(flag):
 _USE_SMALL_EEF = False
 
 
-def _quat_wxyz_to_rot(quat_wxyz):
-    """MuJoCo/robosuite 四元数是 wxyz，转 3x3 旋转矩阵。"""
+def _quat_wxyz_to_rot(quat):
+    """四元数 → 3x3 旋转矩阵（xyzw 约定，兼容历史调用名）。
+
+    ⚠️ 修复记录（2026-11-04）：robosuite 的 `robot0_eef_quat` 是 **xyzw** 约定
+    （robosuite/robots/single_arm.py: `convert_quat(..., to="xyzw")`），不是 wxyz。
+    之前误当 wxyz 做 `[x,y,z,w]=[q1,q2,q3,q0]` 重排，导致 R1 的 y/z 轴符号翻转、
+    末端椭球中心 p1 偏移方向反了（16cm 偏差）。现已改为 scipy 默认 xyzw 直通。
+    函数名保留以免破坏调用点，语义已纠正。
+    """
     from scipy.spatial.transform import Rotation as R
-    w, x, y, z = quat_wxyz
-    return R.from_quat([x, y, z, w]).as_matrix()
+    return R.from_quat(np.asarray(quat, dtype=np.float64)).as_matrix()
 
 
 def find_active_obstacle(env, obs):
@@ -104,36 +110,92 @@ def find_active_obstacle(env, obs):
     return None
 
 
+def _geom_half_axes(geom_type, geom_size):
+    """按 MuJoCo geom type 把 geom_size 解释为「半轴」（世界系前，局部系后）。"""
+    s = np.asarray(geom_size, dtype=np.float64)
+    if geom_type == 2:  # sphere: [radius]
+        return np.array([s[0], s[0], s[0]])
+    if geom_type == 3:  # capsule: [radius, half_length]，z 半轴 = radius + half_length
+        return np.array([s[0], s[0], s[0] + s[1]])
+    if geom_type == 5:  # cylinder: [radius, half_length]
+        return np.array([s[0], s[0], s[1]])
+    if geom_type in (4, 6, 7):  # ellipsoid / box / mesh: 3 半轴（mesh 的 size 视为半轴）
+        return s.copy()
+    return np.array([s[0], s[0], s[0]]) if s.shape[0] == 1 else s.copy()
+
+
+def _box_vertices(center, Rmat, half):
+    """box/椭球 geom 的世界系 8 顶点（对角顶点）。"""
+    verts = []
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            for sz in (-1, 1):
+                local = np.array([sx * half[0], sy * half[1], sz * half[2]])
+                verts.append(center + Rmat @ local)
+    return np.array(verts)
+
+
 def obstacle_ellipsoid(env, obs, name):
-    """oracle：从 MuJoCo geom 直接取障碍物的位姿与包围椭球半轴。
+    """oracle：对「碰撞几何顶点」拟合最小外接椭球（MVEE），保证包围性。
 
-    上游是对深度点云做最小体积椭球拟合（mvee_cvxpy）。我们用真值：
-    - 位姿：obs[f"{name}_pos"] / `_quat`
-    - 半轴：该 body 所有 geom 的 size 取最大（保守，保证包住物体）
+    修复（审计 P0-B）：之前用「body 原点 + geom_size 逐轴 max」或「AABB 半长」，
+    两者都**不能保证包住**碰撞几何（AABB 半长做椭球半轴时 8 顶点里 6 个越界）。
+    正确做法：
+    - 遍历该 body 所有 contype>0（碰撞几何）的 geom；
+    - 用 geom_xpos/geom_xmat 算每个 geom 的世界系 8 顶点；
+    - 对全体顶点拟合 MVEE（与上游对点云拟合 MVEE 同一数学操作，输入换成真值顶点）。
+
+    返回 (center, R, half_axes)，R 是 MVEE 主轴（列向量），half_axes 是半轴长。
     """
-    pos = np.asarray(obs[name + "_pos"], dtype=np.float64)
-    quat = np.asarray(obs[name + "_quat"], dtype=np.float64)
-    R = _quat_wxyz_to_rot(quat)
-
     model = env.sim.model
+    data = env.sim.data
     body_name = name + "_main"
     try:
         bid = model.body_name2id(body_name)
     except Exception:
-        # 兜底：按前缀找
         bid = next(
-            (i for i, b in enumerate(model.body_names) if b.startswith(name)),
-            None,
+            (i for i, b in enumerate(model.body_names) if b.startswith(name)), None
         )
         if bid is None:
             return None
-    gids = [g for g in range(model.ngeom) if model.geom_bodyid[g] == bid]
-    if not gids:
+
+    has_world = hasattr(data, "geom_xpos") and hasattr(data, "geom_xmat")
+    verts = []
+    for g in range(model.ngeom):
+        if model.geom_bodyid[g] != bid or model.geom_contype[g] <= 0:
+            continue  # 只取碰撞几何（contype>0），跳过纯视觉 mesh
+        half = _geom_half_axes(int(model.geom_type[g]), model.geom_size[g])
+        if has_world:
+            c = np.asarray(data.geom_xpos[g], dtype=np.float64)
+            Rm = np.asarray(data.geom_xmat[g], dtype=np.float64).reshape(3, 3)
+        else:
+            c = (np.asarray(data.xpos[bid], dtype=np.float64)
+                 + np.asarray(model.geom_pos[g], dtype=np.float64))
+            Rm = _quat_wxyz_to_rot(model.geom_quat[g])
+        verts.append(_box_vertices(c, Rm, half))
+
+    if not verts:
         return None
-    # 每个 geom 的 size 是半轴（box/ellipsoid/capsule 含义不同），取最大最保守
-    half_axes = np.max(np.array([model.geom_size[g] for g in gids]), axis=0)
-    half_axes = np.maximum(half_axes, 1e-3)
-    return pos, R, half_axes
+    P = np.vstack(verts)
+
+    # 对顶点拟合 MVEE（复用上游 mvee_cvxpy + 特征分解，同 fit_ellipse 逻辑）
+    from scipy.spatial import ConvexHull
+    try:
+        hull = ConvexHull(P)
+        hull_pts = P[hull.vertices]
+    except Exception:
+        hull_pts = P
+    from utils import mvee_cvxpy
+    center, A = mvee_cvxpy(hull_pts)
+    eigvals, eigvecs = np.linalg.eigh(A)
+    eigvals = np.clip(eigvals, 1e-15, None)
+    axes = 1.0 / np.sqrt(eigvals)
+    sort_idx = np.argsort(axes)[::-1]
+    axes = axes[sort_idx]
+    R = eigvecs[:, sort_idx]
+    # 保守放大：MVEE 的 SCS 数值解有 ~1e-4 量级的越界，放大 0.1% 保证严格包围
+    half_axes = np.maximum(axes, 1e-3) * 1.001
+    return np.asarray(center, dtype=np.float64), R, half_axes
 
 
 class AegisSafetyLayer:
@@ -152,8 +214,20 @@ class AegisSafetyLayer:
     """
 
     def __init__(self, env, verbose=False, filter_mode="euclidean",
-                 beta_max=4.0, eta=0.8, intent_len=5):
+                 beta_max=4.0, eta=0.8, intent_len=5,
+                 extra_obstacle_names=None, auto_support=False,
+                 use_circulation=False, circ_gain=50.0, circ_activate=0.02,
+                 circ_sign=1.0, eef_q_override=None, grasp_aware=False,
+                 grasped_object_body=None, grasped_q=None,
+                 keep_small_when_grasped=False, perception_mode="oracle"):
         self.env = env
+        # perception_mode: "oracle"=MuJoCo 真值 AABB；"perception"=VLM+GroundingDINO+MVEE
+        # （与上游论文一致）。两者是不同的方法变体，须分开报告。
+        assert perception_mode in ("oracle", "perception"), \
+            f"未知 perception_mode: {perception_mode}"
+        self.perception_mode = perception_mode
+        # suite_name 用于 perception 模式的 filtering_points（不同套件的 z 过滤范围不同）
+        self.suite_name = "safelibero_long"
         self.verbose = verbose
         self.obstacle_name = None
         self.p2 = None
@@ -161,6 +235,11 @@ class AegisSafetyLayer:
         self.Q2_diag = None
         self.z_fixed = None
         self.Q1_diag = EEF_Q_DEFAULT.copy()
+        # 传递链扩展：额外纳入保护的障碍物（如支撑 hazard 的底座）。
+        # 每个是 dict{name, p2, R2, Q2, z}，filter 里各加一条 CBF 约束。
+        self.extra_obstacle_names = list(extra_obstacle_names or [])
+        self.auto_support = bool(auto_support)
+        self.extra_obstacles = []
         self.feasible_count = 0
         self.infeasible_count = 0
         self.intervene_count = 0
@@ -174,9 +253,42 @@ class AegisSafetyLayer:
         self._task_direction_z = None
         # E0 审计：是否在 info 里记录 QP 快照（u_nom/A_row/r/d_y/u_sol），默认关
         self.record_qp_snapshot = False
+        # ---- Circulation CBF（CBF with Circulation Inequalities，T-CST 2024）----
+        # 缓解 CBF-QP 的稳定虚假平衡点（spurious equilibrium）：当末端被障碍物
+        # 径向推离卡死时，强制一个切向（环绕）速度分量，让末端绕开障碍物。
+        # 约束形式：T_local @ u[:3] >= circ_gain * (circ_activate - h)
+        #   - T_world = 绕障碍物的水平切向（circ_sign 控制顺时针/逆时针）；
+        #   - beta(h) = circ_gain * (circ_activate - h)，h 大时 beta<0 约束平凡化，
+        #     h 小时 beta>0 强制环绕。
+        self.use_circulation = bool(use_circulation)
+        self.circ_gain = float(circ_gain)
+        self.circ_activate = float(circ_activate)
+        self.circ_sign = 1.0 if float(circ_sign) >= 0 else -1.0
+        # 末端椭球尺寸覆盖（轴敏感性扫描 / grasp-aware 豁免用）。None = 用任务默认。
+        self.eef_q_override = None if eef_q_override is None else np.asarray(
+            eef_q_override, dtype=np.float64).copy()
+        # grasp-aware 椭球：接近（未抓，夹爪张开）用小椭球，抓住后（夹爪闭合）用
+        # 大椭球（包住被抓物体）。gripper_qpos 绝对值和 < grasp_close_thresh 判闭合。
+        self.grasp_aware = bool(grasp_aware)
+        self.grasp_q_open = None   # 未抓时的椭球（接近阶段，仅夹爪本体）
+        self.grasp_q_grasped = None  # 已抓时的椭球（夹爪 + 被抓物体）
+        self.grasp_close_thresh = 0.035
+        self._grasped = False
+        # 被抓物体分离约束：抓取阶段加「被抓物体椭球 vs 障碍物椭球」的 CBF，
+        # 而非扩大末端椭球。grasped_object_body = 被抓物体的 joint 名（如 alphabet_soup_1）。
+        self.grasped_object_body = grasped_object_body
+        self.grasped_q = None if grasped_q is None else np.asarray(grasped_q, dtype=np.float64)
+        # keep_small_when_grasped：抓取后不切大椭球（保持小椭球），只靠 sep 约束保护
+        # 被抓物体。避免大椭球「末端 vs mug」约束支配「soup vs mug」分离约束。
+        self.keep_small_when_grasped = bool(keep_small_when_grasped)
 
     def reset(self, obs, task_language=""):
         """episode 开始：定位障碍物、算初始椭球与 z 方向。"""
+        # 修复（2026-11-04）：计数器在 __init__ 初始化，但 layer 跨 episode 复用，
+        # 必须在 reset 时清零，否则 stats() 返回的是跨 episode 累计值。
+        self.feasible_count = 0
+        self.infeasible_count = 0
+        self.intervene_count = 0
         # CCA-ASF：每次 reset 清除注入的任务方向
         self._task_direction_z = None
         # 末端椭球半轴按任务类型选（上游同款规则）
@@ -188,6 +300,17 @@ class AegisSafetyLayer:
         else:
             self.Q1_diag = EEF_Q_DEFAULT.copy()
 
+        if self.eef_q_override is not None:
+            self.Q1_diag = self.eef_q_override.copy()
+
+        # grasp-aware：接近阶段（未抓）用夹爪本体小椭球，抓住后用大椭球。
+        # 默认：open=[0.06,0.04,0.20]（夹爪本体），grasped=任务默认（包住被抓物体）。
+        if self.grasp_aware:
+            self.grasp_q_grasped = self.Q1_diag.copy()
+            self.grasp_q_open = np.array([0.06, 0.04, self.Q1_diag[2]])
+            self._grasped = False
+            self.Q1_diag = self.grasp_q_open.copy()
+
         name = find_active_obstacle(self.env, obs)
         if name is None:
             self.obstacle_name = None
@@ -195,7 +318,16 @@ class AegisSafetyLayer:
                 print("[aegis] 未找到工作空间内障碍物 → 安全层关闭")
             return False
 
-        ell = obstacle_ellipsoid(self.env, obs, name)
+        # 障碍物椭球来源：oracle（真值 AABB）vs perception（VLM+GroundingDINO+MVEE）
+        if self.perception_mode == "perception":
+            from src.safety.aegis_perception import fit_obstacle_from_perception
+            ell, vlm_name = fit_obstacle_from_perception(
+                self.env, obs, task_language, self.suite_name)
+            if self.verbose:
+                print(f"[aegis] perception 识别: {vlm_name}")
+        else:
+            ell = obstacle_ellipsoid(self.env, obs, name)
+
         if ell is None:
             self.obstacle_name = None
             return False
@@ -208,6 +340,38 @@ class AegisSafetyLayer:
         nz = np.linalg.norm(z)
         self.z_fixed = z / nz if nz > 1e-8 else np.array([1.0, 0, 0])
         self._last_p1 = p1
+
+        # 额外障碍物（传递链保护）：初始化椭球与分离方向。
+        # auto_support 模式：自动检测 hazard 的支撑物并加入保护（P1 端到端）。
+        extra_names = list(self.extra_obstacle_names)
+        if self.auto_support and name is not None:
+            try:
+                from src.safety.support_detection import detect_supports, supports_as_joint_names
+                hazard_body = name + "_main"
+                supports, _ = detect_supports(self.env, hazard_body)
+                auto = supports_as_joint_names(supports)
+                if self.verbose and auto:
+                    print(f"[aegis] 自动检测支撑物: {auto}")
+                extra_names += auto
+            except Exception:
+                pass
+
+        self.extra_obstacles = []
+        seen_extra = set()
+        for ename in extra_names:
+            if ename in seen_extra:
+                continue
+            seen_extra.add(ename)
+            eell = obstacle_ellipsoid(self.env, obs, ename)
+            if eell is None:
+                continue
+            ep2, eR2, eQ2 = eell
+            ez = ep2 - p1
+            enz = np.linalg.norm(ez)
+            ez = ez / enz if enz > 1e-8 else np.array([1.0, 0, 0])
+            self.extra_obstacles.append({
+                "name": ename, "p2": ep2, "R2": eR2, "Q2": eQ2, "z": ez,
+            })
 
         if self.verbose:
             print(f"[aegis] 障碍物={name} 半轴={np.round(self.Q2_diag,4)} "
@@ -250,6 +414,18 @@ class AegisSafetyLayer:
         p1 = self._eef_center(obs)
         R1 = _quat_wxyz_to_rot(np.asarray(obs["robot0_eef_quat"], dtype=np.float64))
 
+        # grasp-aware：按夹爪状态切换末端椭球。夹爪闭合（|qpos| 均值 < 阈值）= 已抓。
+        if self.grasp_aware:
+            gq = np.asarray(obs.get("robot0_gripper_qpos"), dtype=np.float64)
+            grasped = bool(np.abs(gq).mean() < self.grasp_close_thresh)
+            if grasped != self._grasped:
+                self._grasped = grasped
+                if not self.keep_small_when_grasped:
+                    self.Q1_diag = (self.grasp_q_grasped if grasped
+                                    else self.grasp_q_open).copy()
+                # keep_small_when_grasped=True：始终小椭球，抓取保护交给 sep 约束
+            info["grasped"] = bool(grasped)
+
         v_ref = R1.T @ action[:3]
         u_v_ref = V_REF_GAIN * v_ref
         omega_ref = action[3:6]
@@ -263,6 +439,14 @@ class AegisSafetyLayer:
         a_u_v = QP_ACTION_SCALE * a_v
         a_u_omega = QP_ACTION_SCALE * a_omega
         u_z_nom = U_Z_NOM_GAIN * mu_row
+
+        # 额外障碍物（传递链）系数：各算一组，各加一条约束
+        extra_coeffs = []
+        for eo in self.extra_obstacles:
+            ea_v, ea_omega, ea_uz, eh, _ = compute_h_coeffs_3d(
+                p1, self.Q1_diag, R1, eo["p2"], eo["Q2"], eo["R2"], eo["z"],
+            )
+            extra_coeffs.append((ea_v, ea_omega, ea_uz, eh))
 
         u = cp.Variable(9)
         W = np.diag([1.0 / 25] * 6 + [1.0, 1.0, 1.0])
@@ -301,6 +485,61 @@ class AegisSafetyLayer:
 
         objective = cp.Minimize(cp.quad_form(u - u_ref_vec, W_used))
         constraints = [a_u_v @ u[:3] + a_u_omega @ u[3:6] + a_uz @ u[6:] + QP_H_GAIN * h >= 0]
+        for (ea_v, ea_omega, ea_uz, eh) in extra_coeffs:
+            constraints.append(
+                QP_ACTION_SCALE * ea_v @ u[:3]
+                + QP_ACTION_SCALE * ea_omega @ u[3:6]
+                + ea_uz @ u[6:]
+                + QP_H_GAIN * eh >= 0
+            )
+        # ---- Circulation 约束（绕障碍物切向，缓解虚假平衡点）----
+        circ_active = False
+        if self.use_circulation:
+            # 环绕方向：绕障碍物的水平切向（世界系）。z_fixed 是「末端→障碍物」方向，
+            # 其水平分量 z_h 指向障碍物方位，绕它的水平切向 = 旋转 90°。
+            z_h = self.z_fixed[:2].copy()
+            nz_h = float(np.linalg.norm(z_h))
+            if nz_h > 1e-4:
+                # circ_sign=+1 逆时针、-1 顺时针（从上方看，绕 +z 轴）
+                T_world = self.circ_sign * np.array([-z_h[1], z_h[0], 0.0]) / nz_h
+            else:
+                T_world = np.array([0.0, 0.0, 0.0])
+            T_local = R1.T @ T_world  # 世界系切向 → R1 系
+            beta_circ = self.circ_gain * (self.circ_activate - h)
+            constraints.append(T_local @ u[:3] >= beta_circ)
+            circ_active = bool(nz_h > 1e-4)
+        info["circ_active"] = circ_active
+        # ---- 被抓物体分离约束（grasped object vs obstacle）----
+        # 抓取阶段：保护「被抓 soup 不撞 mug」，正确约束是 soup 椭球 vs mug 椭球的
+        # 分离，而非扩大末端椭球。soup 被抓时速度 ≈ 末端速度（刚性跟随），故约束
+        # 施加在 u[:3] 上。soup 作为「被保护椭球 i」，mug 作为「障碍物 j」。
+        grasped_sep_active = False
+        if self.grasped_object_body and self._grasped and self.obstacle_name:
+            try:
+                gobj_name = self.grasped_object_body.replace("_main", "")
+                g_ell = obstacle_ellipsoid(self.env, obs, gobj_name)
+                if g_ell is not None:
+                    g_p, g_R, g_Q = g_ell
+                    g_z = self.p2 - g_p  # soup → mug 方向（保护 soup 远离 mug）
+                    g_nz = np.linalg.norm(g_z)
+                    if g_nz > 1e-6:
+                        g_z = g_z / g_nz
+                        # soup 椭球朝向用单位阵（soup 近似不旋转）
+                        g_R_eye = np.eye(3)
+                        ga_v, ga_omega, ga_uz, gh, _ = compute_h_coeffs_3d(
+                            g_p, (g_Q if self.grasped_q is None else self.grasped_q),
+                            g_R_eye, self.p2, self.Q2_diag, self.R2, g_z,
+                        )
+                        # soup 速度 = 末端速度：约束 a_v · u_v + a_omega · u_omega
+                        # 但 soup 平移由末端平移驱动，姿态近似不随末端姿态变。
+                        # 简化：只约束平移分量（soup 分离主要由平移决定）。
+                        constraints.append(
+                            QP_ACTION_SCALE * ga_v @ u[:3] + QP_H_GAIN * gh >= 0
+                        )
+                        grasped_sep_active = True
+            except Exception:
+                grasped_sep_active = False
+        info["grasped_sep_active"] = bool(grasped_sep_active)
         prob = cp.Problem(objective, constraints)
         try:
             prob.solve(solver=cp.OSQP)
@@ -310,6 +549,18 @@ class AegisSafetyLayer:
         info["active"] = True
         info["h"] = float(h)
 
+        # 记录每条 CBF 约束的对偶变量（>0 表示该约束在最优解处 binding = 激活）。
+        # 用于「约束激活」的精确实证（命题 7.2）。
+        if prob is not None:
+            try:
+                duals = [float(c.dual_value) for c in constraints]
+                info["constraint_duals"] = {
+                    "hazard": duals[0],
+                    "extra": duals[1:],
+                }
+            except Exception:
+                pass
+
         if prob is not None and u.value is not None:
             self.feasible_count += 1
             u_v = u.value[:3]
@@ -318,8 +569,11 @@ class AegisSafetyLayer:
             info["feasible"] = True
             if self.record_qp_snapshot:
                 info["qp_snapshot"]["u_sol"] = np.asarray(u.value, dtype=np.float64).copy()
-            # 判断是否真的介入了（与参考解不同）
-            if np.linalg.norm(u_v - u_v_ref) > 1e-3:
+            # 判断是否真的介入了（与参考解不同）。
+            # 修复（2026-11-04）：不只比 u_v（平移），还比 u_omega（旋转），
+            # 否则「只改旋转不改平移」的过滤会被漏计。
+            if (np.linalg.norm(u_v - u_v_ref) > 1e-3
+                    or np.linalg.norm(u_omega - u_omega_ref) > 1e-3):
                 self.intervene_count += 1
                 info["intervened"] = True
         else:
@@ -344,11 +598,17 @@ class AegisSafetyLayer:
         out[6] = action[6]  # 夹爪不变
 
         self._last_p1 = p1
-        # 障碍物可能被碰动：每步刷新位姿（上游只初始化一次，见文档）
-        if self.obstacle_name:
-            key = self.obstacle_name + "_pos"
+        # 障碍物位姿：严格复现上游——fit_ellipse 一次后 episode 内固定，不刷新。
+        # （之前每步刷新 obs 位姿是「跟踪移动障碍物」的保守化，偏离上游，已移除。）
+        # 额外障碍物（传递链保护，支撑感知扩展）仍每步刷新——它不是上游 AEGIS 的一部分，
+        # 是本项目的扩展，保留其位姿跟踪以正确保护静态支撑物。
+        for eo in self.extra_obstacles:
+            key = eo["name"] + "_pos"
             if key in obs:
-                self.p2 = np.asarray(obs[key], dtype=np.float64)
+                eo["p2"] = np.asarray(obs[key], dtype=np.float64)
+            ez = eo["p2"] - p1
+            enz = np.linalg.norm(ez)
+            eo["z"] = ez / enz if enz > 1e-8 else np.array([1.0, 0, 0])
 
         return out, info
 
@@ -381,6 +641,16 @@ class AegisSafetyLayer:
             "intervene_count": self.intervene_count,
             "_last_p1": None if getattr(self, "_last_p1", None) is None
                         else np.asarray(self._last_p1).copy(),
+            "extra_obstacles": [
+                {
+                    "name": eo["name"],
+                    "p2": np.asarray(eo["p2"]).copy(),
+                    "R2": np.asarray(eo["R2"]).copy(),
+                    "Q2": np.asarray(eo["Q2"]).copy(),
+                    "z": np.asarray(eo["z"]).copy(),
+                }
+                for eo in self.extra_obstacles
+            ],
         }
 
     def restore_state(self, st):
@@ -395,3 +665,13 @@ class AegisSafetyLayer:
         self.infeasible_count = st["infeasible_count"]
         self.intervene_count = st["intervene_count"]
         self._last_p1 = None if st.get("_last_p1") is None else np.asarray(st["_last_p1"]).copy()
+        self.extra_obstacles = [
+            {
+                "name": eo["name"],
+                "p2": np.asarray(eo["p2"]).copy(),
+                "R2": np.asarray(eo["R2"]).copy(),
+                "Q2": np.asarray(eo["Q2"]).copy(),
+                "z": np.asarray(eo["z"]).copy(),
+            }
+            for eo in st.get("extra_obstacles", [])
+        ]
