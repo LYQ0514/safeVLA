@@ -169,9 +169,10 @@ def main():
 
     outdir = os.path.join(ROOT, "data", "audit")
     os.makedirs(outdir, exist_ok=True)
-    with open(os.path.join(outdir, "cca_asf_pilot_manifest.json"), "w") as f:
+    # v2：修复跨 replan 窗口缺陷后重跑，避免覆盖 v1 作废结果作审计对照
+    with open(os.path.join(outdir, "cca_asf_pilot_v2_manifest.json"), "w") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=2)
-    with open(os.path.join(outdir, "cca_asf_pilot_results.json"), "w") as f:
+    with open(os.path.join(outdir, "cca_asf_pilot_v2_results.json"), "w") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
 
     # ---- 汇总（指标分离） ----
@@ -211,8 +212,8 @@ def main():
             print(f"  S{state_id:02d}/st{stream}: eu_SSR={int(eu['SSR_native'])} "
                   f"cc_SSR={int(cc['SSR_native'])}")
 
-    print(f"\n结果: {outdir}/cca_asf_pilot_results.json")
-    print(f"manifest: {outdir}/cca_asf_pilot_manifest.json")
+    print(f"\n结果: {outdir}/cca_asf_pilot_v2_results.json")
+    print(f"manifest: {outdir}/cca_asf_pilot_v2_manifest.json")
 
 
 if __name__ == "__main__":
