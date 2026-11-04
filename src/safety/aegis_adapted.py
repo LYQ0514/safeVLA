@@ -256,10 +256,13 @@ class AegisSafetyLayer:
         # ---- Circulation CBF（CBF with Circulation Inequalities，T-CST 2024）----
         # 缓解 CBF-QP 的稳定虚假平衡点（spurious equilibrium）：当末端被障碍物
         # 径向推离卡死时，强制一个切向（环绕）速度分量，让末端绕开障碍物。
-        # 约束形式：T_local @ u[:3] >= circ_gain * (circ_activate - h)
-        #   - T_world = 绕障碍物的水平切向（circ_sign 控制顺时针/逆时针）；
-        #   - beta(h) = circ_gain * (circ_activate - h)，h 大时 beta<0 约束平凡化，
-        #     h 小时 beta>0 强制环绕。
+        # 严格形式（论文式 (3)）：T(q)^T μ ≥ β(D(q))，T = Ω N，N = ∇D/‖∇D‖。
+        #   - N = ∇h = a_v（末端局部系），D ≡ h（椭圆安全距离）；
+        #   - Ω skew-symmetric orthonormal（末端平移 3D 奇数维 → §IV-C workaround，
+        #     在 xy 水平面 2D orthonormal，z 维奇异）；
+        #   - β(h) = circ_gain * (circ_activate - h)，递减、β(0)>0、h 大时平凡化；
+        #   - circ_sign 控制绕向（+1 逆时针 / -1 顺时针）。
+        # 实现见 src/safety/circulation.py（含量纲与坐标变换的严格说明）。
         self.use_circulation = bool(use_circulation)
         self.circ_gain = float(circ_gain)
         self.circ_activate = float(circ_activate)
@@ -495,22 +498,22 @@ class AegisSafetyLayer:
                 + ea_uz @ u[6:]
                 + QP_H_GAIN * eh >= 0
             )
-        # ---- Circulation 约束（绕障碍物切向，缓解虚假平衡点）----
+        # ---- Circulation 约束（严格对应论文 CCBF-QP 式 (3)：T(q)^T μ ≥ β(D(q))）----
+        # T = Ω N，N = ∇D/‖∇D‖，D ≡ h（椭圆安全距离），Ω skew-symmetric orthonormal。
+        # 法向用 ∇h = a_v（局部系），而非「末端→障碍物连线方向 z_fixed」——
+        # 各向异性椭球下二者方向不重合（实测夹角约 28°），用 z_fixed 是启发式近似。
+        # 末端平移 3D 是奇数维 → 论文 §IV-C workaround：Ω 在 xy 水平面 orthonormal，
+        # z 维奇异。详见 src/safety/circulation.py。
         circ_active = False
         if self.use_circulation:
-            # 环绕方向：绕障碍物的水平切向（世界系）。z_fixed 是「末端→障碍物」方向，
-            # 其水平分量 z_h 指向障碍物方位，绕它的水平切向 = 旋转 90°。
-            z_h = self.z_fixed[:2].copy()
-            nz_h = float(np.linalg.norm(z_h))
-            if nz_h > 1e-4:
-                # circ_sign=+1 逆时针、-1 顺时针（从上方看，绕 +z 轴）
-                T_world = self.circ_sign * np.array([-z_h[1], z_h[0], 0.0]) / nz_h
-            else:
-                T_world = np.array([0.0, 0.0, 0.0])
-            T_local = R1.T @ T_world  # 世界系切向 → R1 系
-            beta_circ = self.circ_gain * (self.circ_activate - h)
-            constraints.append(T_local @ u[:3] >= beta_circ)
-            circ_active = bool(nz_h > 1e-4)
+            from src.safety.circulation import circulation_constraint
+            c = circulation_constraint(R1, a_v, h, self.circ_sign,
+                                       self.circ_gain, self.circ_activate,
+                                       V_REF_GAIN)
+            if c is not None:
+                T_local, rhs = c
+                constraints.append(T_local @ u[:3] >= rhs)
+                circ_active = True
         info["circ_active"] = circ_active
         # ---- 被抓物体分离约束（grasped object vs obstacle）----
         # 抓取阶段：保护「被抓 soup 不撞 mug」，正确约束是 soup 椭球 vs mug 椭球的
