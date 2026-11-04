@@ -45,9 +45,17 @@ def obstacle_detection_vlm(agentview_img, instruction, task_suite_name):
     import matplotlib.pyplot as plt
 
     client = ZhipuAI(api_key=_load_api_key())
-    plt.imsave("/tmp/aegis_obstacle_detection.png", agentview_img)
-    with open("/tmp/aegis_obstacle_detection.png", "rb") as f:
-        b64 = base64.b64encode(f.read()).decode("utf-8")
+    # 用进程唯一临时路径，避免多进程并发写同一文件损坏图片（LI/LII 并行时竞态）
+    tmp_img = f"/tmp/aegis_obstacle_detection_{os.getpid()}.png"
+    plt.imsave(tmp_img, agentview_img)
+    try:
+        with open(tmp_img, "rb") as f:
+            b64 = base64.b64encode(f.read()).decode("utf-8")
+    finally:
+        try:
+            os.remove(tmp_img)
+        except OSError:
+            pass
 
     prefer_list = ['yellow rectangular book', 'blue moka pot', 'red mug',
                    'white storage box', 'black wine bottle', 'red milk carton']
@@ -94,7 +102,8 @@ def fit_obstacle_from_perception(env, obs, task_language, task_suite_name,
             raise RuntimeError(
                 f"感知模式需要深度图观测 {key}，请用 camera_depths=True 创建 env")
 
-    save_path = pathlib.Path(save_dir) if save_dir else pathlib.Path("/tmp/aegis_perception")
+    save_path = pathlib.Path(save_dir) if save_dir else pathlib.Path(
+        f"/tmp/aegis_perception_{os.getpid()}")
     save_path.mkdir(parents=True, exist_ok=True)
 
     # 1. VLM 识别
