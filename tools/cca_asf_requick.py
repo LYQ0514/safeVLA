@@ -60,9 +60,11 @@ def run_episode(policy, ts, task, state_id, stream, filter_mode):
             q = step // REPLAN
             z0, _ = sample_z(nominal_seed(SUITE, TASK_ID, state_id, stream, q))
             po = R.obs_to_policy_obs(obs, task.language, image_size=IMAGE_SIZE)
-            chunk = np.clip(policy.generate(z0, po), -1, 1)
+            # 截断到 replan_steps：上游 AEGIS 只消费前 replan_steps 步，
+            # 方向提取禁止包含「未来会被丢弃重新生成」的尾部（规格 §3.2）。
+            chunk = np.clip(policy.generate(z0, po), -1, 1)[:REPLAN]
         action = chunk[step % REPLAN]
-        # CCA 模式：每步注入任务方向（从当前 chunk 剩余部分提取）
+        # CCA 模式：每步注入任务方向（从当前 replan 窗口内的剩余部分提取）
         if filter_mode == "cca_asf":
             idx = step % REPLAN
             d_z = chunk_direction(chunk[idx:])

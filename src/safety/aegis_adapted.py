@@ -451,6 +451,9 @@ class AegisSafetyLayer:
         u = cp.Variable(9)
         W = np.diag([1.0 / 25] * 6 + [1.0, 1.0, 1.0])
         u_ref_vec = np.hstack([u_v_ref, u_omega_ref, u_z_nom])
+        # u_ref（QP 目标中心）与 u_nom（门控名义输入）当前数值相同，
+        # 规格 §3.1 要求分别命名以防后续误用。
+        u_nom = u_ref_vec
 
         # ---- CCA-ASF：白化各向异性低秩更新（仅替换目标二次项） ----
         W_used = W
@@ -462,7 +465,7 @@ class AegisSafetyLayer:
                 # 冲突门控（白化空间）
                 A_row = np.hstack([a_u_v, a_u_omega, a_uz])[None, :]  # (1,9)
                 r_val = np.array([-QP_H_GAIN * h])
-                beta = compute_conflict_beta(A_row, r_val, u_ref_vec, d_y,
+                beta = compute_conflict_beta(A_row, r_val, u_nom, d_y,
                                              beta_max=self.beta_max)
                 if beta > 0.0:
                     Bd = B_DIAG * d_y
