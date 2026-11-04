@@ -1,0 +1,41 @@
+{
+  "suite": "safelibero_long",
+  "level": "I",
+  "task_id": 0,
+  "state_ids": [
+    1,
+    2,
+    4,
+    9
+  ],
+  "streams": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "methods": [
+    "euclidean",
+    "cca_asf"
+  ],
+  "beta_max": 4.0,
+  "replan_steps": 5,
+  "max_steps": 550,
+  "image_size": 224,
+  "car_eps": 0.001,
+  "policy": "PnsgPolicy(CRN)",
+  "git": {
+    "HEAD": "b2226d9a27df1b446e75b2cc56fa630fca6faf3b",
+    "short": "b2226d9",
+    "dirty": "M src/pnsg/openpi_worker.py\n M src/pnsg/policy_adapter.py",
+    "untracked": "?? CCA_ASF_PostFix_Strict_Implementation_Spec_20261104.md\n?? aegis_reproduction_package.tar.gz\n?? aegis_reproduction_package_README.md\n?? data/audit/aegis_long_design/\n?? data/audit/cca_asf_requick.json\n?? data/audit/circulation_gate.json\n?? data/audit/contact_propagation_detection.json\n?? data/audit/eef_axis_sensitivity.json\n?? data/audit/g1a_r2_replay.json\n?? data/audit/g1a_r2_w1.json\n?? data/audit/grasp_aware_gate.json\n?? data/audit/grasped_sep_gate.json\n?? data/audit/indirect_propagation_aegis_full.json\n?? data/audit/indirect_propagation_vanilla.json\n?? data/audit/mug_static_drift_baseline.json\n?? data/audit/quat_fix_verify.json\n?? data/audit/side_effect_detection.json\n?? data/audit/success_value_probe_gate.json\n?? data/audit/success_value_probe_gate2.json\n?? data/audit/support_activation_frequency.json"
+  },
+  "versions": {
+    "numpy": "1.22.4",
+    "cvxpy": "1.5.2",
+    "mujoco": "2.3.7",
+    "robosuite": "1.4.1",
+    "open3d": "0.19.0",
+    "torch": "2.4.1+cu121"
+  }
+}
