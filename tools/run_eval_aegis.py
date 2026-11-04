@@ -41,12 +41,15 @@ class AegisPolicy:
     每次 episode 开始要调 `reset(obs, prompt)` 让安全层重新定位障碍物。
     """
 
-    def __init__(self, base_policy, env, verbose=False):
+    def __init__(self, base_policy, env, verbose=False, perception_mode="oracle",
+                 suite_name="safelibero_long"):
         from src.safety.aegis_adapted import AegisSafetyLayer
 
         self.base = base_policy
         self.env = env
-        self.layer = AegisSafetyLayer(env, verbose=verbose)
+        self.layer = AegisSafetyLayer(env, verbose=verbose,
+                                      perception_mode=perception_mode)
+        self.layer.suite_name = suite_name
         self.verbose = verbose
         self.enabled = True
         self._infos = []
@@ -104,6 +107,8 @@ def main():
                     help="消融：CBF 约束的 h 增益（上游固定 10）")
     ap.add_argument("--small-eef", action="store_true",
                     help="消融：忽略上游大椭球规则，所有任务用小椭球")
+    ap.add_argument("--perception", action="store_true",
+                    help="用完整感知链（VLM+GroundingDINO+MVEE）替代 oracle 真值椭球")
     args = ap.parse_args()
 
     if not os.environ.get("LIBERO_CONFIG_PATH"):
@@ -172,10 +177,14 @@ def main():
                     bddl_file_name=bddl,
                     camera_heights=args.resolution,
                     camera_widths=args.resolution,
+                    camera_depths=args.perception,  # 感知模式需要深度图
                 )
                 env.seed(7)
                 max_steps = args.max_steps or DEFAULT_MAX_STEPS[suite_name]
-                policy = AegisPolicy(base, env, verbose=False)
+                policy = AegisPolicy(base, env, verbose=False,
+                                     perception_mode=("perception" if args.perception
+                                                      else "oracle"),
+                                     suite_name=suite_name)
                 try:
                     for ep in episode_ids:
                         if (suite_name, level, task_id, ep) in done_keys:
