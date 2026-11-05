@@ -12,15 +12,35 @@ from __future__ import annotations
 from typing import Dict, Optional
 
 
+def normalize_predicate_name(pred) -> str:
+    """谓词名统一小写（manifest 用 'In'，_eval_predicate 用 'in'）。"""
+    return str(pred).lower()
+
+
+def canonical_clause(state) -> str:
+    """谓词状态 → canonical clause 字符串（统一小写 + 空格连接，如 "in a b"）。
+
+    兼容两种输入：
+    - goal_state 里的 list：['in', 'a', 'b']；
+    - role_manifest 的 tuple：('In', ['a', 'b'])。
+    """
+    if isinstance(state, (tuple, list)):
+        items = list(state)
+        # ('In', ['a','b']) 形式：第二元素是 list
+        if len(items) >= 2 and isinstance(items[1], (list, tuple)):
+            flat = [items[0]] + list(items[1])
+        else:
+            flat = items
+        pred = normalize_predicate_name(flat[0])
+        args = [str(x) for x in flat[1:]]
+        return " ".join([pred] + args)
+    return str(state)
+
+
 def goal_state_clauses(env) -> list:
     """从 env 提取 goal_state（谓词列表）。"""
     e = env.env
     return list(e.parsed_problem.get("goal_state", []))
-
-
-def canonical_clause(state) -> str:
-    """谓词状态 → canonical clause 字符串（如 "on a b"）。"""
-    return " ".join(str(x) for x in state)
 
 
 def eval_goal_clauses(env) -> Dict[str, Optional[bool]]:
