@@ -138,10 +138,16 @@ def make_manifest(a, manifest, bddl_sha):
         "max_steps": MAX_STEPS,
         "replan_steps": REPLAN_STEPS,
         "implementation_status": IMPLEMENTATION_STATUS,
-        "parent_code_commit": "550f56c",
+        "parent_code_commit": subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], cwd=ROOT).decode().strip(),
         "label_router": "route_e1_label",
         "label_router_version": "v1",
         "legacy_diagnostic_used_for_label": False,
+        "State02_closed": True,
+        "historical_candidate": {
+            "State02": "State02_NATIVE_FALSE_POSITIVE_CANDIDATE",
+            "S01": "S01_UNSAFE_RETURN",
+            "S04": "S04_TASK_INTEGRITY_OR_STALL",
+        }.get(a.case, None),
     }
 
 
