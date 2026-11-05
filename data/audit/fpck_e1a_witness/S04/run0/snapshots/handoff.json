@@ -1,0 +1,94 @@
+{
+  "bridge": {
+    "automaton": {
+      "mode": "q_bad",
+      "lifecycle": {
+        "alphabet_soup_1": "RESTING",
+        "cream_cheese_1": "RESTING"
+      },
+      "achieved_mask": {
+        "in alphabet_soup_1 basket_1_contain_region": false,
+        "in cream_cheese_1 basket_1_contain_region": false
+      },
+      "violation_code": "UNAUTHORIZED_TARGET_MOTION",
+      "spec_version": "fpck-task-automaton-v1.2"
+    },
+    "settled_baseline": {
+      "alphabet_soup_1_main": [
+        0.13273926064106537,
+        -0.0988966695382882,
+        0.47517012396052544
+      ],
+      "cream_cheese_1_main": [
+        -0.1564387182969971,
+        0.04613534944104038,
+        0.44569592152000004
+      ]
+    },
+    "target_prev": {
+      "alphabet_soup_1_main": [
+        0.14288446169791474,
+        -0.026004210652913792,
+        0.4642798429952643
+      ],
+      "cream_cheese_1_main": [
+        -0.1564387182969971,
+        0.04613534944104038,
+        0.44569592152000004
+      ]
+    },
+    "lift_hist": {
+      "alphabet_soup_1_main": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "cream_cheese_1_main": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "drift_hist": {
+      "alphabet_soup_1_main": [],
+      "cream_cheese_1_main": []
+    },
+    "contact_gone": {
+      "alphabet_soup_1_main": 0,
+      "cream_cheese_1_main": 0
+    },
+    "vel_hist": {
+      "alphabet_soup_1_main": [],
+      "cream_cheese_1_main": []
+    },
+    "primary_violation": [
+      54,
+      52,
+      2,
+      "UNAUTHORIZED_TARGET_MOTION"
+    ],
+    "first_decisive_index": 54,
+    "obstacle_baseline": [
+      0.0199873942400703,
+      -0.09994721547018226,
+      0.5144666911309
+    ],
+    "first_gt2mm": [
+      41,
+      40
+    ],
+    "first_gt5mm": [
+      54,
+      52
+    ],
+    "first_gt10mm": [
+      99,
+      96
+    ],
+    "first_task_contact": null,
+    "first_controlled": null,
+    "progress_history": [],
+    "last_progress_index": null
+  },
+  "env_hash": "0faeea0466069b6caed6f0a8a92febe17898b29298f1afeae6d49410b7a9c4f2"
+}
