@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Exact strict-separation experiment; writes JSON without external packages."""
 import argparse, json, pathlib, sys
-ROOT=pathlib.Path(__file__).resolve().parents[1]; sys.path.insert(0,str(ROOT))
-sys.path.insert(0, str(ROOT / "src"))  # fpck 安装在 src/fpck（safeVLA 布局）
+ROOT=pathlib.Path(__file__).resolve().parents[1]; sys.path.insert(0,str(ROOT/"src" if (ROOT/"src").exists() else ROOT))
 from fpck import FiniteProductGame, solve_fpck, solve_physical_viability
 
 def build():

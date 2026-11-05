@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Fit value baseline from JSONL rows: {split, features, target}."""
 import argparse,json,pathlib,sys,numpy as np
-ROOT=pathlib.Path(__file__).resolve().parents[1]; sys.path.insert(0,str(ROOT))
-sys.path.insert(0, str(ROOT / "src"))  # fpck 安装在 src/fpck（safeVLA 布局）
+ROOT=pathlib.Path(__file__).resolve().parents[1]; sys.path.insert(0,str(ROOT/"src" if (ROOT/"src").exists() else ROOT))
 from fpck.value_model import fit_ridge
 from fpck.governor import one_sided_correction
 def main():
