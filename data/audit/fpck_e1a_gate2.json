@@ -1,0 +1,26 @@
+{
+  "results": [
+    {
+      "step": 10,
+      "act_same": true,
+      "key_same": true,
+      "contact_same": true,
+      "ok": true
+    },
+    {
+      "step": 50,
+      "act_same": true,
+      "key_same": true,
+      "contact_same": true,
+      "ok": true
+    },
+    {
+      "step": 150,
+      "act_same": true,
+      "key_same": true,
+      "contact_same": true,
+      "ok": true
+    }
+  ],
+  "all_pass": true
+}

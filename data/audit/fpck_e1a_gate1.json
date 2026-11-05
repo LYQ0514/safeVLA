@@ -1,0 +1,70 @@
+{
+  "results": [
+    {
+      "state_id": 0,
+      "max_act_err": 0.0,
+      "same_len": true,
+      "same_act": true,
+      "same_success": true,
+      "same_steps": true,
+      "same_disp": true,
+      "same_hash": true,
+      "same_buf": true,
+      "same_gen": true,
+      "ok": true
+    },
+    {
+      "state_id": 1,
+      "max_act_err": 0.0,
+      "same_len": true,
+      "same_act": true,
+      "same_success": true,
+      "same_steps": true,
+      "same_disp": true,
+      "same_hash": true,
+      "same_buf": true,
+      "same_gen": true,
+      "ok": true
+    },
+    {
+      "state_id": 2,
+      "max_act_err": 0.0,
+      "same_len": true,
+      "same_act": true,
+      "same_success": true,
+      "same_steps": true,
+      "same_disp": true,
+      "same_hash": true,
+      "same_buf": true,
+      "same_gen": true,
+      "ok": true
+    },
+    {
+      "state_id": 3,
+      "max_act_err": 0.0,
+      "same_len": true,
+      "same_act": true,
+      "same_success": true,
+      "same_steps": true,
+      "same_disp": true,
+      "same_hash": true,
+      "same_buf": true,
+      "same_gen": true,
+      "ok": true
+    },
+    {
+      "state_id": 4,
+      "max_act_err": 0.0,
+      "same_len": true,
+      "same_act": true,
+      "same_success": true,
+      "same_steps": true,
+      "same_disp": true,
+      "same_hash": true,
+      "same_buf": true,
+      "same_gen": true,
+      "ok": true
+    }
+  ],
+  "all_pass": true
+}
