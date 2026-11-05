@@ -65,7 +65,7 @@ from tools.g1a_soup_trace import body_state  # noqa: E402
 # 历史机制（import 复用，不改行为）
 from tools.m1_p4_p1_reentry import plan_main_path  # noqa: E402
 from tools.m1_p4_p0e_joint_execution import reconstruct_nvs, SOUP_BODY, MUG_BODY  # noqa: E402
-from tools.m1_p4_p0_reachability import get_arm_q  # noqa: E402
+from tools.m1_p4_p0_reachability import get_arm_q, set_arm_q  # noqa: E402
 from tools.m1_p2_p1a_pilot import SUITE, LEVEL, TASK_ID, REPLAN_STEPS, IMAGE_SIZE  # noqa: E402
 
 CASES = {
