@@ -20,10 +20,18 @@ class CKGPolicy:
         d=self.governor.choose(state,nominal,candidates,self.budget,self.horizon); runtime=(time.perf_counter()-t0)*1000
         if d.action is None: action=np.zeros_like(nominal); action[-1]=-1.; status=d.status
         else: action=d.action; status=d.status
-        dist=float(np.linalg.norm(action-nominal)); self.budget-=int(dist>self.governor.intervention_eps); self.horizon=max(0,self.horizon-1); self.step+=1
+        dist=float(np.linalg.norm(action-nominal)); intervention=int(dist>self.governor.intervention_eps)
+        budget_before=self.budget
+        # Never underflow. An emergency action outside the certified set may be
+        # executed by the integration layer, but it does not create new budget
+        # and carries no continuation guarantee.
+        self.budget=max(0,self.budget-intervention); self.horizon=max(0,self.horizon-1); self.step+=1
         if self.log_path:
             meta=getattr(self.base,"get_chunk_metadata",lambda:{})()
-            row={"step":self.step,"status":status,"budget_remaining":self.budget,"horizon_remaining":self.horizon,
+            row={"step":self.step,"status":status,"budget_before":budget_before,
+                 "budget_remaining":self.budget,"budget_exhausted":bool(self.budget==0),
+                 "intervention":bool(intervention),"outside_guarantee":bool(d.action is None),
+                 "horizon_remaining":self.horizon,
                  "nominal_action":nominal.tolist(),"selected_action":np.asarray(action).tolist(),"runtime_ms":runtime,
                  "chunk_hash":meta.get("chunk_hash"),"buffer_index":getattr(self.base,"buffer_index",None),"evaluated":d.evaluated}
             with open(self.log_path,"a",encoding="utf-8") as f: f.write(json.dumps(row,ensure_ascii=False)+"\n")
