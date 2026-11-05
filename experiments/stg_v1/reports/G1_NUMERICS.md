@@ -56,12 +56,17 @@
 
 | 测试文件 | 用例数 | 覆盖 |
 |---|---|---|
-| tests/stg/test_tangent.py | 11 | 切向正交性、退化、方向切换、旋转等变 |
-| tests/stg/test_governor_reset.py | 10 | reset 不串 episode、风险迟滞、2×2 差异 |
-| tests/stg/test_mapping.py | 6 | P_t 结构、Hessian PSD、量纲 |
-| tests/stg/test_qp_equivalence.py | 6 | λ=0 等价、约束不变、不可行、NaN |
-| tests/stg/test_safety_contract.py | 6 | TSR_valid/StrictSSR_valid 组合逻辑 |
-| **合计** | **39**（含 circulation 15 = 49 全过） | — |
+| tests/stg/test_tangent.py | 10 | 切向正交性、退化、方向切换、旋转等变 |
+| tests/stg/test_governor_reset.py | 9 | reset 不串 episode、风险迟滞、2×2 差异 |
+| tests/stg/test_mapping.py | 5 | P_t 结构、Hessian PSD、量纲 |
+| tests/stg/test_qp_equivalence.py | 5 | λ=0 等价、约束不变、不可行、NaN |
+| tests/stg/test_safety_contract.py | 5 | TSR_valid/StrictSSR_valid 组合逻辑 |
+| **stg 小计** | **34** | — |
+| tests/safety/test_circulation.py | 15 | circulation 严格实现（前一轮） |
+| **合计** | **49** | 全部通过 |
+
+> 更正（2026-11-05）：初版报告分项数写为 11/10/6/6/6=39，精确 collect 后为
+> 10/9/5/5/5=34。合计 49 正确（34+15）。
 
 ## 3. 延迟微基准（g1_latency_bench.py，N=1000）
 

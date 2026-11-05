@@ -1,0 +1,15 @@
+task_id,state_id,stream,selection_reason,expected_mechanism
+1,0,1,"S1: mug=0, tail_interv=0.87, CBF 卡住末端",deadlock
+1,2,0,"S1: mug=0, tail_interv=1.0, 完全停滞",deadlock
+1,2,1,"S1: mug=0, tail_interv=1.0, 完全停滞",deadlock
+1,3,0,"S1: mug=0, tail_interv=0.99, 停滞",deadlock
+1,3,1,"S1: mug=0, tail_interv=0.97, 停滞",deadlock
+1,4,0,"S1: mug=0, tail_interv=1.0, 完全停滞",deadlock
+1,5,1,"S1: mug=0, tail_interv=0.96, 停滞",deadlock
+1,6,0,"S1: mug=0, tail_interv=0.96, 停滞",deadlock
+1,6,1,"S1: mug=0, tail_interv=1.0, 完全停滞",deadlock
+1,7,0,"S3: mug=0, tail_interv=0.0, VLA 无有效动作",vla_limit
+1,7,1,"S3: mug=0, tail_interv=0.31, VLA 弱动作",vla_limit
+0,0,0,"NEG: success, mug=13mm, 正常完成",success
+0,4,0,"NEG: success, mug=7mm, 正常完成",success
+1,5,0,"NEG: success, mug=0, 正常完成",success
