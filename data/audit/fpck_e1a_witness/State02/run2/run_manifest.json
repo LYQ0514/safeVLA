@@ -1,0 +1,33 @@
+{
+  "repo_commit": "b00f39c59a213e148416b1341e2747fa5c30db97",
+  "dirty_worktree": [
+    " M src/pnsg/openpi_worker.py",
+    " M src/pnsg/policy_adapter.py"
+  ],
+  "checkpoint_hash": "b838d8b85a3f317c91950738172ee7f174afe7f2d36d9d8ed80f7110a085e90b",
+  "suite": "safelibero_long",
+  "level": "I",
+  "task_id": 0,
+  "state_id": 2,
+  "stream": 0,
+  "run_idx": 2,
+  "case": "State02",
+  "nominal_seed_scheme": "CRN nominal_seed(suite,task,state,stream,query)",
+  "rrt_seed_schedule": "historical fixed (plan_main_path: range(5) + default_rng(oi*100+off))",
+  "historical_source_hashes": {
+    "m1_p4_p1_reentry.py": "a98e558f78ac0818834b0f06ba5b0247",
+    "m1_p4_p0e_joint_execution.py": "abd7f68da6d312b3cb811d43b32170a2"
+  },
+  "collector_version": "event-level TaskEventBridge v1.2",
+  "automaton_spec_version": "fpck-task-automaton-v1.2",
+  "role_manifest_hash": "92fa409911faf0b80bde3c168cc2a936f2db972efb2249f18bcb63cfffaa1631",
+  "contact_contract_hash": "9bee35096ed5f18784308b710dfb2203a9430a58f277eacd4e13d367e685bae6",
+  "bddl_sha256": "e81e018b9f49963cb06f3228cf7bc1ac32f611a39cebfdb68e8feafc07dbca4b",
+  "max_steps": 550,
+  "replan_steps": 5,
+  "implementation_status": "EVENT_LEVEL_V1_2",
+  "parent_code_commit": "550f56c",
+  "label_router": "route_e1_label",
+  "label_router_version": "v1",
+  "legacy_diagnostic_used_for_label": false
+}
