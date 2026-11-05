@@ -1,0 +1,15 @@
+{
+  "horizon": 3,
+  "budget": 0,
+  "physical_viability": [
+    "A",
+    "S"
+  ],
+  "fpck": [
+    "A"
+  ],
+  "strict_difference": [
+    "S"
+  ],
+  "witnesses": []
+}

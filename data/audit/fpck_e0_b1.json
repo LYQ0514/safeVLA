@@ -1,0 +1,33 @@
+{
+  "horizon": 3,
+  "budget": 1,
+  "physical_viability": [
+    "A",
+    "S"
+  ],
+  "fpck": [
+    "A",
+    "S"
+  ],
+  "strict_difference": [],
+  "witnesses": [
+    {
+      "h": 1,
+      "b": 1,
+      "state": "S",
+      "action": "left"
+    },
+    {
+      "h": 2,
+      "b": 1,
+      "state": "S",
+      "action": "left"
+    },
+    {
+      "h": 3,
+      "b": 1,
+      "state": "S",
+      "action": "left"
+    }
+  ]
+}
