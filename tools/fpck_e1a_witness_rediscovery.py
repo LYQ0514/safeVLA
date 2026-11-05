@@ -53,7 +53,7 @@ from scipy.spatial.transform import Rotation as Rot  # noqa: E402
 
 from src.pnsg.policy_adapter import PnsgPolicy  # noqa: E402
 from src.pnsg.full_state import save_full_state  # noqa: E402
-from src.fpck.task_automaton import TaskAutomaton, bind_four_labels  # noqa: E402
+from src.fpck.task_automaton import TaskAutomaton, bind_four_labels, route_e1_label  # noqa: E402
 from src.fpck.task_event_bridge import TaskEventBridge  # noqa: E402
 from src.fpck.goal_evaluator import canonical_clause  # noqa: E402
 from src.fpck.instrumented_loops import (  # noqa: E402
@@ -138,6 +138,10 @@ def make_manifest(a, manifest, bddl_sha):
         "max_steps": MAX_STEPS,
         "replan_steps": REPLAN_STEPS,
         "implementation_status": IMPLEMENTATION_STATUS,
+        "parent_code_commit": "550f56c",
+        "label_router": "route_e1_label",
+        "label_router_version": "v1",
+        "legacy_diagnostic_used_for_label": False,
     }
 
 
@@ -260,7 +264,7 @@ def main():
 
             if not handoff_eligible:
                 summary["termination"] = f"pregrasp_{auto.state.mode}"
-                summary["final_e1_label"] = bind_four_labels(auto.state)
+                # 正式标签在 finalize 阶段由 route_e1_label 统一生成
                 summary["pregrasp_verdict"] = auto.state.mode
             else:
                 # OSC 接管（不 reset bridge）
@@ -289,7 +293,6 @@ def main():
                 terminal_env_snap = save_full_state(env)
                 summary["terminal_env_hash"] = sha256_hex(terminal_env_snap["flattened"])
                 summary["final_automaton_mode"] = auto.state.mode
-                summary["final_e1_label"] = bind_four_labels(auto.state)
                 summary["pregrasp_verdict"] = "eligible"
                 summary["reentry_verdict"] = auto.state.mode
 
@@ -316,11 +319,55 @@ def main():
     summary["identity_verified"] = (summary.get("q_start_hash") is not None
                                     and summary.get("raw_trace_sha256") is not None)
 
+    # ---- 正式标签路由（route_e1_label，结合违规阶段/handoff/违规码/q_acc）----
+    decisive_phase, accepted_before_violation = _derive_from_trace(raw_log_path)
+    primary_code = None
+    if fin.get("primary_violation"):
+        primary_code = fin["primary_violation"][3]
+    handoff_elig = summary.get("handoff_eligible", False)
+    final_mode = summary.get("final_automaton_mode", auto.state.mode)
+    timed_out = not summary.get("success", False)
+    safe_valid = final_mode not in ("q_bad", "q_unknown")
+    final_label, subreason = route_e1_label(
+        handoff_eligible=handoff_elig,
+        decisive_phase=decisive_phase,
+        primary_violation_code=primary_code,
+        accepted_before_violation=accepted_before_violation,
+        final_mode=final_mode,
+        timed_out=timed_out,
+        safe_and_integrity_valid=safe_valid,
+        stalled=False,  # 停滞窗判定留待 E1b 完整实现
+        identity_verified=summary.get("identity_verified", False),
+    )
+    summary["final_e1_label"] = final_label
+    summary["label_subreason"] = subreason
+    summary["decisive_phase"] = decisive_phase
+    summary["accepted_before_violation"] = accepted_before_violation
+    summary["label_router"] = "route_e1_label"
+
     summary_path = os.path.join(out_dir, "run_summary.json")
     with open(summary_path, "w") as f:
         json.dump(_jsonable(summary), f, ensure_ascii=False, indent=2)
     print(f"[{a.case} run{run_idx}] → {summary_path}")
     print(json.dumps(_jsonable(summary), ensure_ascii=False, indent=2))
+
+
+def _derive_from_trace(raw_log_path):
+    """从 raw trace 推导 decisive_phase（首次 q_bad 的 phase）和
+    accepted_before_violation（q_bad 前是否已 q_acc）。"""
+    decisive_phase = None
+    accepted_before_violation = False
+    try:
+        for l in open(raw_log_path, encoding="utf-8"):
+            d = json.loads(l)
+            after = d.get("automaton_after")
+            if after == "q_acc":
+                accepted_before_violation = True
+            if after == "q_bad" and decisive_phase is None:
+                decisive_phase = d.get("phase")
+    except Exception:
+        pass
+    return decisive_phase, accepted_before_violation
 
 
 def _jsonable(o):
