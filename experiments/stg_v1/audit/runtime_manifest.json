@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-11-05",
+  "gate": "G0",
+  "project": "AEGIS-STG (Spatiotemporal Task-Guided Governor)",
+  "repo": {
+    "path": "/data/safeVLA",
+    "git_head_full": "21e9e494d9c9ceee2b3d418c9e6fa76bf51e3e39",
+    "git_head_short": "21e9e49",
+    "dirty_tracked": [
+      "src/pnsg/openpi_worker.py",
+      "src/pnsg/policy_adapter.py"
+    ],
+    "dirty_note": "上述两文件为无关历史探索（成功价值 probe 的 extract_features），非本轮 AEGIS-STG 复现，未纳入任何评测路径。核心 AEGIS 文件（src/safety/aegis_adapted.py, aegis_perception.py, circulation.py, groundingdino_loader.py）均已 commit。"
+  },
+  "runtime": {
+    "python": "3.8",
+    "cuda": "12.1",
+    "driver": "580.178.04",
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "gpu_mem_total": "49140 MiB"
+  },
+  "packages": {
+    "numpy": "1.22.4",
+    "cvxpy": "1.5.2",
+    "osqp": "1.1.3",
+    "mujoco": "2.3.7",
+    "robosuite": "1.4.1",
+    "open3d": "0.19.0",
+    "torch": "2.4.1+cu121",
+    "zhipuai": "2.1.5.20250725"
+  },
+  "model_checkpoint": {
+    "path": "/data/2608.SDL/MojocoProj/checkpoints/pi05/pi05_libero",
+    "format": "ocdbt",
+    "hash_sha256": "b838d8b85a3f317c91950738172ee7f174afe7f2d36d9d8ed80f7110a085e90b",
+    "note": "π0.5 LIBERO checkpoint，冻结，只读。action_horizon=10，action_dim=32（LiberoOutputs 截前 7 维）。"
+  },
+  "safelibero": {
+    "path": "/data/safeVLA/dataset/SafeLIBERO",
+    "git": "vendored（非独立 git 仓库）",
+    "upstream": "THU-RCSCT/vlsa-aegis",
+    "upstream_commit_sha": "未锁定（待补）",
+    "suites": ["safelibero_spatial", "safelibero_goal", "safelibero_object", "safelibero_long"],
+    "levels": ["I", "II"],
+    "max_steps": {"safelibero_spatial": 300, "safelibero_object": 300, "safelibero_goal": 300, "safelibero_long": 550}
+  },
+  "policy_consumption": {
+    "action_horizon": 10,
+    "replan_steps": 5,
+    "mechanism": "Pi05Policy 一次推理输出 10 步 chunk，逐帧消费；replan_steps=5 时只保留前 5 步，执行完立即重新推理（closed-loop 重规划）。",
+    "num_infer_steps": 10
+  },
+  "aegis_qp": {
+    "variable_dim": 9,
+    "u_structure": "[v_local_x, v_local_y, v_local_z, omega_1, omega_2, omega_3, uz_1, uz_2, uz_3]",
+    "W0_diag": [0.04, 0.04, 0.04, 0.04, 0.04, 0.04, 1.0, 1.0, 1.0],
+    "W0_diag_expression": "diag(1/25 * 6 + 1 * 3)",
+    "solver": "OSQP",
+    "gains": {
+      "QP_H_GAIN": 10,
+      "QP_ACTION_SCALE": 0.2,
+      "V_REF_GAIN": 5,
+      "OMEGA_REF_GAIN": 5,
+      "U_Z_NOM_GAIN": 10,
+      "DT": 0.05
+    },
+    "eef": {
+      "EEF_OFFSET_LOCAL": [0.0, 0.0, -0.08],
+      "EEF_Q_DEFAULT": [0.06, 0.12, 0.11],
+      "EEF_Q_LONG_OBJECT": [0.06, 0.12, 0.20]
+    }
+  },
+  "action_mapping": {
+    "7d_to_9d": "u_ref = [5*R1^T*z[0:3], 5*z[3:6], 10*mu_row]",
+    "9d_to_7d": "out = [0.2*R1*u[0:3], 0.2*u[3:6], z[6]]",
+    "P_t_3x9": "0.2 * R1 * [I_3, 0_{3x3}, 0_{3x3}]",
+    "gripper": "passthrough (out[6] = z[6])"
+  }
+}
