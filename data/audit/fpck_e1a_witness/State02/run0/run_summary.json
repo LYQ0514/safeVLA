@@ -1,0 +1,58 @@
+{
+  "case": "State02",
+  "state_id": 2,
+  "stream": 0,
+  "run_idx": 0,
+  "implementation_status": "EVENT_LEVEL_V1_2",
+  "legacy_diagnostic_used_for_label": false,
+  "historical_source_hashes": {
+    "m1_p4_p1_reentry.py": "a98e558f78ac0818834b0f06ba5b0247",
+    "m1_p4_p0e_joint_execution.py": "abd7f68da6d312b3cb811d43b32170a2"
+  },
+  "identity_verified": true,
+  "started_at": 1793888790.4538171,
+  "nvs_step": 53,
+  "Dmax0_mm": 3.971722256634891e-09,
+  "q_start_hash": "4641a235082c14d2f6157ea4ad1d5c02db4a93613c48852b1d798b1457ad6538",
+  "selected_path_hash": "b8ee4864490158da0b752c517b05a088f794345303b76354d76111e1bf38817b",
+  "gap_mm": 50.0,
+  "Dmax_pregrasp_mm": 1.4405195786215685e-08,
+  "handoff_env_hash": "0a1f19d860d1e652e570e38b2beeb11249faa7c192aee01810b1aab9cc7a74e2",
+  "handoff_auto_mode": "q_init",
+  "handoff_eligible": true,
+  "success": false,
+  "success_step": null,
+  "soup_done": null,
+  "Dmax": 0.2868335031112232,
+  "car_ok": false,
+  "n_forbidden_events": 154,
+  "first_forbidden": 19,
+  "forbidden_pair_types": {
+    "red_coffee_mug_obstacle_1_main↔robot0_link7": 150,
+    "red_coffee_mug_obstacle_1_main↔gripper0_right_gripper": 4
+  },
+  "n_generate": 110,
+  "terminal_env_hash": "6906ca01ae4f182c5c5d5f824bf171985133ae497d61846e2bd906448f803268",
+  "final_automaton_mode": "q_bad",
+  "final_e1_label": "TASK_INTEGRITY_FAIL",
+  "pregrasp_verdict": "eligible",
+  "reentry_verdict": "q_bad",
+  "violation_code": "FORBIDDEN_CONTACT",
+  "primary_violation": [
+    3712,
+    0,
+    0,
+    "FORBIDDEN_CONTACT"
+  ],
+  "first_decisive_event_index": 3712,
+  "final_lifecycle": {
+    "alphabet_soup_1": "RESTING",
+    "cream_cheese_1": "RESTING"
+  },
+  "final_achieved_mask": {
+    "in alphabet_soup_1 basket_1_contain_region": false,
+    "in cream_cheese_1 basket_1_contain_region": false
+  },
+  "wall_s": 649.9827303886414,
+  "raw_trace_sha256": "20663eaed41cc58c27927567e332d3618ca09517942a3fd0dd758a68d25c11db"
+}
