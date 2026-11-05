@@ -1,0 +1,33 @@
+# STG 开发集冻结配置（G1 预注册，G2/G3 开发集用，测试集冻结）
+# 任务书 §3 / §7：开发集可试至多 3 档 λ、至多 2 档风险迟滞宽度，其余冻结。
+
+stg:
+  mode: "B0"            # B0 | B1 | B2 | B3（2×2 因子）
+  lam_max: 1.0          # 软项权重（开发集可试 3 档：0.5 / 1.0 / 2.0）
+  h_enter: 0.01         # 风险进入阈值（h < h_enter）
+  h_exit: 0.02          # 风险退出阈值（h > h_exit，迟滞）
+  alpha: 0.5            # 参考吸引速率
+  gamma: 0.01           # 切向幅度（米/步）
+
+aegis:
+  filter_mode: "euclidean"   # STG 实验用 euclidean（非 cca_asf）
+  perception_mode: "oracle"  # 基线 B0 = AEGIS-QP (Oracle Perception)
+  extra_obstacle_names: []
+  auto_support: false
+
+eval:
+  suite: "safelibero_long"
+  level: "I"
+  tasks: [0, 1]
+  num_steps_wait: 20
+  resolution: 1024
+  policy_resize: 224
+  replan_steps: 5
+  strict_audit: true    # 输出 TSR_valid / StrictSSR_valid
+  collision_mode: "displacement"
+
+budget:
+  vla_queries_per_outer_step: 1   # 硬预算，不可超
+  qp_solves_per_outer_step: 1
+  online_candidates: 0
+  future_rollouts: 0

@@ -125,12 +125,14 @@ class ContactCollisionTracker:
 
 def run_episode(env, task_suite, task_id, episode_idx, policy, max_steps=300,
                 num_steps_wait=10, image_size=256, collect_frames=False,
-                collision_mode="displacement"):
+                collision_mode="displacement", strict_audit=False):
     """跑一个 episode，返回结果 dict。
 
     `num_steps_wait`：官方要求前几步空转等物体落稳（LIBERO 惯例 10 步）。
     `collision_mode`：'displacement'（障碍位移>1mm，默认）或
     'contact'（论文 VLPSA 口径：MuJoCo 接触检测）。
+    `strict_audit`：True 时接入 StrictAuditTracker（forbidden_contact + task_integrity），
+    输出 TSR_valid / StrictSSR_valid（任务书 §4.5 / §7 严格口径）。
     """
     task = task_suite.get_task(task_id)
     prompt = task.language
@@ -155,6 +157,11 @@ def run_episode(env, task_suite, task_id, episode_idx, policy, max_steps=300,
         tracker = ContactCollisionTracker(env, obs)
     else:
         tracker = CollisionTracker(env, obs)
+    if strict_audit:
+        from src.safety.contract_objects import StrictAuditTracker
+        strict_tracker = StrictAuditTracker(env)
+    else:
+        strict_tracker = None
     if hasattr(policy, "reset"):
         # 传 obs/prompt：安全层需要稳定后的观测来定位障碍物、建初始椭球。
         # 不传也能工作（老策略的 reset 签名是 ()），故用 try 兜底。
@@ -179,11 +186,13 @@ def run_episode(env, task_suite, task_id, episode_idx, policy, max_steps=300,
             tracker.update(env, step)
         else:
             tracker.update(obs, step)
+        if strict_tracker is not None:
+            strict_tracker.update()
         if done or env.check_success():
             success = True
             break
 
-    return {
+    result = {
         "task_id": task_id,
         "task_language": prompt,
         "episode_idx": episode_idx,
@@ -196,6 +205,11 @@ def run_episode(env, task_suite, task_id, episode_idx, policy, max_steps=300,
         "max_displacement": getattr(tracker, "max_displacement", 0.0),
         "frames": frames,
     }
+    if strict_tracker is not None:
+        result.update(strict_tracker.result(
+            success_native=bool(success),
+            car_native=not bool(tracker.collided)))
+    return result
 
 
 SEVERE_COLLISION_EPS = 0.005
@@ -231,7 +245,7 @@ def summarize(results, ets_mode="all"):
     ets_all = sum(r["steps"] for r in results) / n
     ets_succ = (sum(r["steps"] for r in succ) / len(succ)) if succ else None
 
-    return {
+    out = {
         "episodes": n,
         "TSR": len(succ) / n,
         "CAR": len(clean) / n,
@@ -249,6 +263,20 @@ def summarize(results, ets_mode="all"):
             for th in (0.001, 0.002, 0.005, 0.01)
         },
     }
+
+    # 严格口径（TSR_valid / StrictSSR_valid），仅当 strict_audit 开启时有字段
+    if results and "tsr_valid" in results[0]:
+        tsr_valid = [r for r in results if r["tsr_valid"]]
+        strict_ssr = [r for r in results if r["strict_ssr_valid"]]
+        forb_rate = sum(r["forbidden_contact_count"] > 0 for r in results) / n
+        integrity_rate = sum(1 for r in results if r["task_integrity_ok"]) / n
+        out.update({
+            "TSR_valid": len(tsr_valid) / n,
+            "StrictSSR_valid": len(strict_ssr) / n,
+            "forbidden_contact_episode_rate": forb_rate,
+            "task_integrity_rate": integrity_rate,
+        })
+    return out
 
 
 def save_results(results, summary, out_path):

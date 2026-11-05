@@ -219,7 +219,9 @@ class AegisSafetyLayer:
                  use_circulation=False, circ_gain=50.0, circ_activate=0.02,
                  circ_sign=1.0, eef_q_override=None, grasp_aware=False,
                  grasped_object_body=None, grasped_q=None,
-                 keep_small_when_grasped=False, perception_mode="oracle"):
+                 keep_small_when_grasped=False, perception_mode="oracle",
+                 stg_mode="B0", stg_lam_max=1.0, stg_h_enter=0.01,
+                 stg_h_exit=0.02, stg_alpha=0.5, stg_gamma=0.01):
         self.env = env
         # perception_mode: "oracle"=MuJoCo 真值 AABB；"perception"=VLM+GroundingDINO+MVEE
         # （与上游论文一致）。两者是不同的方法变体，须分开报告。
@@ -267,6 +269,21 @@ class AegisSafetyLayer:
         self.circ_gain = float(circ_gain)
         self.circ_activate = float(circ_activate)
         self.circ_sign = 1.0 if float(circ_sign) >= 0 else -1.0
+        # ---- STG（Spatiotemporal Task-Guided Governor）软引导 ----
+        # 研究原型：在原生 AEGIS QP 目标中加软引导项，不改变硬约束 U_AEGIS。
+        # 2×2 因子：B0 无引导 / B1 切向 / B2 参考迟滞 / B3 联合。
+        # 软项：min J_0(u) + λ‖P_t u - g_t‖²_Q，P_t=0.2·R1·[I3,0,0]（G0 已验证）。
+        # λ=0 时精确回归原生 AEGIS（B0）。详见 src/safety/stg.py。
+        self.stg_mode = stg_mode
+        self.stg_lam_max = float(stg_lam_max)
+        self.stg_h_enter = float(stg_h_enter)
+        self.stg_h_exit = float(stg_h_exit)
+        self.stg_alpha = float(stg_alpha)
+        self.stg_gamma = float(stg_gamma)
+        from src.safety.stg import STGGuide
+        self.stg_guide = STGGuide(
+            mode=stg_mode, lam_max=stg_lam_max, h_enter=stg_h_enter,
+            h_exit=stg_h_exit, alpha=stg_alpha, gamma=stg_gamma)
         # 末端椭球尺寸覆盖（轴敏感性扫描 / grasp-aware 豁免用）。None = 用任务默认。
         self.eef_q_override = None if eef_q_override is None else np.asarray(
             eef_q_override, dtype=np.float64).copy()
@@ -292,6 +309,8 @@ class AegisSafetyLayer:
         self.feasible_count = 0
         self.infeasible_count = 0
         self.intervene_count = 0
+        # STG：每个 episode 重置引导器状态（防跨 episode 泄漏）
+        self.stg_guide.reset()
         # CCA-ASF：每次 reset 清除注入的任务方向
         self._task_direction_z = None
         # 末端椭球半轴按任务类型选（上游同款规则）
@@ -489,7 +508,34 @@ class AegisSafetyLayer:
                 "beta": float(beta),
             }
 
+        # ---- STG 软引导（B1/B2/B3）：min J_0 + λ‖P_t u - g_t‖²，不改变硬约束 ----
+        # P_t = 0.2·R1·[I3,0,0]（G0 已验证），g_t 为归一化平移增量（与 z[:3] 同量纲）。
+        # λ=0（无风险/退化）时精确回归原生 AEGIS（B0）。详见 src/safety/stg.py。
+        stg_g = None
+        stg_lam = 0.0
+        if self.stg_mode in ("B1", "B2", "B3"):
+            p_ee = np.asarray(obs["robot0_eef_pos"], dtype=np.float64)
+            d_world = action[:3].copy()  # 意图方向（世界系归一化平移增量）
+            stg_g, stg_lam, stg_info = self.stg_guide.step(p_ee, a_v, R1, d_world, h)
+            info["stg_in_risk"] = bool(stg_info.get("in_risk", False))
+            info["stg_tangent_degenerate"] = bool(stg_info.get("tangent_degenerate", False))
+        info["stg_lambda"] = float(stg_lam)
+
         objective = cp.Minimize(cp.quad_form(u - u_ref_vec, W_used))
+        if stg_lam > 0.0 and stg_g is not None:
+            P_t = np.zeros((3, 9))
+            P_t[:, :3] = QP_ACTION_SCALE * R1  # 0.2 * R1
+            Q_w = np.eye(3)
+            # 软项 λ‖P_t u - g_t‖² 展开为 9D 二次型 + 线性项（避免 3D 中间表达式，
+            # 降低 CVXPY 规范化开销，G1 微基准显示 p95 比值 1.22→1.14）
+            P_QP = stg_lam * (P_t.T @ Q_w @ P_t)       # 9×9 PSD
+            lin = -2.0 * stg_lam * (stg_g @ Q_w @ P_t)  # 9D
+            objective = cp.Minimize(
+                cp.quad_form(u - u_ref_vec, W_used)
+                + cp.quad_form(u, P_QP)
+                + lin @ u
+            )
+
         constraints = [a_u_v @ u[:3] + a_u_omega @ u[3:6] + a_uz @ u[6:] + QP_H_GAIN * h >= 0]
         for (ea_v, ea_omega, ea_uz, eh) in extra_coeffs:
             constraints.append(
