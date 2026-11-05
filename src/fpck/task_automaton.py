@@ -288,7 +288,10 @@ class TaskAutomaton:
 
 
 def bind_four_labels(state: AutomatonState) -> str:
-    """§9：自动机状态 → 四类 E1 标签（含 UNCERTAIN）。"""
+    """LEGACY 粗粒度映射（仅旧结果对照，不得用于正式标签）。
+
+    正式标签必须用 route_e1_label（结合违规阶段/handoff/违规码/q_acc）。
+    """
     m = state.mode
     if m == MODE_BAD:
         return "TASK_INTEGRITY_FAIL"
@@ -296,5 +299,65 @@ def bind_four_labels(state: AutomatonState) -> str:
         return "UNCERTAIN"
     if m == MODE_ACC:
         return "SAFE_REENTRY"
-    # 非终态（q_init/engaged/controlled/progress/released）→ 由外部结合停滞窗判 SAFE_STALL
     return "SAFE_STALL"
+
+
+# 物理安全违规码（相对任务完整性违规码）
+_SAFETY_VIOLATIONS = {
+    "FORBIDDEN_CONTACT",
+    "STATIC_OBSTACLE_MOVED",
+    "PAYLOAD_OBSTACLE_CONTACT",
+}
+
+# 任务完整性违规码
+_INTEGRITY_VIOLATIONS = {
+    "UNAUTHORIZED_TARGET_MOTION",
+    "NATIVE_FALSE_POSITIVE",
+    "DISTRACTOR_DISTURBED",
+    "PREEXISTING_WORSENED",
+    "GOAL_INVALIDATED_IRREVERSIBLY",
+}
+
+
+def route_e1_label(*, handoff_eligible, decisive_phase, primary_violation_code,
+                   accepted_before_violation, final_mode, timed_out,
+                   safe_and_integrity_valid, stalled, identity_verified):
+    """正式 E1 标签路由（结合违规阶段/handoff/违规码/q_acc）。
+
+    规则顺序（裁决指定）：
+    1. 身份未验证 / q_unknown → UNCERTAIN；
+    2. 任务完整性违规码 → TASK_INTEGRITY_FAIL；
+    3. handoff 成立 + REENTRY 阶段物理安全违规 + q_acc 前 → UNSAFE_RETURN；
+    4. q_acc → SAFE_REENTRY；
+    5. 安全超时 + 停滞 → SAFE_STALL；安全超时 + 仍进展 → UNCERTAIN_TIMEOUT_PROGRESSING；
+    6. 其余 → UNCERTAIN。
+
+    PREGRASP 阶段物理安全违规（监督前缀本身失效）：TASK_INTEGRITY_FAIL，
+    subreason=PREHANDOFF_SAFETY_FAIL。
+    """
+    if not identity_verified or final_mode == MODE_UNKNOWN:
+        return "UNCERTAIN", None
+
+    # 任务完整性违规码（无论阶段）
+    if primary_violation_code in _INTEGRITY_VIOLATIONS:
+        return "TASK_INTEGRITY_FAIL", None
+
+    # 物理安全违规码
+    if primary_violation_code in _SAFETY_VIOLATIONS:
+        if (handoff_eligible and decisive_phase == "REENTRY"
+                and not accepted_before_violation):
+            return "UNSAFE_RETURN", None
+        else:
+            # PREGRASP 阶段安全违规：监督前缀本身失效
+            return "TASK_INTEGRITY_FAIL", "PREHANDOFF_SAFETY_FAIL"
+
+    # 无违规（未进入 q_bad）
+    if final_mode == MODE_ACC:
+        return "SAFE_REENTRY", None
+
+    if timed_out and safe_and_integrity_valid:
+        if stalled:
+            return "SAFE_STALL", None
+        return "UNCERTAIN_TIMEOUT_PROGRESSING", None
+
+    return "UNCERTAIN", None

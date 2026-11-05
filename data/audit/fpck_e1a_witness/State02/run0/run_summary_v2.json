@@ -1,0 +1,19 @@
+{
+  "case": "State02",
+  "state_id": 2,
+  "stream": 0,
+  "run_idx": 0,
+  "implementation_status": "EVENT_LEVEL_V1_2",
+  "old_final_e1_label": "TASK_INTEGRITY_FAIL",
+  "corrected_final_e1_label": "UNSAFE_RETURN",
+  "relabel_reason": "REENTRY_FORBIDDEN_CONTACT_BEFORE_ACCEPTANCE",
+  "raw_trace_changed": false,
+  "raw_trace_sha256": "20663eaed41cc58c27927567e332d3618ca09517942a3fd0dd758a68d25c11db",
+  "handoff_eligible": true,
+  "decisive_phase": "REENTRY",
+  "primary_violation_code": "FORBIDDEN_CONTACT",
+  "accepted_before_violation": false,
+  "final_mode": "q_bad",
+  "identity_verified": true,
+  "subreason": null
+}
