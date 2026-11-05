@@ -1,6 +1,5 @@
 """Runtime CKG and calibration utilities; independent of SafeLIBERO."""
-from __future__ import annotations  # py3.8 兼容：延迟注解求值，允许 X | None 语法
-
+from __future__ import annotations
 from dataclasses import dataclass
 import math
 from typing import Any, Callable, Iterable, Sequence
