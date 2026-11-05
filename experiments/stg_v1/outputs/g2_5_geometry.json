@@ -1,0 +1,41 @@
+{
+  "mug_center": [
+    0.021,
+    -0.158,
+    0.59
+  ],
+  "mug_half": [
+    0.097,
+    0.071,
+    0.06
+  ],
+  "soup_center": [
+    0.132,
+    -0.155,
+    0.475
+  ],
+  "soup_half": [
+    0.065,
+    0.04,
+    0.039
+  ],
+  "eef_half_long": [
+    0.06,
+    0.12,
+    0.2
+  ],
+  "eef_half_small": [
+    0.06,
+    0.04,
+    0.2
+  ],
+  "grasp_p1": [
+    0.132,
+    -0.155,
+    0.714
+  ],
+  "soup_mug_dist_cm": 16.0,
+  "eef_mug_xy_dist_cm": 11.1,
+  "eef_mug_halfsum_cm": 21.7,
+  "overlap": true
+}
