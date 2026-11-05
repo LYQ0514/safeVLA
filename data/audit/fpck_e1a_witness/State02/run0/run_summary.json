@@ -54,5 +54,7 @@
     "in cream_cheese_1 basket_1_contain_region": false
   },
   "wall_s": 649.9827303886414,
-  "raw_trace_sha256": "20663eaed41cc58c27927567e332d3618ca09517942a3fd0dd758a68d25c11db"
+  "raw_trace_sha256": "20663eaed41cc58c27927567e332d3618ca09517942a3fd0dd758a68d25c11db",
+  "semantic_trace_sha256": "d8e2d0e242a7697d0716484a5df710ff5fb0bba779daeefad1be36ab773167b0",
+  "semantic_hash_version": "fpck-event-v1"
 }

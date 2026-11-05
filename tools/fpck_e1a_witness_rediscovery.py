@@ -316,6 +316,13 @@ def main():
             open(raw_log_path, "rb").read()).hexdigest()
     except Exception:
         summary["raw_trace_sha256"] = None
+    # semantic trace hash（排除 wall_time 等易变字段，可跨 run 对比）
+    try:
+        from src.fpck.canonical_hash import semantic_trace_hash, SEMANTIC_HASH_VERSION
+        summary["semantic_trace_sha256"] = semantic_trace_hash(raw_log_path)
+        summary["semantic_hash_version"] = SEMANTIC_HASH_VERSION
+    except Exception:
+        summary["semantic_trace_sha256"] = None
     summary["identity_verified"] = (summary.get("q_start_hash") is not None
                                     and summary.get("raw_trace_sha256") is not None)
 

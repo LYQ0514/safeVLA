@@ -58,5 +58,7 @@
   "label_subreason": null,
   "decisive_phase": "REENTRY",
   "accepted_before_violation": false,
-  "label_router": "route_e1_label"
+  "label_router": "route_e1_label",
+  "semantic_trace_sha256": "d8e2d0e242a7697d0716484a5df710ff5fb0bba779daeefad1be36ab773167b0",
+  "semantic_hash_version": "fpck-event-v1"
 }
