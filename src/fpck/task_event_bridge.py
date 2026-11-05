@@ -70,6 +70,14 @@ class TaskEventBridge:
         self._primary_violation = None  # (decision_index, substep, priority, code)
         self._first_decisive_index = None
         self._obstacle_baseline = None
+        # S04 需要的额外时间线字段（从事件流记录）
+        self._first_gt2mm = None      # (event_index, substep) 首次 >2mm
+        self._first_gt5mm = None      # 首次 >5mm
+        self._first_gt10mm = None     # 首次 >10mm
+        self._first_task_contact = None  # 首次 TASK_CONTACT
+        self._first_controlled = None    # 首次 CONTROLLED witness
+        self._progress_history = []      # [(event_index, mode)] 阶段推进历史
+        self._last_progress_index = None  # 最后合法进展 event_index
 
     # ------------------------------------------------------------------
     # 生命周期
@@ -113,6 +121,15 @@ class TaskEventBridge:
                 target_disp_mm[t] = float(np.sum(np.abs(
                     np.asarray(cur) - self._settled_baseline[t]))) * 1000
 
+        # 记录位移阈值时间线（S04 需要：first >2/5/10mm）
+        max_disp = max(target_disp_mm.values()) if target_disp_mm else 0.0
+        if self._first_gt2mm is None and max_disp > 2.0:
+            self._first_gt2mm = (self.event_index, physics_substep)
+        if self._first_gt5mm is None and max_disp > 5.0:
+            self._first_gt5mm = (self.event_index, physics_substep)
+        if self._first_gt10mm is None and max_disp > 10.0:
+            self._first_gt10mm = (self.event_index, physics_substep)
+
         # 违规候选（substep 级）
         violation = None
         if forbidden:
@@ -130,6 +147,18 @@ class TaskEventBridge:
             self._primary_violation = (self.event_index, physics_substep,
                                        VIOLATION_PRIORITY.get(violation, 99), violation)
             self._first_decisive_index = self.event_index
+
+        # 精确 substep 时机：检测到违规立即驱动自动机进入 q_bad
+        # （否则精确 substep 时机丢失，要等到 control step 才 q_bad）
+        if violation is not None and self.auto.state.mode not in ("q_bad", "q_unknown", "q_acc"):
+            ev = TaskEvent(
+                step=control_step,
+                forbidden_contact=forbidden,
+                payload_obstacle_contact=payload_obstacle,
+                obstacle_displacement_l1_mm=obstacle_disp,
+                target_displacement_l1_mm=max(target_disp_mm.values()) if target_disp_mm else 0.0,
+            )
+            self.auto.process(ev)
 
         # 输出 substep 事件
         self._emit({
@@ -201,6 +230,18 @@ class TaskEventBridge:
         self.auto.process(ev)
         after = self.auto.state.mode
 
+        # 记录 TASK_CONTACT / CONTROLLED / progress 时间线
+        if task_contact and self._first_task_contact is None:
+            self._first_task_contact = (self.event_index, control_step)
+        if any(v in ("CONTROLLED", "TRANSPORTED", "RELEASED")
+               for v in self.auto.state.lifecycle.values()) and self._first_controlled is None:
+            self._first_controlled = (self.event_index, control_step)
+        if after != before:
+            self._progress_history.append((self.event_index, before, after))
+            # 合法进展（mode 前进，非 q_bad/q_unknown）
+            if after not in (MODE_BAD, MODE_UNKNOWN):
+                self._last_progress_index = self.event_index
+
         # 违规候选（control step 级，主违规码已在 substep 级优先记录）
         if self._primary_violation is None and after == MODE_BAD:
             code = self.auto.state.violation_code or "UNKNOWN"
@@ -245,6 +286,13 @@ class TaskEventBridge:
             "first_decisive_index": self._first_decisive_index,
             "obstacle_baseline": (None if self._obstacle_baseline is None
                                   else self._obstacle_baseline.tolist()),
+            "first_gt2mm": self._first_gt2mm,
+            "first_gt5mm": self._first_gt5mm,
+            "first_gt10mm": self._first_gt10mm,
+            "first_task_contact": self._first_task_contact,
+            "first_controlled": self._first_controlled,
+            "progress_history": list(self._progress_history),
+            "last_progress_index": self._last_progress_index,
         }
 
     def restore(self, snap):
@@ -265,6 +313,13 @@ class TaskEventBridge:
         self._first_decisive_index = snap["first_decisive_index"]
         self._obstacle_baseline = (None if snap["obstacle_baseline"] is None
                                    else np.asarray(snap["obstacle_baseline"]))
+        self._first_gt2mm = snap.get("first_gt2mm")
+        self._first_gt5mm = snap.get("first_gt5mm")
+        self._first_gt10mm = snap.get("first_gt10mm")
+        self._first_task_contact = snap.get("first_task_contact")
+        self._first_controlled = snap.get("first_controlled")
+        self._progress_history = list(snap.get("progress_history", []))
+        self._last_progress_index = snap.get("last_progress_index")
 
     def finalize(self):
         """返回最终汇总（引用 trace hash，不代替原始记录）。"""
@@ -275,6 +330,14 @@ class TaskEventBridge:
             "first_decisive_event_index": self._first_decisive_index,
             "final_lifecycle": dict(self.auto.state.lifecycle),
             "final_achieved_mask": dict(self.auto.state.achieved_mask),
+            # S04 额外时间线字段
+            "first_gt2mm": self._first_gt2mm,
+            "first_gt5mm": self._first_gt5mm,
+            "first_gt10mm": self._first_gt10mm,
+            "first_task_contact": self._first_task_contact,
+            "first_controlled_witness": self._first_controlled,
+            "progress_history": list(self._progress_history),
+            "last_progress_index": self._last_progress_index,
         }
 
     # ------------------------------------------------------------------
