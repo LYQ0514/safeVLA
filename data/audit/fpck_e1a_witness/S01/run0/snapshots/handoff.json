@@ -1,0 +1,73 @@
+{
+  "bridge": {
+    "automaton": {
+      "mode": "q_init",
+      "lifecycle": {
+        "alphabet_soup_1": "RESTING",
+        "cream_cheese_1": "RESTING"
+      },
+      "achieved_mask": {
+        "in alphabet_soup_1 basket_1_contain_region": false,
+        "in cream_cheese_1 basket_1_contain_region": false
+      },
+      "violation_code": null,
+      "spec_version": "fpck-task-automaton-v1.2"
+    },
+    "settled_baseline": {
+      "alphabet_soup_1_main": [
+        0.1327392606410653,
+        -0.06952453385485276,
+        0.47517012396052544
+      ],
+      "cream_cheese_1_main": [
+        -0.1679261084095663,
+        0.039596519650210694,
+        0.44569592152000004
+      ]
+    },
+    "target_prev": {
+      "alphabet_soup_1_main": [
+        0.1327392606410653,
+        -0.06952453385485276,
+        0.47517012396052544
+      ],
+      "cream_cheese_1_main": [
+        -0.1679261084095663,
+        0.039596519650210694,
+        0.44569592152000004
+      ]
+    },
+    "lift_hist": {
+      "alphabet_soup_1_main": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "cream_cheese_1_main": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "drift_hist": {
+      "alphabet_soup_1_main": [],
+      "cream_cheese_1_main": []
+    },
+    "contact_gone": {
+      "alphabet_soup_1_main": 0,
+      "cream_cheese_1_main": 0
+    },
+    "vel_hist": {
+      "alphabet_soup_1_main": [],
+      "cream_cheese_1_main": []
+    },
+    "primary_violation": null,
+    "first_decisive_index": null,
+    "obstacle_baseline": [
+      0.019987394242096335,
+      -0.09994721546971042,
+      0.5144666911309
+    ]
+  },
+  "env_hash": "b788daf914fa7550c44478c14942b56669faf2af4195e8d70c89cb46408fa454"
+}
