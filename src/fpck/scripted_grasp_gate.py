@@ -108,13 +108,17 @@ PRESHAPE_CLEARANCE = 0.01  # 手指内侧距对象表面额外 clearance
 
 
 def preshape_target_ca(obj_width):
-    """由对象宽度反求 current_action 目标（预闭合开度 = 对象宽 + 2*(tip半宽+clearance)）。"""
+    """由对象宽度反求 current_action 目标（裁决 §三：选最小满足的档位）。
+
+    A_desired = obj_width + 2*(tip半宽 + clearance)。
+    g* = argmin {A_steady(g) : A_steady(g) >= A_desired}（从小到大找第一个满足）。
+    """
     needed_aperture = obj_width + 2 * (TIP_HALF_WIDTH + PRESHAPE_CLEARANCE)
-    # 找最接近且 ≥ needed 的 current_action 档位
-    for ca in [1.00, 0.75, 0.50, 0.25, 0.00, -0.25, -0.50, -0.75, -1.00]:
+    # 从最小 aperture（ca=-1.0）往上找第一个 >= needed 的（最小满足）
+    for ca in [-1.00, -0.75, -0.50, -0.25, 0.00, 0.25, 0.50, 0.75, 1.00]:
         if CA_TO_APERTURE[ca] >= needed_aperture:
             return ca
-    return None  # 无足够大档位
+    return None  # 无足够大档位（对象超过 full open 可夹）
 
 
 def servo_current_action(env, target_ca, max_steps=30):
