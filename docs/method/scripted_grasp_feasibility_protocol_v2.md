@@ -1,5 +1,11 @@
 # 脚本化抓取可行性门禁协议 v2（scripted_grasp_feasibility_protocol_v2）
 
+> **状态：SUPERSEDED_BY_V3（2026-11-06，开发阶段被替代）**
+>
+> superseded_reason: 开发 MVP（cream_cheese）证明「full open → descend → close」模板
+> 会侵入对象（尤其窄面对象），需引入 PRESHAPE（预闭合）状态。
+> superseded_by: scripted_grasp_feasibility_protocol_v3
+>
 > 日期：2026-11-06。**在运行任何对象门禁前冻结**。
 > supersedes: scripted_grasp_feasibility_protocol_v1（INVALID）
 > protocol_sha256 记录本文件冻结时的 hash。
