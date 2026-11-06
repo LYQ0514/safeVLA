@@ -95,6 +95,21 @@ def main():
     legacy = TaskAutomaton(manipulated_targets, goal_keys)
     v13 = GraspAcquisitionAutomaton(manipulated_targets, goal_keys)
 
+    # 审计 D：运行时源码身份（从实际 Python 进程采集，非仓库目录读 commit）
+    from src.fpck.runtime_identity import capture_runtime_identity, verify_runtime_identity
+    runtime_ident = capture_runtime_identity(extra={
+        "suite": SUITE, "task_id": TASK_ID, "state_id": STATE_ID,
+        "dual_monitor": {"primary": "v1.3", "compare": "v1.2"},
+    })
+    runtime_verify = verify_runtime_identity(runtime_ident)
+    with open(os.path.join(out_dir, "runtime_identity.json"), "w") as f:
+        json.dump({"identity": runtime_ident, "verify": runtime_verify},
+                  f, ensure_ascii=False, indent=2)
+    if not runtime_verify["pass"]:
+        print(f"[审计 D 失败] {runtime_verify['failures']}")
+        print(f"[审计 D 警告] {runtime_verify['reasons']}")
+        # 不硬中止（身份失败需人工裁决），但明确标记
+
     env = make_env_local(ts, task, TASK_ID, STATE_ID)
     obs = env.env._get_observations()
     obstacle = find_active_obstacle(env, obs)
