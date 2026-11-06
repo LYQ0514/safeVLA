@@ -35,6 +35,9 @@ from src.fpck.task_automaton import (
     RELEASE_CONTACT_GONE_STEPS, RELEASE_VEL_STEPS, RELEASE_VEL_MPS,
 )
 from src.fpck.goal_evaluator import eval_goal_clauses, native_success
+from src.fpck.task_automaton_acq import (
+    AcquisitionEvent, GraspAcquisitionAutomaton,
+)
 from src.fpck.gripper_action_decoder import (
     CloseIntentTracker, decode_close_intent,
     compute_closing_response, compute_closure_blocked,
@@ -47,9 +50,10 @@ SPEC_VERSION = "fpck-task-automaton-v1.2"
 VIOLATION_PRIORITY = {
     "FORBIDDEN_CONTACT": 0,
     "PAYLOAD_OBSTACLE_CONTACT": 1,
-    "UNAUTHORIZED_TARGET_MOTION": 2,
-    "STATIC_OBSTACLE_MOVED": 3,
-    "NATIVE_FALSE_POSITIVE": 4,
+    "NON_FINGER_ROBOT_TARGET_CONTACT": 2,
+    "UNAUTHORIZED_TARGET_MOTION": 3,
+    "STATIC_OBSTACLE_MOVED": 4,
+    "NATIVE_FALSE_POSITIVE": 5,
 }
 
 
@@ -78,6 +82,7 @@ class TaskEventBridge:
         # 夹爪意图解码状态（裁决 §十二：close intent 来自命令，不从 qpos 反推）
         self._close_intent_tracker = CloseIntentTracker()
         self._prev_aperture = None  # 上一步 aperture（用于 closing_response）
+        self._eef_xy_at_first_finger = None  # 首次手指接触时 EEF 水平位置（横向扫动基线）
         # S04 需要的额外时间线字段（从事件流记录）
         self._first_gt2mm = None      # (event_index, substep) 首次 >2mm
         self._first_gt5mm = None      # 首次 >5mm
@@ -100,6 +105,7 @@ class TaskEventBridge:
         self._vel_hist = {t: [] for t in target_bodies}
         self._close_intent_tracker = CloseIntentTracker()
         self._prev_aperture = None
+        self._eef_xy_at_first_finger = None
         self.obstacle_body = obstacle_body
         self._obstacle_baseline = None
         if obstacle_body is not None:
@@ -112,7 +118,8 @@ class TaskEventBridge:
     def _dynamic_contacts(self, env, target_bodies):
         """用动态 target_bodies/obstacle_body 判定接触（不依赖 contract_objects 硬编码）。
 
-        返回 (robot_target_contact, robot_obstacle_contact, two_finger, contacts_detail)。
+        返回 (robot_target_contact, robot_obstacle_contact, two_finger,
+        left_finger, right_finger, non_finger_robot_target, contacts_detail)。
         contract_objects 的 PROTECTED_OBJECTS/TASK_OBJECTS 硬编码为 long 套件对象名，
         跨套件（goal/spatial）会误判。这里直接用 bridge 持有的动态 body 名扫描
         mjData.contact。
@@ -128,6 +135,7 @@ class TaskEventBridge:
         robot_obstacle = False
         left_finger = False
         right_finger = False
+        non_finger_robot_target = False
         detail = []
 
         def is_robot(b):
@@ -146,18 +154,24 @@ class TaskEventBridge:
                 robot_target = True
                 if "leftfinger" in robot_side:
                     left_finger = True
-                if "rightfinger" in robot_side:
+                elif "rightfinger" in robot_side:
                     right_finger = True
+                else:
+                    # gripper housing / eef / wrist / robot link 触碰目标 = 非法推动
+                    non_finger_robot_target = True
             if obstacle is not None and other == obstacle:
                 robot_obstacle = True
             detail.append({"robot": robot_side, "other": other})
 
-        return robot_target, robot_obstacle, (left_finger and right_finger), detail
+        two_finger = left_finger and right_finger
+        return (robot_target, robot_obstacle, two_finger,
+                left_finger, right_finger, non_finger_robot_target, detail)
 
     def observe_physics_substep(self, env, phase, control_step, physics_substep,
                                 target_bodies, target_poses):
         """Joint-PD 阶段：每个 physics substep 记录 contact + 位移 + 违规候选。"""
-        robot_target, robot_obstacle, _, contact_detail = self._dynamic_contacts(env, target_bodies)
+        robot_target, robot_obstacle, _, _lf, _rf, _nf, contact_detail = \
+            self._dynamic_contacts(env, target_bodies)
         forbidden = robot_obstacle  # 仅障碍物接触算 forbidden（不把 unclassified 当 forbidden）
         payload_obstacle = robot_obstacle
 
@@ -236,8 +250,10 @@ class TaskEventBridge:
                              eef_pos_world=None):
         """OSC/π0.5 阶段：每个控制步记录完整事件 + 驱动自动机转移。"""
         # 动态接触判定（不依赖 contract_objects 硬编码角色清单）
-        robot_target, robot_obstacle, two_finger_contact, _ = \
+        (robot_target, robot_obstacle, two_finger_contact,
+         left_finger_contact, right_finger_contact, non_finger_robot_target, _) = \
             self._dynamic_contacts(env, target_bodies)
+        valid_finger_target_contact = left_finger_contact or right_finger_contact
         forbidden = robot_obstacle  # 仅障碍物接触算 forbidden
         payload_obstacle = robot_obstacle
         clause_truth = eval_goal_clauses(env)
@@ -258,6 +274,18 @@ class TaskEventBridge:
         eef_target_drift_mm = 0.0
         target_vel_mps = 0.0
         release_cmd = False
+        # 夹爪解码字段默认值（target_bodies 为空时仍可用）
+        aperture = None
+        nominal_grip = None
+        deployed_grip = None
+        nominal_close_intent = False
+        deployed_close_intent = False
+        close_intent_latched = False
+        controller_target = None
+        aperture_vel = None
+        closing_response = False
+        closure_blocked = False
+        lateral_sweep_mm = 0.0
         if target_bodies:
             from tools.g1a_soup_trace import body_state, eef_pos
             ee = eef_pos(env)  # EEF 世界系位置
@@ -313,6 +341,12 @@ class TaskEventBridge:
                 # 目标速度
                 target_vel_mps = max(target_vel_mps, float(np.linalg.norm(vel)))
             self._prev_eef = ee
+            # EEF 横向扫动（自首次手指接触起，判定 sweeping push）
+            if valid_finger_target_contact and self._eef_xy_at_first_finger is None:
+                self._eef_xy_at_first_finger = ee[:2].copy()
+            if self._eef_xy_at_first_finger is not None:
+                lateral_sweep_mm = float(np.linalg.norm(
+                    ee[:2] - self._eef_xy_at_first_finger)) * 1000
 
         # 更新 contact_gone 计数（释放见证需要：机器人-目标接触连续消失步数）
         for t in target_bodies or []:
@@ -323,8 +357,8 @@ class TaskEventBridge:
                     self._contact_gone[t] += 1
         contact_gone = max(self._contact_gone.values()) if self._contact_gone else 0
 
-        # 构造 TaskEvent，驱动自动机
-        ev = TaskEvent(
+        # 构造 AcquisitionEvent（v1.3），驱动自动机
+        ev = AcquisitionEvent(
             step=control_step,
             goal_clause_truth=clause_truth,
             native_success=native,
@@ -340,6 +374,19 @@ class TaskEventBridge:
             target_velocity_mps=target_vel_mps,
             contact_gone_steps=contact_gone,
             release_command=release_cmd,
+            # acquisition 见证字段（裁决 §五）
+            left_finger_contact=left_finger_contact,
+            right_finger_contact=right_finger_contact,
+            valid_finger_target_contact=valid_finger_target_contact,
+            non_finger_robot_target_contact=non_finger_robot_target,
+            close_intent=deployed_close_intent,
+            closing_response=closing_response,
+            closure_blocked=closure_blocked,
+            aperture=aperture,
+            support_contact=False,  # 支撑面接触由 lift 代理（见 spec §7）
+            lift_mm=target_lifted_mm,
+            lateral_sweep_mm=lateral_sweep_mm,
+            relative_pose_error=eef_target_drift_mm,
         )
         before = self.auto.state.mode
         self.auto.process(ev)
@@ -395,6 +442,13 @@ class TaskEventBridge:
             "aperture_velocity": aperture_vel,
             "closing_response": closing_response,
             "closure_blocked_by_object": closure_blocked,
+            # acquisition 见证字段（裁决 §五）
+            "left_finger_contact": left_finger_contact,
+            "right_finger_contact": right_finger_contact,
+            "valid_finger_target_contact": valid_finger_target_contact,
+            "non_finger_robot_target_contact": non_finger_robot_target,
+            "support_contact": False,
+            "lateral_sweep_mm": lateral_sweep_mm,
             "target_velocity_mps": target_vel_mps,
             "contact_gone_steps": contact_gone,
             "release_command": release_cmd,
@@ -431,6 +485,8 @@ class TaskEventBridge:
             "last_progress_index": self._last_progress_index,
             "close_intent_tracker": self._close_intent_tracker.snapshot(),
             "prev_aperture": self._prev_aperture,
+            "eef_xy_at_first_finger": (None if self._eef_xy_at_first_finger is None
+                                       else self._eef_xy_at_first_finger.tolist()),
         }
 
     def restore(self, snap):
@@ -461,6 +517,8 @@ class TaskEventBridge:
         self._close_intent_tracker = CloseIntentTracker().restore(
             snap.get("close_intent_tracker", {}))
         self._prev_aperture = snap.get("prev_aperture")
+        self._eef_xy_at_first_finger = (None if snap.get("eef_xy_at_first_finger") is None
+                                        else np.asarray(snap["eef_xy_at_first_finger"]))
 
     def finalize(self):
         """返回最终汇总（引用 trace hash，不代替原始记录）。"""
