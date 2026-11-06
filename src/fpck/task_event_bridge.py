@@ -70,6 +70,7 @@ class TaskEventBridge:
         self._primary_violation = None  # (decision_index, substep, priority, code)
         self._first_decisive_index = None
         self._obstacle_baseline = None
+        self._prev_eef = None  # 上一步 EEF 位置（用于相对漂移见证）
         # S04 需要的额外时间线字段（从事件流记录）
         self._first_gt2mm = None      # (event_index, substep) 首次 >2mm
         self._first_gt5mm = None      # 首次 >5mm
@@ -196,23 +197,64 @@ class TaskEventBridge:
         # target 位移 + 见证
         target_disp_mm = {}
         task_contact = False
+        # 见证字段（真实物理量，避免默认值导致见证永不成立）
+        target_lifted_mm = 0.0
+        eef_target_drift_mm = 0.0
+        two_finger_contact = False
+        target_vel_mps = 0.0
+        release_cmd = False
         if target_bodies:
-            from tools.g1a_soup_trace import body_state
+            from tools.g1a_soup_trace import body_state, eef_pos
+            ee = eef_pos(env)  # EEF 世界系位置
+            obs_ = env.env._get_observations()
+            gq = np.asarray(obs_.get("robot0_gripper_qpos", [0.0]), dtype=np.float64)
+            gripper_open = bool(np.abs(gq).mean() > 0.03)  # |qpos| 均值大 = 张开
+            release_cmd = gripper_open
+
             for t in target_bodies:
                 if t not in self._settled_baseline:
                     continue
-                cur = body_state(env, t)["pos"]
+                st = body_state(env, t)
+                cur = st["pos"]
+                vel = st["vel"]
                 target_disp_mm[t] = float(np.sum(np.abs(
                     cur - self._settled_baseline[t]))) * 1000
+                # 抬升（相对 settled baseline 的 z 变化，取正抬升）
+                lift_z = float(cur[2] - self._settled_baseline[t][2]) * 1000
+                target_lifted_mm = max(target_lifted_mm, lift_z)
+                # EEF-目标相对漂移（相对上一步的相对位置变化）
                 if t in self._target_prev:
-                    lift = float(np.sum(np.abs(cur - self._target_prev[t]))) * 1000
-                    self._lift_hist[t].append(lift)
-                    self._lift_hist[t] = self._lift_hist[t][-CONTROL_WITNESS_STEPS:]
+                    rel = np.asarray(cur) - ee
+                    if self._prev_eef is not None:
+                        prev_rel = np.asarray(self._target_prev[t]) - self._prev_eef
+                        drift = float(np.sum(np.abs(rel - prev_rel))) * 1000
+                        eef_target_drift_mm = max(eef_target_drift_mm, drift)
                     self._target_prev[t] = cur.copy()
+                # 目标速度
+                target_vel_mps = max(target_vel_mps, float(np.linalg.norm(vel)))
+            self._prev_eef = ee
+
             # task_contact：ROBOT_MANIPULATED_TARGET 几何接触
             task_contact = any(ev.get("body1", "").startswith("robot0")
                                or ev.get("body2", "").startswith("robot0")
                                for ev in mon["task"])
+            # 双指接触：左右夹爪分别与 TASK 目标几何接触
+            left_finger = any(
+                ("leftfinger" in ev.get("body1", "") or "leftfinger" in ev.get("body2", ""))
+                for ev in mon["task"])
+            right_finger = any(
+                ("rightfinger" in ev.get("body1", "") or "rightfinger" in ev.get("body2", ""))
+                for ev in mon["task"])
+            two_finger_contact = left_finger and right_finger
+
+        # 更新 contact_gone 计数（释放见证需要：机器人-目标接触连续消失步数）
+        for t in target_bodies or []:
+            if t in self._contact_gone:
+                if task_contact:
+                    self._contact_gone[t] = 0
+                else:
+                    self._contact_gone[t] += 1
+        contact_gone = max(self._contact_gone.values()) if self._contact_gone else 0
 
         # 构造 TaskEvent，驱动自动机
         ev = TaskEvent(
@@ -224,7 +266,13 @@ class TaskEventBridge:
             obstacle_displacement_l1_mm=obstacle_disp,
             target_displacement_l1_mm=max(target_disp_mm.values()) if target_disp_mm else 0.0,
             task_contact=task_contact,
-            gripper_command_close=bool(gripper_close) if gripper_close is not None else False,
+            target_lifted_mm=target_lifted_mm,
+            eef_target_relative_drift_mm=eef_target_drift_mm,
+            gripper_command_close=bool(gripper_close) if gripper_close is not None else (not release_cmd),
+            gripper_two_finger_contact=two_finger_contact,
+            target_velocity_mps=target_vel_mps,
+            contact_gone_steps=contact_gone,
+            release_command=release_cmd,
         )
         before = self.auto.state.mode
         self.auto.process(ev)
