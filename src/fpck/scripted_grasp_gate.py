@@ -65,12 +65,35 @@ FAILURES = [
 ]
 
 
-def make_env(suite, task_id):
+def make_env(suite, task_ref):
+    """task_ref 可以是 task_id(int) 或 task_name(str)。独立实例化（不 set_init_state）。
+
+    不复用 g1a_soup_trace.make_env（那个硬编码 TASK_ID=0，multi-object 任务会
+    broadcast error）。这里只要 reset 后的 env，对象位置由 BDDL 初始场景决定。
+    """
     from libero.libero import benchmark
-    from tools.g1a_soup_trace import make_env as _make
+    from libero.libero import get_libero_path
+    from libero.libero.envs import OffScreenRenderEnv
+    import pathlib
     ts = benchmark.get_benchmark_dict()[suite](safety_level="I")
-    task = ts.get_task(task_id)
-    return _make(ts, task, task_id)
+    if isinstance(task_ref, str):
+        task_id = None
+        for i in range(ts.n_tasks):
+            if ts.get_task(i).name == task_ref:
+                task_id = i
+                break
+        if task_id is None:
+            raise ValueError(f"task {task_ref} 不在 suite {suite}")
+        task = ts.get_task(task_id)
+    else:
+        task_id = task_ref
+        task = ts.get_task(task_id)
+    bddl = pathlib.Path(get_libero_path("bddl_files")) / task.problem_folder / task.bddl_file
+    env = OffScreenRenderEnv(bddl_file_name=bddl, camera_heights=256,
+                             camera_widths=256, controller="OSC_POSE")
+    env.seed(7)
+    env.reset()
+    return env
 
 
 def eef_pos(env):
@@ -102,21 +125,20 @@ CA_TO_APERTURE = {
     -0.25: 0.0305, -0.50: 0.0205, -0.75: 0.0105, -1.00: 0.0010,
 }
 
-# 预闭合余量（每侧）：手指 tip 半宽 0.004 + 安全余量
+# 预闭合：手指 tip 半宽（tip 内侧间距 = aperture - 2*tip_half_width）
 TIP_HALF_WIDTH = 0.004
-PRESHAPE_CLEARANCE = 0.01  # 手指内侧距对象表面额外 clearance
 
 
 def preshape_target_ca(obj_width):
-    """由对象宽度反求 current_action 目标（裁决 §三：选最小满足的档位）。
+    """由对象宽度反求 current_action 目标。
 
-    A_desired = obj_width + 2*(tip半宽 + clearance)。
-    g* = argmin {A_steady(g) : A_steady(g) >= A_desired}（从小到大找第一个满足）。
+    约束：手指 tip 内侧间距 > 对象宽度，即 aperture > obj_width + 2*tip_half_width。
+    选满足此约束的最小 current_action 档位（裁决 §三 argmin 语义）。
     """
-    needed_aperture = obj_width + 2 * (TIP_HALF_WIDTH + PRESHAPE_CLEARANCE)
-    # 从最小 aperture（ca=-1.0）往上找第一个 >= needed 的（最小满足）
+    needed_aperture = obj_width + 2 * TIP_HALF_WIDTH
+    # 从最小 aperture（ca=-1.0）往上找第一个 > needed 的（最小满足）
     for ca in [-1.00, -0.75, -0.50, -0.25, 0.00, 0.25, 0.50, 0.75, 1.00]:
-        if CA_TO_APERTURE[ca] >= needed_aperture:
+        if CA_TO_APERTURE[ca] > needed_aperture:
             return ca
     return None  # 无足够大档位（对象超过 full open 可夹）
 
@@ -254,12 +276,46 @@ class GraspGateResult:
     def __init__(self):
         self.template = None
         self.passed = False
-        self.failure_reason = None
+        self._failure_reason = None
+        self.outcome = None  # PASS / PHYSICAL_INELIGIBLE / TEMPLATE_FAIL / CONTROLLER_INCONCLUSIVE
         self.phase_log = {}
         self.effective_aperture = None
         self.object_lift_m = 0.0
         self.bilateral_held = False
         self.relative_pose_stable = False
+
+    @property
+    def failure_reason(self):
+        return self._failure_reason
+
+    @failure_reason.setter
+    def failure_reason(self, value):
+        self._failure_reason = value
+        self.outcome = classify_outcome(value)
+
+
+# 结果分类（裁决 §四）：不能把 controller 失败解释成物理不可抓
+_PHYSICAL_INELIGIBLE_REASONS = {
+    "PRESHAPE_APERTURE_UNREACHABLE",
+    "TRANSIT_HEIGHT_UNREACHABLE",
+}
+_CONTROLLER_INCONCLUSIVE_REASONS = {
+    "DESCENT_TIMEOUT", "PREGRASP_TIMEOUT", "NAVIGATION_STALLED",
+    "ORIENTATION_UNREACHABLE", "PREGRASP_UNREACHABLE",
+    "TRANSIT_PATH_BLOCKED",
+}
+# 其余 → TEMPLATE_FAIL（控制器完成动作但未建立稳定抓取）
+
+
+def classify_outcome(failure_reason):
+    """由 failure_reason 分类结果（裁决 §四四类）。"""
+    if failure_reason is None:
+        return "PASS"
+    if failure_reason in _PHYSICAL_INELIGIBLE_REASONS:
+        return "PHYSICAL_INELIGIBLE"
+    if failure_reason in _CONTROLLER_INCONCLUSIVE_REASONS:
+        return "CONTROLLER_INCONCLUSIVE"
+    return "TEMPLATE_FAIL"
 
 
 def run_grasp_gate(env, obj_body, closing_target, obj_width, grasp_center_xy=None):
@@ -378,6 +434,7 @@ def run_grasp_gate(env, obj_body, closing_target, obj_width, grasp_center_xy=Non
 
     if bilateral_held and r.relative_pose_stable:
         r.passed = True
+        r.outcome = "PASS"
     else:
         r.failure_reason = "OBJECT_DROPPED" if not bilateral_held else "RELATIVE_POSE_UNSTABLE"
     return r
