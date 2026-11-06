@@ -217,6 +217,83 @@ class TestCloseCommandNoContact(unittest.TestCase):
         self.assertEqual(st.mode, MODE_BAD)
 
 
+class TestAcceptRequiresReleased(unittest.TestCase):
+    """修复 v1.2 过早接受：goal true 但目标仍被夹持（TRANSPORTED）不得 q_acc。"""
+
+    def _drive_to_transported(self, auto):
+        """驱动到 TRANSPORTED：close→单指→双指→受阻→抬升→运输。"""
+        auto.process(mk_event(step=0, close_intent=True, task_contact=False))
+        auto.process(mk_event(step=1, close_intent=True, task_contact=True,
+                              left_finger_contact=True, valid_finger_target_contact=True,
+                              target_displacement_l1_mm=1.0))
+        auto.process(mk_event(step=2, close_intent=True, task_contact=True,
+                              left_finger_contact=True, valid_finger_target_contact=True,
+                              target_displacement_l1_mm=6.0))
+        for i in range(ACQ_BILATERAL_STEPS):
+            auto.process(mk_event(step=3 + i, close_intent=True, task_contact=True,
+                                  left_finger_contact=True, right_finger_contact=True,
+                                  valid_finger_target_contact=True,
+                                  target_displacement_l1_mm=7.0 + i,
+                                  closure_blocked=True, aperture=0.02))
+        # 运输：位移 > TRANSPORTED_MM
+        auto.process(mk_event(step=10, close_intent=True, task_contact=True,
+                              left_finger_contact=True, right_finger_contact=True,
+                              valid_finger_target_contact=True,
+                              target_displacement_l1_mm=30.0))
+
+    def test_goal_true_but_still_grasped_not_accept(self):
+        """goal clause 为真但目标仍在 TRANSPORTED（未 RELEASED）→ 不得 q_acc，也不得 q_bad。"""
+        auto = mk_auto()
+        self._drive_to_transported(auto)
+        self.assertIn(auto.state.lifecycle["bowl_main"], ("CONTROLLED", "TRANSPORTED"))
+        # goal true 但仍在夹持
+        st = auto.process(mk_event(
+            step=11, close_intent=True, task_contact=True,
+            left_finger_contact=True, right_finger_contact=True,
+            valid_finger_target_contact=True,
+            target_displacement_l1_mm=30.0,
+            goal_clause_truth={"place_bowl": True}, native_success=True))
+        self.assertNotEqual(st.mode, MODE_ACC,
+                            "目标仍被夹持（未 RELEASED）时不得 q_acc")
+        self.assertNotEqual(st.mode, MODE_BAD,
+                            "goal 已达成但未释放 ≠ NATIVE_FALSE_POSITIVE（goal 未达成才是）")
+
+    def test_native_success_goal_not_achieved_is_false_positive(self):
+        """native 声称成功但 goal 未达成 → NATIVE_FALSE_POSITIVE（q_bad）。"""
+        auto = mk_auto()
+        auto.process(mk_event(step=0, close_intent=True, task_contact=False))
+        auto.process(mk_event(step=1, close_intent=True, task_contact=True,
+                              left_finger_contact=True, valid_finger_target_contact=True,
+                              target_displacement_l1_mm=1.0))
+        # native 声称成功，但 goal clause 仍 false
+        st = auto.process(mk_event(
+            step=2, close_intent=True, task_contact=True,
+            left_finger_contact=True, valid_finger_target_contact=True,
+            target_displacement_l1_mm=2.0,
+            goal_clause_truth={"place_bowl": False}, native_success=True))
+        self.assertEqual(st.mode, MODE_BAD)
+        self.assertEqual(st.violation_code, "NATIVE_FALSE_POSITIVE")
+
+    def test_released_then_accept(self):
+        """完整走完 RELEASED（open + contact gone + 速度稳定）后 goal true → q_acc。"""
+        auto = mk_auto()
+        self._drive_to_transported(auto)
+        # 释放：open intent + contact gone 连续步 + 速度稳定
+        st = None
+        for i in range(3):
+            st = auto.process(mk_event(
+                step=11 + i, close_intent=False, task_contact=False,
+                left_finger_contact=False, right_finger_contact=False,
+                valid_finger_target_contact=False,
+                release_command=True, contact_gone_steps=3,
+                target_velocity_mps=0.001,
+                target_displacement_l1_mm=30.0,
+                goal_clause_truth={"place_bowl": True}))
+        self.assertEqual(st.mode, MODE_ACC,
+                         "完整 RELEASED 后 goal true 应 q_acc")
+        self.assertEqual(auto.state.lifecycle["bowl_main"], "RELEASED")
+
+
 class TestSnapshotRestore(unittest.TestCase):
     def test_acquisition_memory_roundtrip(self):
         auto = mk_auto()

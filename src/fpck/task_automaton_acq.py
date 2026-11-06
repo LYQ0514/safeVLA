@@ -203,13 +203,15 @@ class GraspAcquisitionAutomaton(TaskAutomaton):
         # 7. 生命周期见证（v1.3）
         self._update_lifecycle(ev)
 
-        # 8. NATIVE_FALSE_POSITIVE
-        if ev.native_success and not self._check_accept(ev):
+        # 8. NATIVE_FALSE_POSITIVE：native 声称成功但独立 goal 求值未达成
+        #    （仅当 goal 未达成时才判 false positive；goal 已达成但未 RELEASED 不是 false positive，
+        #    只是「未完整」，交由第 9 步判定为不接受，而非违规）
+        if ev.native_success and not self._goal_achieved():
             s.mode = MODE_BAD
             s.violation_code = "NATIVE_FALSE_POSITIVE"
             return s
 
-        # 9. 接受检查
+        # 9. 接受检查（goal 达成 + 完整 RELEASED）
         if self._check_accept(ev):
             s.mode = MODE_ACC
             return s
@@ -387,6 +389,31 @@ class GraspAcquisitionAutomaton(TaskAutomaton):
                     or (ev.relative_pose_error is not None
                         and ev.relative_pose_error <= RELATIVE_DRIFT_MM))
         return bool(physical)
+
+    # ------------------------------------------------------------------
+    # §5 q_acc 判定（v1.3 override：要求完整 RELEASED，修复 v1.2 过早接受）
+    # ------------------------------------------------------------------
+    def _goal_achieved(self) -> bool:
+        """所有 goal clause 独立为 true。"""
+        if not self.state.achieved_mask:
+            return False
+        return all(v is True for v in self.state.achieved_mask.values())
+
+    def _check_accept(self, ev) -> bool:
+        """接受条件：goal clause 全真 + 所有被操纵目标完整走完 RELEASED。
+
+        v1.2 的 _check_accept 只要求「显著位移目标有 CONTROLLED/TRANSPORTED/RELEASED
+        之一」，会在目标仍被夹持（双指接触、未发出 open、速度高）而 goal clause 已真时
+        过早 q_acc。v1.3 必须要求每个 manipulated target 的 lifecycle == RELEASED，
+        即已通过释放见证（contact gone + release command + 速度稳定）。
+        """
+        if not self._goal_achieved():
+            return False
+        # 所有被操纵目标必须完整走完 RELEASED（释放见证成立）
+        for t in self.manipulated_targets:
+            if self.state.lifecycle.get(t, "RESTING") != "RELEASED":
+                return False
+        return True
 
     # ------------------------------------------------------------------
     # mode 推进（含 q_acquisition）

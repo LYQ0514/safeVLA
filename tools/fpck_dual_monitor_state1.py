@@ -112,6 +112,7 @@ def main():
     query_idx = 0
     buf_idx = 0
     success_native = False
+    native_step = None
 
     try:
         for step in range(MAX_STEPS):
@@ -130,8 +131,13 @@ def main():
                 chunk_hash=chunk_hash, buffer_index=buf_idx,
                 target_bodies=target_bodies)
             buf_idx += 1
-            if env.check_success():
+            # 记录 native_success 但不 break：让策略继续运行到释放/终态，
+            # 否则「未释放」可能是循环过早截断的产物（裁决 §一 需要完整 release 时间线）
+            if env.check_success() and not success_native:
                 success_native = True
+                native_step = step
+            # 自动机终态即停止
+            if v13.state.mode in ("q_acc", "q_bad", "q_unknown"):
                 break
     finally:
         policy.close()
@@ -141,7 +147,7 @@ def main():
     rows = [json.loads(l) for l in open(raw_log_path, encoding="utf-8")]
 
     print(f"=== 双监视器对比 {SUITE} task{TASK_ID} state{STATE_ID} ===")
-    print(f"native_success={success_native}  事件数={len(rows)}")
+    print(f"native_success={success_native}@{native_step}  事件数={len(rows)}")
     print(f"{'step':>4} {'disp_mm':>8} {'close':>5} {'L_f':>4} {'R_f':>4} "
           f"{'sweep_mm':>8} {'lift_mm':>7} {'legacy':>16} {'v1.3':>16}")
     for r in rows:
