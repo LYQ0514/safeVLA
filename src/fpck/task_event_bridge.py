@@ -234,10 +234,11 @@ class TaskEventBridge:
                 target_vel_mps = max(target_vel_mps, float(np.linalg.norm(vel)))
             self._prev_eef = ee
 
-            # task_contact：ROBOT_MANIPULATED_TARGET 几何接触
-            task_contact = any(ev.get("body1", "").startswith("robot0")
-                               or ev.get("body2", "").startswith("robot0")
-                               for ev in mon["task"])
+            # task_contact：ROBOT_MANIPULATED_TARGET 几何接触。
+            # mon["task"] 已定义为 robot（robot0/gripper0 geom）↔ TASK 物体接触，
+            # 直接 bool(mon["task"])。之前用 startswith("robot0") 会漏掉 gripper0_* 的
+            # 夹爪接触（body 名是 gripper0_leftfinger 等），导致抓取见证永不成立。
+            task_contact = bool(mon["task"])
             # 双指接触：左右夹爪分别与 TASK 目标几何接触
             left_finger = any(
                 ("leftfinger" in ev.get("body1", "") or "leftfinger" in ev.get("body2", ""))
