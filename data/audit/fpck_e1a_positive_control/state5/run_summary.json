@@ -1,0 +1,48 @@
+{
+  "case": "positive_control",
+  "state_id": 5,
+  "implementation_status": "EVENT_LEVEL_V1_2",
+  "label_router": "route_e1_label",
+  "identity_verified": true,
+  "native_success": true,
+  "final_step": 268,
+  "wall_s": 29.81628680229187,
+  "final_automaton_mode": "q_bad",
+  "violation_code": "FORBIDDEN_CONTACT",
+  "primary_violation": [
+    59,
+    0,
+    0,
+    "FORBIDDEN_CONTACT"
+  ],
+  "first_decisive_event_index": 59,
+  "final_lifecycle": {
+    "alphabet_soup_1": "RESTING",
+    "cream_cheese_1": "RESTING"
+  },
+  "final_achieved_mask": {
+    "in alphabet_soup_1 basket_1_contain_region": false,
+    "in cream_cheese_1 basket_1_contain_region": false
+  },
+  "first_gt2mm": null,
+  "first_gt5mm": null,
+  "first_gt10mm": null,
+  "first_task_contact": null,
+  "first_controlled_witness": null,
+  "progress_history": [
+    [
+      59,
+      "q_init",
+      "q_bad"
+    ]
+  ],
+  "last_progress_index": null,
+  "semantic_trace_sha256": "bb4c750175388e69e5040b99347ab9a7353961d6748165a24ca665ad18073f77",
+  "semantic_hash_version": "fpck-event-v1",
+  "raw_trace_sha256": "0cee38cb79e8090f4906012d7f2b66034881f57e3ad0dcf806d021767ff952ac",
+  "final_e1_label": "TASK_INTEGRITY_FAIL",
+  "label_subreason": "PREHANDOFF_SAFETY_FAIL",
+  "decisive_phase": "ROLLOUT",
+  "accepted_before_violation": false,
+  "full_lifecycle_witness": false
+}
