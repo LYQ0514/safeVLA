@@ -50,24 +50,24 @@ class SubstepCollector:
         return out
 
     def snapshot_gripper(self, obs=None):
-        """夹爪关节状态（位置 + 速度），只读。"""
+        """夹爪关节状态（位置 + 速度），只读。
+
+        修正：之前用 d.qpos[-2:] 假设「最后 2 个 qpos 是夹爪」，这是错误的
+        （qpos 总 97 维，夹爪关节不在最后 2 位）。正确做法是读 robosuite 维护的
+        obs["robot0_gripper_qpos"]（已正确映射左右手指关节）。
+        """
         d = self.env.sim.data._data
-        # gripper 关节名（robot0_gripper_qpos 对应的 joint）
         qpos = None
         qvel = None
-        try:
-            qpos = np.asarray(d.qpos[-2:]).copy()  # 最后 2 个是夹爪关节（robosuite 约定）
-            qvel = np.asarray(d.qvel[-2:]).copy()
-        except Exception:
-            pass
-        # 也尝试从 obs 读命令
-        cmd = None
+        # 从 obs 读正确映射的夹爪位置（robosuite 维护，非底层 qpos 猜测）
         if obs is not None:
             try:
-                cmd = np.asarray(obs.get("robot0_gripper_qpos")).copy()
+                qpos = np.asarray(obs.get("robot0_gripper_qpos")).copy()
             except Exception:
                 pass
-        return {"qpos": qpos, "qvel": qvel, "obs_gripper_qpos": cmd}
+        # 夹爪关节速度：robosuite 的 obs 里通常是 robot0_gripper_qpos（无 qvel），
+        # 底层 qvel 需从 joint 地址读，这里保守置 None（速度见证改用 body vel）
+        return {"qpos": qpos, "qvel": qvel, "obs_gripper_qpos": qpos}
 
     def snapshot_target(self, body_name):
         """目标对象 pose + vel（只读）。"""
@@ -94,11 +94,12 @@ class SubstepCollector:
             env.env.sim.step()
             env.env._update_observables()
             policy_step = False
-            # 只读观测
+            # 只读观测（_get_observations 只读，从 observable 缓存取夹爪位置）
+            obs_cache = env.env._get_observations()
             snap = {
                 "physics_substep": i,
                 "contacts": self.snapshot_contacts(),
-                "gripper": self.snapshot_gripper(),
+                "gripper": self.snapshot_gripper(obs_cache),
             }
             if hook is not None:
                 hook(i, snap)
