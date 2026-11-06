@@ -35,7 +35,6 @@ from src.fpck.task_automaton import (
     RELEASE_CONTACT_GONE_STEPS, RELEASE_VEL_STEPS, RELEASE_VEL_MPS,
 )
 from src.fpck.goal_evaluator import eval_goal_clauses, native_success
-from src.safety.contract_objects import monitor_contacts
 
 SPEC_VERSION = "fpck-task-automaton-v1.2"
 
@@ -100,12 +99,57 @@ class TaskEventBridge:
     # ------------------------------------------------------------------
     # 观测接口
     # ------------------------------------------------------------------
+    def _dynamic_contacts(self, env, target_bodies):
+        """用动态 target_bodies/obstacle_body 判定接触（不依赖 contract_objects 硬编码）。
+
+        返回 (robot_target_contact, robot_obstacle_contact, two_finger, contacts_detail)。
+        contract_objects 的 PROTECTED_OBJECTS/TASK_OBJECTS 硬编码为 long 套件对象名，
+        跨套件（goal/spatial）会误判。这里直接用 bridge 持有的动态 body 名扫描
+        mjData.contact。
+        """
+        m = env.sim.model._model
+        d = env.sim.data._data
+        names = env.sim.model.body_names
+        robot_prefix = ("robot0", "gripper0")
+        target_set = set(target_bodies or [])
+        obstacle = self.obstacle_body
+
+        robot_target = False
+        robot_obstacle = False
+        left_finger = False
+        right_finger = False
+        detail = []
+
+        def is_robot(b):
+            return b.startswith(robot_prefix)
+
+        for c in range(d.ncon):
+            g1, g2 = d.contact[c].geom1, d.contact[c].geom2
+            b1 = names[m.geom_bodyid[g1]]
+            b2 = names[m.geom_bodyid[g2]]
+            r1, r2 = is_robot(b1), is_robot(b2)
+            if not (r1 or r2):
+                continue
+            other = b2 if r1 else b1
+            robot_side = b1 if r1 else b2
+            if other in target_set:
+                robot_target = True
+                if "leftfinger" in robot_side:
+                    left_finger = True
+                if "rightfinger" in robot_side:
+                    right_finger = True
+            if obstacle is not None and other == obstacle:
+                robot_obstacle = True
+            detail.append({"robot": robot_side, "other": other})
+
+        return robot_target, robot_obstacle, (left_finger and right_finger), detail
+
     def observe_physics_substep(self, env, phase, control_step, physics_substep,
                                 target_bodies, target_poses):
         """Joint-PD 阶段：每个 physics substep 记录 contact + 位移 + 违规候选。"""
-        mon = monitor_contacts(env)
-        forbidden = len(mon["forbidden"]) > 0 or len(mon["unclassified"]) > 0
-        payload_obstacle = len(mon["forbidden"]) > 0  # 简化：forbidden 含 payload-obstacle
+        robot_target, robot_obstacle, _, contact_detail = self._dynamic_contacts(env, target_bodies)
+        forbidden = robot_obstacle  # 仅障碍物接触算 forbidden（不把 unclassified 当 forbidden）
+        payload_obstacle = robot_obstacle
 
         # 障碍物位移
         obstacle_disp = 0.0
@@ -181,9 +225,11 @@ class TaskEventBridge:
                              target_bodies=None, gripper_close=None,
                              eef_pos_world=None):
         """OSC/π0.5 阶段：每个控制步记录完整事件 + 驱动自动机转移。"""
-        mon = monitor_contacts(env)
-        forbidden = len(mon["forbidden"]) > 0 or len(mon["unclassified"]) > 0
-        payload_obstacle = len(mon["forbidden"]) > 0
+        # 动态接触判定（不依赖 contract_objects 硬编码角色清单）
+        robot_target, robot_obstacle, two_finger_contact, _ = \
+            self._dynamic_contacts(env, target_bodies)
+        forbidden = robot_obstacle  # 仅障碍物接触算 forbidden
+        payload_obstacle = robot_obstacle
         clause_truth = eval_goal_clauses(env)
         native = native_success(env)
 
@@ -196,11 +242,10 @@ class TaskEventBridge:
 
         # target 位移 + 见证
         target_disp_mm = {}
-        task_contact = False
+        task_contact = robot_target  # 动态判定（第 230 行）
         # 见证字段（真实物理量，避免默认值导致见证永不成立）
         target_lifted_mm = 0.0
         eef_target_drift_mm = 0.0
-        two_finger_contact = False
         target_vel_mps = 0.0
         release_cmd = False
         if target_bodies:
@@ -233,20 +278,6 @@ class TaskEventBridge:
                 # 目标速度
                 target_vel_mps = max(target_vel_mps, float(np.linalg.norm(vel)))
             self._prev_eef = ee
-
-            # task_contact：ROBOT_MANIPULATED_TARGET 几何接触。
-            # mon["task"] 已定义为 robot（robot0/gripper0 geom）↔ TASK 物体接触，
-            # 直接 bool(mon["task"])。之前用 startswith("robot0") 会漏掉 gripper0_* 的
-            # 夹爪接触（body 名是 gripper0_leftfinger 等），导致抓取见证永不成立。
-            task_contact = bool(mon["task"])
-            # 双指接触：左右夹爪分别与 TASK 目标几何接触
-            left_finger = any(
-                ("leftfinger" in ev.get("body1", "") or "leftfinger" in ev.get("body2", ""))
-                for ev in mon["task"])
-            right_finger = any(
-                ("rightfinger" in ev.get("body1", "") or "rightfinger" in ev.get("body2", ""))
-                for ev in mon["task"])
-            two_finger_contact = left_finger and right_finger
 
         # 更新 contact_gone 计数（释放见证需要：机器人-目标接触连续消失步数）
         for t in target_bodies or []:
