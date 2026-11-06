@@ -83,10 +83,50 @@ def body_pos(env, body_name):
     return body_state(env, body_name)["pos"].copy()
 
 
+def current_action(env):
+    """sticky gripper 的 current_action（sticky target），量化步长 0.25。"""
+    return np.asarray(env.env.robots[0].gripper.current_action).copy()
+
+
 def aperture(env):
     obs = env.env._get_observations()
     gq = np.asarray(obs["robot0_gripper_qpos"], dtype=np.float64)
     return float(gq[0] - gq[1])
+
+
+# current_action → 稳定 aperture 映射（空载表征，见 fpck_aperture_target_characterization）
+# ca: 1.00→79.5mm, 0.75→69.5, 0.50→59.5, 0.25→49.5, 0.00→40.3,
+#     -0.25→30.5, -0.50→20.5, -0.75→10.5, -1.00→1.0
+CA_TO_APERTURE = {
+    1.00: 0.0795, 0.75: 0.0695, 0.50: 0.0595, 0.25: 0.0495, 0.00: 0.0403,
+    -0.25: 0.0305, -0.50: 0.0205, -0.75: 0.0105, -1.00: 0.0010,
+}
+
+# 预闭合余量（每侧）：手指 tip 半宽 0.004 + 安全余量
+TIP_HALF_WIDTH = 0.004
+PRESHAPE_CLEARANCE = 0.01  # 手指内侧距对象表面额外 clearance
+
+
+def preshape_target_ca(obj_width):
+    """由对象宽度反求 current_action 目标（预闭合开度 = 对象宽 + 2*(tip半宽+clearance)）。"""
+    needed_aperture = obj_width + 2 * (TIP_HALF_WIDTH + PRESHAPE_CLEARANCE)
+    # 找最接近且 ≥ needed 的 current_action 档位
+    for ca in [1.00, 0.75, 0.50, 0.25, 0.00, -0.25, -0.50, -0.75, -1.00]:
+        if CA_TO_APERTURE[ca] >= needed_aperture:
+            return ca
+    return None  # 无足够大档位
+
+
+def servo_current_action(env, target_ca, max_steps=30):
+    """控制 current_action 到 target_ca（±0.13），返回 (converged, steps)。"""
+    for i in range(max_steps):
+        c = current_action(env)[0]
+        if abs(c - target_ca) < 0.13:
+            return True, i
+        act = np.zeros(7)
+        act[-1] = 1.0 if c > target_ca else -1.0
+        env.step(act)
+    return False, max_steps
 
 
 def finger_pos(env, side):
@@ -230,9 +270,9 @@ def run_grasp_gate(env, obj_body, closing_target, obj_width, grasp_center_xy=Non
     cx, cy = (grasp_center_xy if grasp_center_xy is not None
               else (obj_p0[0], obj_p0[1]))
 
-    # 预闭合 aperture
-    a_preshape = obj_width + 2 * DELTA_CLEAR
-    if a_preshape >= 0.077 or a_preshape <= obj_width:
+    # 预闭合：由对象宽度反求 current_action 目标（裁决 §四 目标感知 servo）
+    target_ca = preshape_target_ca(obj_width)
+    if target_ca is None:
         r.failure_reason = "PRESHAPE_APERTURE_UNREACHABLE"
         return r
 
@@ -259,47 +299,26 @@ def run_grasp_gate(env, obj_body, closing_target, obj_width, grasp_center_xy=Non
                      freeze=("x", "y"))
     r.phase_log["descend_pregrasp"] = (l, s)
 
-    # 5. preshape（闭合到 aperture ≤ A_preshape 即停，允许 undershoot）
-    # 注意：PandaGripper sticky 单向累积，无法「回开」精确到目标值，
-    # 故 preshape 语义 = 闭合到 ≤ 目标 且不接触对象（MVP 实测的 close_to 语义）
-    preshape_ok = False
-    for i in range(30):
-        lf, rf, nf = check_finger_contacts(env, obj_body)
-        if (lf or rf or nf):
-            r.failure_reason = "PREMATURE_FINGER_CONTACT" if (lf or rf) else "PREGRASP_NON_FINGER_CONTACT"
-            r.phase_log["preshape"] = ("CONTACT", i)
-            return r
-        if aperture(env) <= a_preshape:
-            preshape_ok = True
-            r.phase_log["preshape"] = ("OK", i, aperture(env))
-            break
-        act = np.zeros(7)
-        act[-1] = 1.0  # close
-        env.step(act)
-    if not preshape_ok:
+    # 5. preshape：servo current_action 到目标（裁决 §四，控制 sticky target 而非 actual）
+    servo_ok, servo_steps = servo_current_action(env, target_ca)
+    if not servo_ok:
         r.failure_reason = "PRESHAPE_APERTURE_UNREACHABLE"
         return r
+    # 检查 preshape 后无接触（手指在对象上方）
+    lf, rf, nf = check_finger_contacts(env, obj_body)
+    if lf or rf or nf:
+        r.failure_reason = "PREMATURE_FINGER_CONTACT" if (lf or rf) else "PREGRASP_NON_FINGER_CONTACT"
+        r.phase_log["preshape"] = ("CONTACT", servo_steps)
+        return r
+    r.phase_log["preshape"] = ("OK", servo_steps, current_action(env)[0], aperture(env))
 
-    # 6. descend（act[-1]=0 hold：sticky 缓慢继续闭，不强制 close；单指接触即停）
+    # 6. descend：pose 收敛到 grasp pose（裁决 §七：不等待 contact，pose 到即进入 final close）
     tip_off = eef_to_tip_offset(env)
     z_grasp = obj_p0[2] - tip_off[2]
-    descend_ok = False
-    for i in range(HARD_CAP):
-        err = np.array([cx, cy, z_grasp]) - eef_pos(env)
-        lf, rf, nf = check_finger_contacts(env, obj_body)
-        if lf or rf:
-            descend_ok = True
-            r.phase_log["descend"] = ("CONTACT", i, aperture(env))
-            break
-        if nf:
-            r.failure_reason = "PREGRASP_NON_FINGER_CONTACT"
-            return r
-        act = np.zeros(7)
-        act[:3] = np.clip(np.clip(err, -DESCENT_MAX_TRANS, DESCENT_MAX_TRANS) / 0.05,
-                          -ACTION_CLIP, ACTION_CLIP)
-        act[-1] = 0.0  # hold（sticky 缓慢闭，非强制 close）
-        env.step(act)
-    if not descend_ok:
+    l, s = nav_phase(env, np.array([cx, cy, z_grasp]), freeze=("x", "y"),
+                     max_trans=DESCENT_MAX_TRANS, gripper_mode="hold")
+    r.phase_log["descend"] = (l, s, aperture(env))
+    if l != "CONVERGED":
         r.failure_reason = "DESCENT_TIMEOUT"
         return r
 
