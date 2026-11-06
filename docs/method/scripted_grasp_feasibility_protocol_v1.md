@@ -1,5 +1,18 @@
 # 脚本化抓取可行性门禁协议 v1（scripted_grasp_feasibility_protocol_v1）
 
+> **状态：INVALID（2026-11-06 标记，不覆盖文件）**
+>
+> invalid_reason:
+>   - FIXED_PREGRASP_TIMEOUT_NOT_DISTANCE_AWARE（固定 40 步 timeout 不考虑初始距离与 OSC 收敛速度）
+>   - DIRECT_DIAGONAL_TRANSIT_NOT_PHASE_SEPARATED（对角线直达未分阶段，接近语义不明确）
+>
+> superseded_by: scripted_grasp_feasibility_protocol_v2
+>
+> MVP-1 证据保留：
+>   - short waypoint（0.03m）：PASS，14 步
+>   - long pregrasp（~0.14m）：TIMEOUT_WITH_PROGRESS（非 NAVIGATION_FAILURE），
+>     最终垂直误差 ~0.03m，无接触，对象位移 0
+
 > 日期：2026-11-06。**在运行任何对象门禁前冻结**。
 > protocol_sha256 记录本文件冻结时的 hash，门禁 artifact 必须引用。
 > 脚本门禁是 v2 对象选择的主要资格依据（方案 C+），几何算法仅作审计字段。
