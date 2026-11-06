@@ -1,0 +1,22 @@
+{
+  "case": "positive_control",
+  "state_id": 3,
+  "suite": "safelibero_long",
+  "level": "I",
+  "task_id": 0,
+  "intervention": "none",
+  "replan_steps": 5,
+  "max_steps": 550,
+  "implementation_status": "EVENT_LEVEL_V1_2",
+  "automaton_spec_version": "fpck-task-automaton-v1.2",
+  "label_router": "route_e1_label",
+  "semantic_hash_version": "fpck-event-v1",
+  "checkpoint_hash": "b838d8b85a3f317c91950738172ee7f174afe7f2d36d9d8ed80f7110a085e90b",
+  "parent_code_commit": "c48f616",
+  "positive_control_candidates": [
+    2,
+    3,
+    5
+  ],
+  "historical_candidate": "positive_control_full_lifecycle"
+}
