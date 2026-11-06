@@ -126,9 +126,8 @@ class OfflineMonitor:
             self._mark("first_bilateral_contact", step)
         if lift >= LIFT_THRESHOLD_MM:
             self._mark("first_lift", step)
-        if disp > TRANSPORTED_MM:
-            self._mark("first_transported", step)
-        if row.get("native_success"):
+        goal_truth = row.get("goal_clause_truth") or {}
+        if goal_truth and all(goal_truth.values()):
             self._mark("first_goal_truth", step)
 
         # 4. 独立状态机
@@ -148,14 +147,26 @@ class OfflineMonitor:
                     self.bilateral_steps += 1
                 else:
                     self.bilateral_steps = 0
-                # controlled：双指持续 + 物理证据（lift）
-                if self.bilateral_steps >= BILATERAL_STEPS and (lift >= LIFT_THRESHOLD_MM):
+                # controlled：双指持续 + 物理证据（独立算 closure_blocked 或 lift 或 coupling）
+                # closure_blocked = close ∧ 双指 ∧ |aperture_vel|≤stall ∧ aperture>fully_closed
+                aperture = row.get("aperture")
+                aperture_vel = row.get("aperture_velocity")
+                stall_eps = 2e-4
+                closure_blocked = bool(
+                    close and bilateral and aperture_vel is not None
+                    and abs(aperture_vel) <= stall_eps
+                    and aperture is not None and aperture > 0.005)
+                relative_err = row.get("eef_target_drift_mm")
+                coupled = relative_err is not None and relative_err <= 5.0
+                physical = closure_blocked or lift >= LIFT_THRESHOLD_MM or coupled
+                if self.bilateral_steps >= BILATERAL_STEPS and physical:
                     self.lifecycle[t] = "CONTROLLED"
                     self._mark("first_controlled", step)
                     self.acq_active = False
                     self.bilateral_steps = 0
             elif cur == "CONTROLLED" and disp > TRANSPORTED_MM:
                 self.lifecycle[t] = "TRANSPORTED"
+                self._mark("first_transported", step)
             elif cur in ("CONTROLLED", "TRANSPORTED"):
                 # released：open + contact gone + 速度稳定
                 if not task_contact:
