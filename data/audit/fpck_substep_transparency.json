@@ -1,0 +1,9 @@
+{
+  "act_err": 0.0,
+  "traj_err": 0.0,
+  "qpos_err": 0.0,
+  "same_success": true,
+  "same_step": true,
+  "same_len": true,
+  "ok": true
+}
