@@ -269,7 +269,7 @@ class TaskEventBridge:
         """OSC/π0.5 阶段：每个控制步记录完整事件 + 驱动自动机转移。"""
         # 动态接触判定（不依赖 contract_objects 硬编码角色清单）
         (robot_target, robot_obstacle, two_finger_contact,
-         left_finger_contact, right_finger_contact, non_finger_robot_target, _) = \
+         left_finger_contact, right_finger_contact, non_finger_robot_target, contact_detail) = \
             self._dynamic_contacts(env, target_bodies)
         valid_finger_target_contact = left_finger_contact or right_finger_contact
         forbidden = robot_obstacle  # 仅障碍物接触算 forbidden
@@ -473,6 +473,8 @@ class TaskEventBridge:
             "non_finger_robot_target_contact": non_finger_robot_target,
             "support_contact": False,
             "lateral_sweep_mm": lateral_sweep_mm,
+            # 审计 C：原始接触对（body 名），供独立离线监视器重新分类
+            "contact_detail": contact_detail,
             "target_velocity_mps": target_vel_mps,
             "contact_gone_steps": contact_gone,
             "release_command": release_cmd,
