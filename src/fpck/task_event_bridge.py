@@ -35,6 +35,11 @@ from src.fpck.task_automaton import (
     RELEASE_CONTACT_GONE_STEPS, RELEASE_VEL_STEPS, RELEASE_VEL_MPS,
 )
 from src.fpck.goal_evaluator import eval_goal_clauses, native_success
+from src.fpck.gripper_action_decoder import (
+    CloseIntentTracker, decode_close_intent,
+    compute_closing_response, compute_closure_blocked,
+    THETA_EXIT,
+)
 
 SPEC_VERSION = "fpck-task-automaton-v1.2"
 
@@ -70,6 +75,9 @@ class TaskEventBridge:
         self._first_decisive_index = None
         self._obstacle_baseline = None
         self._prev_eef = None  # 上一步 EEF 位置（用于相对漂移见证）
+        # 夹爪意图解码状态（裁决 §十二：close intent 来自命令，不从 qpos 反推）
+        self._close_intent_tracker = CloseIntentTracker()
+        self._prev_aperture = None  # 上一步 aperture（用于 closing_response）
         # S04 需要的额外时间线字段（从事件流记录）
         self._first_gt2mm = None      # (event_index, substep) 首次 >2mm
         self._first_gt5mm = None      # 首次 >5mm
@@ -90,6 +98,8 @@ class TaskEventBridge:
         self._drift_hist = {t: [] for t in target_bodies}
         self._contact_gone = {t: 0 for t in target_bodies}
         self._vel_hist = {t: [] for t in target_bodies}
+        self._close_intent_tracker = CloseIntentTracker()
+        self._prev_aperture = None
         self.obstacle_body = obstacle_body
         self._obstacle_baseline = None
         if obstacle_body is not None:
@@ -253,8 +263,33 @@ class TaskEventBridge:
             ee = eef_pos(env)  # EEF 世界系位置
             obs_ = env.env._get_observations()
             gq = np.asarray(obs_.get("robot0_gripper_qpos", [0.0]), dtype=np.float64)
-            gripper_open = bool(np.abs(gq).mean() > 0.03)  # |qpos| 均值大 = 张开
-            release_cmd = gripper_open
+            # aperture = qpos[0]-qpos[1]（对称手指，闭合→0），不再用 |qpos|.mean()>0.03 猜张开
+            aperture = float(gq[0] - gq[1]) if gq.shape[0] >= 2 else float(gq[0])
+            # 意图从命令解码（裁决 §一/§四：close_intent 来自 deployed command，不从 qpos 反推）
+            nominal_grip = (float(nominal_action[6])
+                           if nominal_action is not None and len(nominal_action) > 6 else None)
+            deployed_grip = (float(executed_action[6])
+                             if executed_action is not None and len(executed_action) > 6 else None)
+            nominal_close_intent = decode_close_intent(nominal_grip)
+            deployed_close_intent = decode_close_intent(deployed_grip)
+            close_intent_latched = self._close_intent_tracker.update(deployed_grip, control_step)
+            # controller gripper target = sticky 累积后的 current_action（读 env，非逻辑值）
+            controller_target = None
+            try:
+                controller_target = tuple(np.asarray(
+                    env.env.robots[0].gripper.current_action).tolist())
+            except Exception:
+                pass
+            # aperture velocity（每控制步 0.05s）
+            aperture_vel = None
+            if self._prev_aperture is not None:
+                aperture_vel = (aperture - self._prev_aperture) / 0.05
+            self._prev_aperture = aperture
+            closing_response = compute_closing_response(deployed_close_intent, aperture_vel)
+            closure_blocked = compute_closure_blocked(
+                deployed_close_intent, aperture_vel, two_finger_contact, aperture)
+            # release = open intent（命令 sign < 0），不从 qpos 反推
+            release_cmd = bool(deployed_grip is not None and deployed_grip < THETA_EXIT)
 
             for t in target_bodies:
                 if t not in self._settled_baseline:
@@ -300,7 +335,7 @@ class TaskEventBridge:
             task_contact=task_contact,
             target_lifted_mm=target_lifted_mm,
             eef_target_relative_drift_mm=eef_target_drift_mm,
-            gripper_command_close=bool(gripper_close) if gripper_close is not None else (not release_cmd),
+            gripper_command_close=bool(gripper_close) if gripper_close is not None else deployed_close_intent,
             gripper_two_finger_contact=two_finger_contact,
             target_velocity_mps=target_vel_mps,
             contact_gone_steps=contact_gone,
@@ -347,7 +382,19 @@ class TaskEventBridge:
             "target_lifted_mm": target_lifted_mm,
             "eef_target_drift_mm": eef_target_drift_mm,
             "two_finger_contact": two_finger_contact,
-            "gripper_command_close": (bool(gripper_close) if gripper_close is not None else (not release_cmd)),
+            "gripper_command_close": (bool(gripper_close) if gripper_close is not None else deployed_close_intent),
+            # 夹爪动作解码字段（裁决 §三/§十一：命令管线 + 意图 + 物理响应分开记录）
+            "gripper_decoder_version": "panda-gripper-sign-v1",
+            "policy_gripper_raw": nominal_grip,
+            "deployed_gripper_command": deployed_grip,
+            "controller_gripper_target": controller_target,
+            "nominal_close_intent": nominal_close_intent,
+            "deployed_close_intent": deployed_close_intent,
+            "close_intent_latched": close_intent_latched,
+            "aperture": aperture,
+            "aperture_velocity": aperture_vel,
+            "closing_response": closing_response,
+            "closure_blocked_by_object": closure_blocked,
             "target_velocity_mps": target_vel_mps,
             "contact_gone_steps": contact_gone,
             "release_command": release_cmd,
@@ -382,6 +429,8 @@ class TaskEventBridge:
             "first_controlled": self._first_controlled,
             "progress_history": list(self._progress_history),
             "last_progress_index": self._last_progress_index,
+            "close_intent_tracker": self._close_intent_tracker.snapshot(),
+            "prev_aperture": self._prev_aperture,
         }
 
     def restore(self, snap):
@@ -409,6 +458,9 @@ class TaskEventBridge:
         self._first_controlled = snap.get("first_controlled")
         self._progress_history = list(snap.get("progress_history", []))
         self._last_progress_index = snap.get("last_progress_index")
+        self._close_intent_tracker = CloseIntentTracker().restore(
+            snap.get("close_intent_tracker", {}))
+        self._prev_aperture = snap.get("prev_aperture")
 
     def finalize(self):
         """返回最终汇总（引用 trace hash，不代替原始记录）。"""
