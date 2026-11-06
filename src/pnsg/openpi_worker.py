@@ -14,6 +14,8 @@ Jacobian 对应「外部 pose 动作坐标」（Unnormalize 之后），包含 a
     /opt/venv/openpi/bin/python src/pnsg/openpi_worker.py
 """
 
+import hashlib
+import json
 import os
 import pickle
 import sys
@@ -21,6 +23,9 @@ import time
 
 os.environ.setdefault("JAX_PLATFORMS", "cuda")
 os.environ.setdefault("XLA_PYTHON_CLIENT_PREALLOCATE", "false")
+# XLA_FLAGS 必须在 import jax 之前已存在于 os.environ（由 policy_adapter 的 env 传入）。
+# 这里只记录，不改写；若调用方未设，则为 None（默认非确定配置）。
+_XLA_FLAGS_AT_IMPORT = os.environ.get("XLA_FLAGS")
 
 import jax
 import jax.numpy as jnp
@@ -28,6 +33,38 @@ import numpy as np
 
 from openpi.policies import policy_config as _policy_config
 from openpi.training import config as _config
+
+
+def _hash_array(arr) -> str:
+    """规范化数组 hash：C-order 连续 + 固定 dtype，排除设备地址/wall time/元数据。"""
+    a = np.ascontiguousarray(np.asarray(arr))
+    meta = json.dumps({
+        "dtype": str(a.dtype), "shape": list(a.shape),
+        "contains_nan": bool(np.isnan(a).any()) if a.dtype.kind == "f" else False,
+        "contains_inf": bool(np.isinf(a).any()) if a.dtype.kind == "f" else False,
+    }, sort_keys=True)
+    return hashlib.sha256(meta.encode() + b"\x00" + a.tobytes(order="C")).hexdigest()
+
+
+def _hash_inputs(inputs, prefix=""):
+    """递归 hash 送入模型的最终输入张量（裁决 §二.2）。
+
+    inputs 可能是嵌套 dict（如 image: {agentview: array, ...}），递归到叶子数组。
+    """
+    out = {}
+    for k, v in inputs.items():
+        key = f"{prefix}.{k}" if prefix else k
+        if isinstance(v, dict):
+            out.update(_hash_inputs(v, prefix=key))
+            continue
+        arr = np.asarray(jax.device_get(v)) if not isinstance(v, (np.ndarray, list, tuple)) else np.asarray(v)
+        out[key] = {
+            "sha256": _hash_array(arr),
+            "shape": list(arr.shape),
+            "dtype": str(arr.dtype),
+            "minmax": [float(arr.min()), float(arr.max())] if arr.size else None,
+        }
+    return out
 
 CKPT_DIR = os.environ.get("PI05_LIBERO_CKPT", "/data/2608.SDL/MojocoProj/checkpoints/pi05/pi05_libero")
 CONFIG_NAME = os.environ.get("PI05_CONFIG", "pi05_libero")
@@ -64,15 +101,17 @@ def build():
 
 
 def _obs_to_inputs(policy, obs):
-    """把 .venv 传来的 obs dict 转成模型输入，返回 (observation, state_np)。
+    """把 .venv 传来的 obs dict 转成模型输入，返回 (observation, state_np, inputs)。
 
+    inputs 是 policy._input_transform 的输出 dict（已完成 resize/normalize/tokenize 的
+    最终张量，batch 前），供 hash 记录（裁决 §二.2）。
     state_np 供 output transform 使用（Unnormalize 需要 state 键）。
     """
     inputs = policy._input_transform({k: v for k, v in obs.items()})
     state_np = np.asarray(inputs["state"])
     inputs_jax = jax.tree.map(lambda x: jnp.asarray(x)[np.newaxis, ...], inputs)
     from openpi.models import model as _model
-    return _model.Observation.from_dict(inputs_jax), state_np
+    return _model.Observation.from_dict(inputs_jax), state_np, inputs
 
 
 def _norm_stats_std(policy):
@@ -89,6 +128,26 @@ def _norm_stats_std(policy):
     return std[:6]
 
 
+def extract_prefix_features(model, observation):
+    """提取观测的 prefix hidden states（mean-pooled），供成功价值 probe 使用。
+
+    复用 sample_actions 的前几步（embed_prefix + PaliGemma.llm prefix 前向），
+    返回 prefix_out 的 mean pooling，shape (1, width)。
+    """
+    from openpi.models import model as _model
+    from openpi.models.pi0 import make_attn_mask
+    observation = _model.preprocess_observation(None, observation, train=False)
+    prefix_tokens, prefix_mask, prefix_ar_mask = model.embed_prefix(observation)
+    prefix_attn_mask = make_attn_mask(prefix_mask, prefix_ar_mask)
+    positions = jnp.cumsum(prefix_mask, axis=1) - 1
+    (prefix_out, _), _ = model.PaliGemma.llm(
+        [prefix_tokens, None], mask=prefix_attn_mask, positions=positions
+    )
+    mask = prefix_mask.astype(jnp.float32)[..., None]  # (1, prefix_len, 1)
+    feats = (prefix_out * mask).sum(axis=1) / mask.sum(axis=1)  # (1, width)
+    return np.asarray(feats[0], dtype=np.float32)
+
+
 def main():
     policy, model, sample_actions_jit, sample_actions_raw = build()
     std_pose = _norm_stats_std(policy)  # (6,)
@@ -101,7 +160,24 @@ def main():
         "action_dim": D,
         "std_pose": std_pose.tolist(),
         "source_dim": H * D,
+        # 运行时身份（裁决 §二.1：模型/环境身份）
+        "jax_version": jax.__version__,
+        "jaxlib_version": jaxlib.__version__ if "jaxlib" in globals() else None,
+        "default_backend": str(jax.default_backend()),
+        "devices": [str(d) for d in jax.devices()],
+        "xla_flags_at_import": _XLA_FLAGS_AT_IMPORT,
+        "xla_flags_env": os.environ.get("XLA_FLAGS"),
     }
+    try:
+        import jaxlib as _jl
+        info["jaxlib_version"] = _jl.__version__
+    except Exception:
+        pass
+    try:
+        info["xla_client_version"] = jax.lib.xla_client.__version__ \
+            if hasattr(jax.lib, "xla_client") else None
+    except Exception:
+        info["xla_client_version"] = None
     _atomic_dump(_READY_PATH, {"status": "ready", "info": info})
 
     while True:
@@ -123,11 +199,27 @@ def main():
                     _atomic_dump(_RESP_PATH, {"status": "closed"})
                     break
 
+                if cmd == "extract_features":
+                    try:
+                        observation, state_np, _ = _obs_to_inputs(policy, req["obs"])
+                        feats = extract_prefix_features(model, observation)
+                        resp = {"status": "ok", "features": feats}
+                    except Exception as e:
+                        import traceback
+                        traceback.print_exc()
+                        resp = {"status": "error", "error": f"{type(e).__name__}: {e}"}
+                    _atomic_dump(_RESP_PATH, resp)
+                    continue
+
                 if cmd in ("generate", "generate_jacobian"):
                     try:
                         z = np.asarray(req["z"], dtype=np.float32)  # (H, D)
-                        observation, state_np = _obs_to_inputs(policy, req["obs"])
+                        observation, state_np, inputs = _obs_to_inputs(policy, req["obs"])
                         z_jax = jnp.asarray(z)[np.newaxis, ...]  # (1,H,D)
+
+                        # 输入张量 hash（裁决 §二.2：最终送入模型的张量，非原始 obs）
+                        input_hashes = _hash_inputs(inputs)
+                        z_hash = _hash_array(z)
 
                         if cmd == "generate_jacobian":
                             # jacfwd 需要原始 while_loop 版（jit 版 jacfwd 不兼容）
@@ -152,6 +244,12 @@ def main():
                             "status": "ok",
                             "raw_actions": raw_np,          # (H,32) 归一化空间
                             "actions": actions_ext,          # (H,7) external，未 clip
+                            # 规范化 hash（裁决 §二/§三：区分模型推理 vs 后处理）
+                            "input_hashes": input_hashes,
+                            "noise_z_sha256": z_hash,
+                            "raw_chunk_sha256": _hash_array(raw_np),
+                            "deployed_chunk_sha256": _hash_array(actions_ext),
+                            "xla_flags_at_import": _XLA_FLAGS_AT_IMPORT,
                         }
                         if cmd == "generate_jacobian":
                             resp["raw_jacobian"] = np.asarray(J_raw, dtype=np.float32)   # (60,320)

@@ -26,7 +26,8 @@ _CKPT = "/data/2608.SDL/MojocoProj/checkpoints/pi05/pi05_libero"
 
 
 class PnsgPolicy:
-    def __init__(self, ckpt_dir=_CKPT, num_steps=10, openpi_py=_OPENPI_PY):
+    def __init__(self, ckpt_dir=_CKPT, num_steps=10, openpi_py=_OPENPI_PY,
+                 xla_flags=None):
         self._tmpdir = tempfile.TemporaryDirectory(prefix="pnsg_")
         base = Path(self._tmpdir.name)
         self._ready = base / "ready.pkl"
@@ -45,6 +46,9 @@ class PnsgPolicy:
             JAX_PLATFORMS="cuda",
             XLA_PYTHON_CLIENT_PREALLOCATE="false",
         )
+        if xla_flags is not None:
+            env["XLA_FLAGS"] = xla_flags
+        self._xla_flags = xla_flags
         self._log_fh = open(self._log, "wb")
         self._proc = subprocess.Popen(
             [openpi_py, _WORKER_SRC],
@@ -105,6 +109,28 @@ class PnsgPolicy:
         if resp.get("status") != "ok":
             raise RuntimeError(f"generate 失败: {resp.get('error')}")
         return np.asarray(resp["actions"], dtype=np.float32)
+
+    def generate_with_hashes(self, z, obs):
+        """注入 z，返回 (actions, hashes_dict)。hashes 含 input/raw/deployed chunk 的
+        规范化 hash（裁决 §二/§三，用于确定性门禁）。"""
+        resp = self._call({"cmd": "generate", "z": np.asarray(z, dtype=np.float32), "obs": obs})
+        if resp.get("status") != "ok":
+            raise RuntimeError(f"generate 失败: {resp.get('error')}")
+        hashes = {
+            "input_hashes": resp.get("input_hashes"),
+            "noise_z_sha256": resp.get("noise_z_sha256"),
+            "raw_chunk_sha256": resp.get("raw_chunk_sha256"),
+            "deployed_chunk_sha256": resp.get("deployed_chunk_sha256"),
+            "xla_flags_at_import": resp.get("xla_flags_at_import"),
+        }
+        return np.asarray(resp["actions"], dtype=np.float32), hashes
+
+    def extract_features(self, obs):
+        """提取观测的 prefix hidden states（mean-pooled），shape (width,)。"""
+        resp = self._call({"cmd": "extract_features", "obs": obs})
+        if resp.get("status") != "ok":
+            raise RuntimeError(f"extract_features 失败: {resp.get('error')}")
+        return np.asarray(resp["features"], dtype=np.float32)
 
     def generate_with_jacobian(self, z, obs):
         """注入 z，返回 (raw_actions, raw_J, external_actions, external_J)。"""
