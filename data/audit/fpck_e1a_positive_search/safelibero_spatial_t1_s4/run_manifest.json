@@ -1,0 +1,28 @@
+{
+  "case": "positive_search",
+  "suite": "safelibero_spatial",
+  "task_id": 1,
+  "state_id": 4,
+  "level": "I",
+  "intervention": "none",
+  "replan_steps": 5,
+  "max_steps": 300,
+  "implementation_status": "EVENT_LEVEL_V1_2",
+  "automaton_spec_version": "fpck-task-automaton-v1.2",
+  "label_router": "route_e1_label",
+  "checkpoint_hash": "b838d8b85a3f317c91950738172ee7f174afe7f2d36d9d8ed80f7110a085e90b",
+  "parent_code_commit": "578ad4f",
+  "task_language": "pick up the black bowl on the ramekin and place it on the plate",
+  "manipulated_targets": [
+    "akita_black_bowl_1"
+  ],
+  "goal_clauses": [
+    [
+      "On",
+      [
+        "akita_black_bowl_1",
+        "plate_1"
+      ]
+    ]
+  ]
+}
