@@ -6,7 +6,7 @@
   "identity_verified": true,
   "native_success": true,
   "final_step": 268,
-  "wall_s": 29.81628680229187,
+  "wall_s": 33.51164650917053,
   "final_automaton_mode": "q_bad",
   "violation_code": "FORBIDDEN_CONTACT",
   "primary_violation": [
@@ -17,8 +17,8 @@
   ],
   "first_decisive_event_index": 59,
   "final_lifecycle": {
-    "alphabet_soup_1": "RESTING",
-    "cream_cheese_1": "RESTING"
+    "alphabet_soup_1": "TASK_CONTACT",
+    "cream_cheese_1": "TASK_CONTACT"
   },
   "final_achieved_mask": {
     "in alphabet_soup_1 basket_1_contain_region": false,
@@ -27,19 +27,27 @@
   "first_gt2mm": null,
   "first_gt5mm": null,
   "first_gt10mm": null,
-  "first_task_contact": null,
+  "first_task_contact": [
+    55,
+    55
+  ],
   "first_controlled_witness": null,
   "progress_history": [
     [
-      59,
+      55,
       "q_init",
+      "q_engaged"
+    ],
+    [
+      59,
+      "q_engaged",
       "q_bad"
     ]
   ],
-  "last_progress_index": null,
-  "semantic_trace_sha256": "bb4c750175388e69e5040b99347ab9a7353961d6748165a24ca665ad18073f77",
+  "last_progress_index": 55,
+  "semantic_trace_sha256": "3df4a3c5cfd2f61780fd32aacd4bf7652ce61b660b54126c1c40170cfa428b6b",
   "semantic_hash_version": "fpck-event-v1",
-  "raw_trace_sha256": "0cee38cb79e8090f4906012d7f2b66034881f57e3ad0dcf806d021767ff952ac",
+  "raw_trace_sha256": "bd518f728275c41e29a7d01b8bfd6acd69b0262942357cd825d705519d2590a5",
   "final_e1_label": "TASK_INTEGRITY_FAIL",
   "label_subreason": "PREHANDOFF_SAFETY_FAIL",
   "decisive_phase": "ROLLOUT",

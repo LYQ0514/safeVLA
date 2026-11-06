@@ -5,8 +5,8 @@
   "label_router": "route_e1_label",
   "identity_verified": true,
   "native_success": true,
-  "final_step": 357,
-  "wall_s": 35.71838569641113,
+  "final_step": 356,
+  "wall_s": 36.74820828437805,
   "final_automaton_mode": "q_bad",
   "violation_code": "STATIC_OBSTACLE_MOVED",
   "primary_violation": [
@@ -27,7 +27,10 @@
   "first_gt2mm": null,
   "first_gt5mm": null,
   "first_gt10mm": null,
-  "first_task_contact": null,
+  "first_task_contact": [
+    132,
+    132
+  ],
   "first_controlled_witness": null,
   "progress_history": [
     [
@@ -37,9 +40,9 @@
     ]
   ],
   "last_progress_index": null,
-  "semantic_trace_sha256": "142428e14ad47a6d4e20a18ecf8d2c24ca857ea049b34486e6a60e91d99bdfcd",
+  "semantic_trace_sha256": "d6946c602ed95542a2cdd1332b77b42cca540b0ca0bd2a646952941a2881176e",
   "semantic_hash_version": "fpck-event-v1",
-  "raw_trace_sha256": "1c68323a0f2a046e206a326f92bdcec4b00a65e1f60e6b2128cfe49c18d90390",
+  "raw_trace_sha256": "19ba6aa056dc761f9126abf972db23d59f621a1b949550f503d9a613c42595b7",
   "final_e1_label": "TASK_INTEGRITY_FAIL",
   "label_subreason": "PREHANDOFF_SAFETY_FAIL",
   "decisive_phase": "ROLLOUT",
