@@ -46,6 +46,20 @@ from src.fpck.gripper_action_decoder import (
 
 SPEC_VERSION = "fpck-task-automaton-v1.2"
 
+
+def classify_robot_body(robot_side: str) -> str:
+    """手指 body 分类：leftfinger/finger_joint1_tip→left，rightfinger/finger_joint2_tip→right，其余→non_finger。
+
+    PandaGripper 手指结构：gripper0_leftfinger（含 pad）+ gripper0_finger_joint1_tip（左指尖）、
+    gripper0_rightfinger + gripper0_finger_joint2_tip（右指尖）；housing=gripper0_right_gripper、
+    eef=gripper0_eef、臂=robot0_link*。指尖是手指一部分，不得误判为非手指。
+    """
+    if "leftfinger" in robot_side or "finger_joint1" in robot_side:
+        return "left"
+    if "rightfinger" in robot_side or "finger_joint2" in robot_side:
+        return "right"
+    return "non_finger"
+
 # 主违规码优先级（同 substep 并发事件）
 VIOLATION_PRIORITY = {
     "FORBIDDEN_CONTACT": 0,
@@ -61,12 +75,15 @@ class TaskEventBridge:
     """统一事件桥：从物理观测构造 TaskEvent，驱动自动机，输出 append-only 日志。"""
 
     def __init__(self, automaton: TaskAutomaton, raw_log_path: str,
-                 manipulated_targets, goal_keys, obstacle_body=None):
+                 manipulated_targets, goal_keys, obstacle_body=None,
+                 compare_automaton=None):
         self.auto = automaton
         self.raw_log_path = raw_log_path
         self.manipulated_targets = list(manipulated_targets)
         self.goal_keys = list(goal_keys)
         self.obstacle_body = obstacle_body  # 如 "red_coffee_mug_obstacle_1_main"
+        # 可选第二监视器（新旧监视器离线对比，裁决 §八）：同一事件驱动两者
+        self.compare_automaton = compare_automaton
 
         self.event_index = 0
         self._settled_baseline = None  # {target: pos}（settled 基线）
@@ -152,9 +169,10 @@ class TaskEventBridge:
             robot_side = b1 if r1 else b2
             if other in target_set:
                 robot_target = True
-                if "leftfinger" in robot_side:
+                kind = classify_robot_body(robot_side)
+                if kind == "left":
                     left_finger = True
-                elif "rightfinger" in robot_side:
+                elif kind == "right":
                     right_finger = True
                 else:
                     # gripper housing / eef / wrist / robot link 触碰目标 = 非法推动
@@ -391,6 +409,12 @@ class TaskEventBridge:
         before = self.auto.state.mode
         self.auto.process(ev)
         after = self.auto.state.mode
+        # 第二监视器（对比用，裁决 §八）
+        compare_before = compare_after = None
+        if self.compare_automaton is not None:
+            compare_before = self.compare_automaton.state.mode
+            self.compare_automaton.process(ev)
+            compare_after = self.compare_automaton.state.mode
 
         # 记录 TASK_CONTACT / CONTROLLED / progress 时间线
         if task_contact and self._first_task_contact is None:
@@ -454,8 +478,14 @@ class TaskEventBridge:
             "release_command": release_cmd,
             "automaton_before": before,
             "automaton_after": after,
+            "violation_code": self.auto.state.violation_code,
             "lifecycle": dict(self.auto.state.lifecycle),
             "achieved_mask": dict(self.auto.state.achieved_mask),
+            # 第二监视器（legacy v1.2 对比）时间线
+            "compare_automaton_before": compare_before,
+            "compare_automaton_after": compare_after,
+            "compare_lifecycle": (None if self.compare_automaton is None
+                                  else dict(self.compare_automaton.state.lifecycle)),
         })
         return after
 
