@@ -106,37 +106,56 @@ def table_height(env):
 
 
 def canonical_quat(shape_family):
-    """canonical upright 姿态（yaw=0）。body-local z 对齐世界 z。"""
-    # 大多数 SafeLIBERO 对象 body-local z 已是世界 z（upright），
-    # 这里用 identity（xyzw = [1,0,0,0]），shape-specific 规则在协议 §3
-    return np.array([1.0, 0.0, 0.0, 0.0])
+    """canonical 姿态：从 frozen manifest 读取（v2，非 principal-axis 强制竖直）。
+
+    注意：此函数签名保留 shape_family 参数兼容，但实际 quat 由调用方从
+    characterization_canonical_pose_manifest_v1.json 读取传入。
+    """
+    raise DeprecationWarning("v2 使用 manifest quat，见 load_canonical_pose")
 
 
-def build_scene(env, target_body, shape_family):
+def load_canonical_pose(object_class):
+    """从 frozen manifest 读取 canonical quat（离线提取，冻结 hash）。"""
+    import json
+    mp = os.path.join(ROOT, ".cache-local", "fpck_characterization",
+                      "characterization_canonical_pose_manifest_v1.json")
+    with open(mp) as f:
+        m = json.load(f)
+    p = m["poses"].get(object_class)
+    if p is None or p.get("status"):
+        return None
+    return np.asarray(p["quaternion"], dtype=np.float64)
+
+
+def build_scene(env, target_body, object_class):
     """teleport 被测对象到标准位姿，其它对象移出工作区，settling。
 
-    关键修正：对象 reset 后已在桌面上（z 自然），只改 x/y 到标准位置 + canonical 姿态，
-    不改 z（保持自然桌面高度，避免 table_height 计算错误）。
+    v2：canonical 姿态从 frozen manifest 读取（object_class 对应）。
+    只改 x/y 到标准位置 + manifest quat，保持自然 z。
     """
     m = env.sim.model
     d = env.sim.data._data
     free = free_joint_bodies(env)
 
-    # 记录对象 reset 后的自然 z（桌面高度参考）
+    # canonical quat（从 manifest）
+    quat = load_canonical_pose(object_class)
+    if quat is None:
+        return None, False, "CANONICAL_STABLE_POSE_NOT_FOUND"
+
+    # 记录对象 reset 后的自然 z
     tbid = m.body_name2id(target_body)
     z_natural = float(d.xpos[tbid][2])
 
-    # 1. 其它对象移出工作区（teleport 到高处，避免干扰）
+    # 1. 其它对象移出工作区
     for bn in free:
         if bn != target_body:
             set_body_pose(env, bn, [0.0, 0.0, OUT_OF_WORKSPACE_Z], [1, 0, 0, 0])
 
-    # 2. 被测对象到标准 x/y + canonical 姿态，保持自然 z
-    quat = canonical_quat(shape_family)
+    # 2. 被测对象到标准 x/y + canonical quat，保持自然 z
     set_body_pose(env, target_body, [STD_POS[0], STD_POS[1], z_natural], quat)
 
-    # 3. forward + settling
-    for _ in range(100):
+    # 3. forward + settling（200 步，对象从摆放掉落到桌面）
+    for _ in range(200):
         env.env.sim.forward()
         env.env.sim.step()
         env.env._update_observables()
@@ -151,7 +170,7 @@ def build_scene(env, target_body, shape_family):
         "target_quat": np.asarray(d.xquat[tbid]).tolist(),
         "z_natural": z_natural,
         "std_pos": STD_POS.tolist(), "std_yaw": STD_YAW,
-        "scene_protocol_sha256": SCENE_PROTOCOL_SHA,
+        "scene_protocol_v2_sha256": "900bcdd4cd231eaca734bf40ac307dbcbe94455f0e6e1d822f8ac3dacf1148fb",
     }
     return anchor, True, None
 
