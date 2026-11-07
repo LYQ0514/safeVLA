@@ -1,5 +1,11 @@
 # 标准物理表征场景协议 v1（CHARACTERIZATION_SCENE_V1）
 
+> **状态：SUPERSEDED_BY_V2（2026-11-07，principal-axis 强制竖直规则被替代）**
+>
+> superseded_reason: tomato_sauce 长轴横放才是自然稳定姿态，「最长轴强制竖直」导致站不稳
+> （CHARACTERIZATION_INITIALIZATION_INVALID）。canonical 姿态应来自资产注册默认姿态。
+> superseded_by: characterization_scene_v2
+>
 > 日期：2026-11-06。**在运行任何标准场景门禁前冻结**。
 > 解决「对象抓取可行性对任务布局敏感」问题（裁决：不选 A 不选 B，独立标准场景）。
 > scene_protocol_sha256 记录本文件冻结时的 hash。
