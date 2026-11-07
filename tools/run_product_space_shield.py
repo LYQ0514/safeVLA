@@ -20,6 +20,7 @@ from src.eval_safelibero import CollisionTracker,active_obstacle,summarize
 from src.fpck.frozen_policy import DeterministicFrozenPolicy
 from src.fpck.goal_evaluator import canonical_clause
 from src.fpck.predictive_shield import ProductSpacePredictiveShield
+from src.fpck.viability_shield import CounterfactualResumeViabilityShield
 from src.fpck.task_automaton import route_e1_label
 from src.fpck.task_automaton_acq import GraspAcquisitionAutomaton,SPEC_VERSION
 from src.fpck.task_event_bridge import TaskEventBridge
@@ -75,19 +76,31 @@ def _episode(env,suite_obj,suite_name,level,task_id,state_id,stream,worker,gate,
     base=DeterministicFrozenPolicy(worker,suite=suite_name,task_id=task_id,
                                    state_id=state_id,stream=stream,
                                    replan_steps=args.horizon,image_size=args.policy_resize)
-    shield=(ProductSpacePredictiveShield(
-        horizon=args.horizon,population=args.population,
-        rollout_budget=args.rollout_budget,iterations=args.iterations,
-        elite=args.elite,sigma=args.sigma,min_sigma=args.min_sigma,
-        clearance_margin=args.clearance_margin,
-        deviation_weight=args.deviation_weight,
-        smoothness_weight=args.smoothness_weight,
-        clearance_weight=args.clearance_weight,
-        progress_weight=args.progress_weight,seed=args.seed)
-        if args.method=="shield" else None)
+    if args.method == "shield":
+        shield=ProductSpacePredictiveShield(
+            horizon=args.horizon,population=args.population,
+            rollout_budget=args.rollout_budget,iterations=args.iterations,
+            elite=args.elite,sigma=args.sigma,min_sigma=args.min_sigma,
+            clearance_margin=args.clearance_margin,
+            deviation_weight=args.deviation_weight,
+            smoothness_weight=args.smoothness_weight,
+            clearance_weight=args.clearance_weight,
+            progress_weight=args.progress_weight,seed=args.seed)
+    elif args.method == "viability":
+        shield=CounterfactualResumeViabilityShield(
+            horizon=args.horizon,resume_horizon=args.resume_horizon,
+            execute_steps=args.execute_steps,h_floor=args.h_floor,
+            constraint_margin=args.constraint_margin,
+            max_constraints=args.max_constraints,
+            min_intent_ratio=args.min_intent_ratio,
+            min_intent_cosine=args.min_intent_cosine,
+            goal_regression_tolerance=args.goal_regression_tolerance)
+    else:
+        shield=None
     max_steps=args.max_steps or MAX_STEPS[suite_name]
     native_first=None; last_progress=0; prev_mode=auto.state.mode
     interventions=unverified=plan_calls=verified_calls=0; plan_ms=[]; rollout_evals=0
+    plan_status_counts={}; plan_source_counts={}
     selected_queue=[]; decision_meta=None; episode_error=None
     t0=time.time(); step=-1
 
@@ -96,11 +109,23 @@ def _episode(env,suite_obj,suite_name,level,task_id,state_id,stream,worker,gate,
             nominal_now=base.peek(obs,prompt)
             chunk=base.get_current_chunk()[base.buffer_index:]
             if shield is not None:
-                decision=shield.plan(env,bridge,obs,chunk,bodies,obstacle,start_step=step)
+                if args.method == "viability":
+                    decision=shield.plan(
+                        env=env,bridge=bridge,obs=obs,nominal_chunk=chunk,
+                        policy=base,prompt=prompt,manifest=manifest,
+                        target_bodies=bodies,obstacle_name=obstacle,
+                        start_step=step)
+                else:
+                    decision=shield.plan(
+                        env,bridge,obs,chunk,bodies,obstacle,start_step=step)
                 take=min(args.execute_steps,len(decision.actions),len(chunk))
                 selected_queue=[x.copy() for x in decision.actions[:take]]
                 decision_meta=decision; plan_calls+=1; rollout_evals+=decision.evaluations
                 plan_ms.append(decision.runtime_ms)
+                plan_status_counts[decision.status]=plan_status_counts.get(decision.status,0)+1
+                source=getattr(decision,"source",None)
+                if source is not None:
+                    plan_source_counts[source]=plan_source_counts.get(source,0)+1
                 if decision.verified: verified_calls+=1
                 else: unverified+=1
             else:
@@ -131,13 +156,20 @@ def _episode(env,suite_obj,suite_name,level,task_id,state_id,stream,worker,gate,
                "buffer_index":max(0,base.buffer_index-1),
                "plan_status":None if decision_meta is None else decision_meta.status,
                "plan_verified":None if decision_meta is None else decision_meta.verified,
-               "plan_objective":None if decision_meta is None else decision_meta.objective,
-               "nominal_objective":None if decision_meta is None else decision_meta.nominal_objective,
+               "plan_source":None if decision_meta is None else getattr(decision_meta,"source",None),
+               "plan_objective":None if decision_meta is None else getattr(decision_meta,"objective",None),
+               "nominal_objective":None if decision_meta is None else getattr(decision_meta,"nominal_objective",None),
                "plan_runtime_ms":None if decision_meta is None else decision_meta.runtime_ms,
                "plan_evaluations":None if decision_meta is None else decision_meta.evaluations,
                "predicted_final_mode":None if decision_meta is None else decision_meta.final_mode,
                "predicted_violation":None if decision_meta is None else decision_meta.violation_code,
-               "predicted_min_clearance":None if decision_meta is None else decision_meta.min_proxy_clearance})
+               "predicted_min_clearance":None if decision_meta is None else decision_meta.min_proxy_clearance,
+               "predicted_progress_delta":None if decision_meta is None else getattr(decision_meta,"progress_delta",None),
+               "predicted_goal_potential_delta":None if decision_meta is None else getattr(decision_meta,"goal_potential_delta",None),
+               "predicted_intent_ratio":None if decision_meta is None else getattr(decision_meta,"intent_ratio",None),
+               "predicted_intent_cosine":None if decision_meta is None else getattr(decision_meta,"intent_cosine",None),
+               "resume_chunk_hash":None if decision_meta is None else getattr(decision_meta,"resume_chunk_hash",None),
+               "candidate_summaries":None if decision_meta is None else getattr(decision_meta,"candidate_summaries",None)})
         if mode in ("q_acc","q_bad","q_unknown"): break
         if done and not native:
             episode_error="ENV_DONE_BEFORE_TERMINAL_AUTOMATON"; break
@@ -167,7 +199,9 @@ def _episode(env,suite_obj,suite_name,level,task_id,state_id,stream,worker,gate,
             "final_automaton_mode":final_mode,"violation_code":code,
             "safe_stall":label=="SAFE_STALL","stalled":stalled,
             "intervention_count":interventions,"plan_calls":plan_calls,
-            "verified_plan_calls":verified_calls,"unverified_backup_calls":unverified,
+            "verified_plan_calls":verified_calls,"unverified_plan_calls":unverified,
+            "unverified_backup_calls":unverified if args.method=="shield" else 0,
+            "plan_status_counts":plan_status_counts,"plan_source_counts":plan_source_counts,
             "rollout_evaluations":rollout_evals,
             "planning_runtime_ms":{"p50":q(.5),"p95":q(.95),"p99":q(.99)},
             "episode_error":episode_error,"automaton_spec":SPEC_VERSION,
@@ -184,13 +218,14 @@ def _summary(rows):
                  "unsafe_return_rate":sum(r["final_e1_label"]=="UNSAFE_RETURN" for r in rows)/n,
                  "integrity_fail_rate":sum(r["final_e1_label"]=="TASK_INTEGRITY_FAIL" for r in rows)/n,
                  "mean_interventions":sum(r["intervention_count"] for r in rows)/n,
+                 "unverified_plan_episode_rate":sum(r.get("unverified_plan_calls",0)>0 for r in rows)/n,
                  "unverified_backup_episode_rate":sum(r["unverified_backup_calls"]>0 for r in rows)/n})
     return base
 
 
 def main():
     ap=argparse.ArgumentParser()
-    ap.add_argument("--method",choices=("baseline","shield"),required=True)
+    ap.add_argument("--method",choices=("baseline","shield","viability"),required=True)
     ap.add_argument("--suite",choices=SUITES,required=True); ap.add_argument("--level",choices=("I","II"),default="I")
     ap.add_argument("--tasks",type=int,nargs="+",default=[0]); ap.add_argument("--episodes",type=int,nargs="+",default=list(range(10)))
     ap.add_argument("--streams",type=int,nargs="+",default=[0]); ap.add_argument("--out",required=True); ap.add_argument("--resume",action="store_true")
@@ -201,6 +236,13 @@ def main():
     ap.add_argument("--clearance-margin",type=float,default=.002); ap.add_argument("--deviation-weight",type=float,default=1.)
     ap.add_argument("--smoothness-weight",type=float,default=.08); ap.add_argument("--clearance-weight",type=float,default=20.)
     ap.add_argument("--progress-weight",type=float,default=.25); ap.add_argument("--seed",type=int,default=0)
+    ap.add_argument("--resume-horizon",type=int,default=5)
+    ap.add_argument("--h-floor",type=float,default=.002)
+    ap.add_argument("--constraint-margin",type=float,default=.015)
+    ap.add_argument("--max-constraints",type=int,default=6)
+    ap.add_argument("--min-intent-ratio",type=float,default=.30)
+    ap.add_argument("--min-intent-cosine",type=float,default=0.0)
+    ap.add_argument("--goal-regression-tolerance",type=float,default=.02)
     ap.add_argument("--policy-resize",type=int,default=224); ap.add_argument("--num-steps-wait",type=int,default=20)
     ap.add_argument("--max-steps",type=int); ap.add_argument("--stall-window",type=int,default=50)
     a=ap.parse_args()
