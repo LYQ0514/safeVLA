@@ -604,8 +604,13 @@ class TaskEventBridge:
                    for v in self.auto.state.lifecycle.values())
 
     def _emit(self, row):
+        # Predictive planning drives the same event bridge on restored MuJoCo
+        # branches.  Those counterfactual events must affect the simulated
+        # automaton but must not pollute the append-only executed trace.
         row["event_index"] = self.event_index
         row["wall_time"] = time.time()
         self.event_index += 1
+        if not self.raw_log_path:
+            return
         with open(self.raw_log_path, "a", encoding="utf-8") as f:
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
