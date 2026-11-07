@@ -32,12 +32,13 @@ SUBSTEPS_PER_STEP = 25
 
 
 def body_vel(env, body_name):
-    """MuJoCo body cvel（线速度 + 角速度）。"""
-    d = env.sim.data._data
-    m = env.sim.model
-    bid = m.body_name2id(body_name)
-    cvel = np.asarray(d.cvel[bid])  # [lin(3), ang(3)]
-    return cvel[:3].copy(), cvel[3:6].copy()
+    """MuJoCo body 速度：用 get_body_xvelp（线）/ get_body_xvelr（角）。
+
+    修正：cvel 是 spatial velocity（[angular, linear]），不能套 free-qvel 顺序。
+    """
+    lin = env.sim.data.get_body_xvelp(body_name)
+    ang = env.sim.data.get_body_xvelr(body_name)
+    return np.asarray(lin).copy(), np.asarray(ang).copy()
 
 
 def body_pos_quat(env, body_name):

@@ -39,10 +39,10 @@ W_CANDIDATES = [0.05, 0.10, 0.20, 0.50, 1.00]
 
 
 def body_vel(env, body):
-    d = env.sim.data._data
-    m = env.sim.model
-    cvel = np.asarray(d.cvel[m.body_name2id(body)])
-    return cvel[:3], cvel[3:6]
+    """MuJoCo body 速度：get_body_xvelp（线）/ get_body_xvelr（角）。"""
+    lin = env.sim.data.get_body_xvelp(body)
+    ang = env.sim.data.get_body_xvelr(body)
+    return np.asarray(lin).copy(), np.asarray(ang).copy()
 
 
 def support_contact(env, obj_body, support_prefixes=("living_room_table", "basket")):
@@ -138,6 +138,15 @@ def main():
     conditions = {}
     for name, prefixes in [("cream_table", ("living_room_table",)),
                            ("cream_receptacle", ("basket",))]:
+        # cream_receptacle 需保留 basket 作支撑，但 run_trial 内部 build_scene 会把 basket 移开
+        # → HARNESS_CONFIGURATION_INVALID（裁决），不重跑
+        if name == "cream_receptacle":
+            conditions[name] = {
+                "status": "HARNESS_CONFIGURATION_INVALID",
+                "reason": "run_trial 内部 build_scene 移开 basket（goal receptacle），无法作支撑",
+            }
+            print(f"{name}: HARNESS_CONFIGURATION_INVALID（basket 被 build_scene 移开）")
+            continue
         traj, err = run_trial(prefixes)
         if traj is None:
             conditions[name] = {"status": "FAIL", "reason": err}

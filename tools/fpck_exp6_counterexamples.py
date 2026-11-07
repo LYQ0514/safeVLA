@@ -60,9 +60,10 @@ def setup_counterexample_scene(env, v0_vertical):
     env.sim.data.set_joint_qpos(joint_name, np.array(
         [basket_pos[0], basket_pos[1], cc_z, quat[0], quat[1], quat[2], quat[3]]))
 
-    # 注入垂直速度（set_joint_qvel；free joint qvel 顺序 = [wx,wy,wz,vx,vy,vz]）
+    # 注入垂直速度（set_joint_qvel；free joint qvel 前3维=线速度，后3维=角速度）
+    # 六基向量门禁确认：qvel = [vx,vy,vz,wx,wy,wz]
     env.sim.data.set_joint_qvel(joint_name, np.array(
-        [0.0, 0.0, 0.0, 0.0, 0.0, -v0_vertical]))
+        [0.0, 0.0, -v0_vertical, 0.0, 0.0, 0.0]))
     return joint_name
 
 
@@ -86,15 +87,17 @@ def run_counterexample(env, v0):
     for cs in range(OBS_STEPS):
         for ss in range(SUBSTEPS_PER_STEP):
             gt = goal_truth(env)
-            cvel = np.asarray(d.cvel[cc_bid])
-            v = np.linalg.norm(cvel[:3])
-            w = np.linalg.norm(cvel[3:])
+            # 正确速度读取：get_body_xvelp（线）/ get_body_xvelr（角）
+            lin = env.sim.data.get_body_xvelp(OBJ_BODY)
+            ang = env.sim.data.get_body_xvelr(OBJ_BODY)
+            v = float(np.linalg.norm(lin))
+            w = float(np.linalg.norm(ang))
             pos = np.asarray(d.xpos[cc_bid])
             global_idx = cs * SUBSTEPS_PER_STEP + ss
             rows.append({
                 "global_substep": global_idx, "control_step": cs,
                 "goal_truth": bool(gt),
-                "lin_norm2": float(v), "ang_norm2": float(w),
+                "lin_norm2": v, "ang_norm2": w,
                 "obj_z": float(pos[2]),
             })
             if gt:
