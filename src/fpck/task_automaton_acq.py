@@ -247,8 +247,13 @@ class GraspAcquisitionAutomaton(TaskAutomaton):
 
         # 进入 acquisition（§3：close_intent ∧ valid_finger_target_contact）
         if mem is None:
+            t = self._which_target(ev)
+            # 已控制/运输/释放的目标不再进入 acquisition：运输阶段夹爪仍闭合+接触目标，
+            # 若无此守卫会重入 acquisition，60 步后触发 _acquisition_ambiguous 把
+            # 正常运输（乃至目标已达成）误判为 q_unknown。
+            if self.state.lifecycle.get(t, "RESTING") in ("CONTROLLED", "TRANSPORTED", "RELEASED"):
+                return
             if ev.close_intent and ev.valid_finger_target_contact:
-                t = self._which_target(ev)
                 m = self.acq_mem[t]
                 m.active = True
                 m.target = t

@@ -294,6 +294,69 @@ class TestAcceptRequiresReleased(unittest.TestCase):
         self.assertEqual(auto.state.lifecycle["bowl_main"], "RELEASED")
 
 
+class TestNoReentryAfterTransport(unittest.TestCase):
+    """运输阶段夹爪仍闭合+接触目标，不得重入 acquisition（否则幻影 acquisition 60 步
+    超时触发 _acquisition_ambiguous，把正常运输/已达成目标误判为 q_unknown）。
+
+    回归：真实 FPCK 首轮实验 10 个 UNCERTAIN 分支（lifecycle 已 TRANSPORTED、
+    4 个末步 goal 已真）即由此 bug 误标。"""
+
+    def _drive_to_transported(self, auto):
+        auto.process(mk_event(step=0, close_intent=True, task_contact=False))
+        auto.process(mk_event(step=1, close_intent=True, task_contact=True,
+                              left_finger_contact=True, valid_finger_target_contact=True,
+                              target_displacement_l1_mm=1.0))
+        auto.process(mk_event(step=2, close_intent=True, task_contact=True,
+                              left_finger_contact=True, valid_finger_target_contact=True,
+                              target_displacement_l1_mm=6.0))
+        for i in range(ACQ_BILATERAL_STEPS):
+            auto.process(mk_event(step=3 + i, close_intent=True, task_contact=True,
+                                  left_finger_contact=True, right_finger_contact=True,
+                                  valid_finger_target_contact=True,
+                                  target_displacement_l1_mm=7.0 + i,
+                                  closure_blocked=True, aperture=0.02))
+        # 运输：位移 > TRANSPORTED_MM(10)
+        auto.process(mk_event(step=10, close_intent=True, task_contact=True,
+                              left_finger_contact=True, right_finger_contact=True,
+                              valid_finger_target_contact=True,
+                              target_displacement_l1_mm=30.0))
+
+    def test_transport_sustained_contact_no_reentry(self):
+        auto = mk_auto()
+        self._drive_to_transported(auto)
+        self.assertIn(auto.state.lifecycle["bowl_main"], ("CONTROLLED", "TRANSPORTED"))
+        # acquisition 已在 GRASP_ACQUISITION->CONTROLLED 时释放
+        self.assertIsNone(auto._acq_active_target, "进入 CONTROLLED 后 acquisition 应已释放")
+        # 运输阶段持续 close + 双指接触 + valid contact，超过 ACQ_TIMEOUT_STEPS
+        st = None
+        for i in range(ACQ_TIMEOUT_STEPS + 5):
+            st = auto.process(mk_event(
+                step=11 + i, close_intent=True, task_contact=True,
+                left_finger_contact=True, right_finger_contact=True,
+                valid_finger_target_contact=True,
+                target_displacement_l1_mm=30.0 + i * 0.1))
+        self.assertNotEqual(st.mode, MODE_UNKNOWN,
+                            "运输阶段持续闭合+接触不得触发幻影 acquisition 超时 q_unknown")
+        self.assertIsNone(auto._acq_active_target, "运输阶段不得重入 acquisition")
+
+    def test_transport_then_release_accept_still_works(self):
+        """修复不得破坏正常释放路径：运输→释放→q_acc。"""
+        auto = mk_auto()
+        self._drive_to_transported(auto)
+        st = None
+        for i in range(3):
+            st = auto.process(mk_event(
+                step=11 + i, close_intent=False, task_contact=False,
+                left_finger_contact=False, right_finger_contact=False,
+                valid_finger_target_contact=False,
+                release_command=True, contact_gone_steps=3,
+                target_velocity_mps=0.001,
+                target_displacement_l1_mm=30.0,
+                goal_clause_truth={"place_bowl": True}))
+        self.assertEqual(st.mode, MODE_ACC, "完整 RELEASED 后 goal true 应 q_acc")
+        self.assertEqual(auto.state.lifecycle["bowl_main"], "RELEASED")
+
+
 class TestSnapshotRestore(unittest.TestCase):
     def test_acquisition_memory_roundtrip(self):
         auto = mk_auto()
