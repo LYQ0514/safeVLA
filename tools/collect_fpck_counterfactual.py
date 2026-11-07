@@ -39,6 +39,12 @@ def _canonical_bytes(arr):
     x = np.asarray(arr, np.float64).copy()
     x[x == 0.0] = 0.0  # signed-zero canonicalization
     return x.tobytes()
+def _env_equivalent(env_snap, restored_env):
+    """Env identity: tolerant to MuJoCo forward's non-idempotent quaternion
+    normalization (1 ulp, ~2e-16). Control state is compared exactly."""
+    a = np.asarray(env_snap["flattened"], np.float64)
+    b = np.asarray(restored_env["flattened"], np.float64)
+    return np.allclose(a, b, rtol=1e-12, atol=1e-15)
 def _append(path,row):
     with open(path,"a",encoding="utf-8") as f: f.write(json.dumps(row,ensure_ascii=False,default=lambda x:x.tolist() if isinstance(x,np.ndarray) else int(x) if isinstance(x,np.integer) else float(x))+"\n")
 def _split(anchor):
@@ -139,8 +145,12 @@ def _collect_anchor(env, base, bridge, manifest, bodies, obstacle, auto,
         base.restore(policy_snap); bridge.restore(copy.deepcopy(bridge_snap))
         branch_log = out / "events" / f"{anchor[:12]}_c{ci}_{candidate.source}.jsonl"
         bridge.raw_log_path = str(branch_log)
-        restore_hash = _hash_anchor_state(save_full_state(env), snapshot_control_state(env))
-        identity = restore_hash == env_hash
+        restored_env = save_full_state(env)
+        restored_control = snapshot_control_state(env)
+        env_ok = _env_equivalent(env_snap, restored_env)
+        ctl_ok = (json.dumps(control_state_payload(control_snap), sort_keys=True)
+                  == json.dumps(control_state_payload(restored_control), sort_keys=True))
+        identity = env_ok and ctl_ok
         context = ProductFeatureContext(manifest, auto.state, a.budget, a.budget,
                                         max_steps - step, max_steps,
                                         policy_snap["buffer_index"],
