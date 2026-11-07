@@ -59,12 +59,23 @@ def restore_control_state(env, snapshot):
 
 
 def control_state_payload(snapshot):
-    """Return a deterministic JSON-compatible identity payload."""
+    """Return a deterministic JSON-compatible identity payload.
+
+    Signed zero is canonicalized to +0.0 so that ``0.0`` and ``-0.0`` (physically
+    identical, but different JSON / bytes representations) hash the same.
+    """
     out = []
     for row in snapshot:
         out.append({
-            kind: {name: np.asarray(value).tolist()
+            kind: {name: _canonical_list(np.asarray(value))
                    for name, value in fields.items()}
             for kind, fields in row.items()
         })
     return out
+
+
+def _canonical_list(arr):
+    arr = np.asarray(arr, dtype=np.float64)
+    arr = arr.copy()
+    arr[arr == 0.0] = 0.0  # signed-zero canonicalization
+    return arr.tolist()

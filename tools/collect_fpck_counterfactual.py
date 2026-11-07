@@ -27,11 +27,18 @@ from src.eval_safelibero import CollisionTracker,active_obstacle
 MAX_STEPS={"safelibero_spatial":300,"safelibero_goal":300,"safelibero_object":300,"safelibero_long":550}
 
 
-def _hash_state(snap): return hashlib.sha256(np.asarray(snap["flattened"],np.float64).tobytes()).hexdigest()
+def _hash_state(snap):
+    x = np.asarray(snap["flattened"], np.float64).copy()
+    x[x == 0.0] = 0.0  # canonicalize signed zero
+    return hashlib.sha256(x.tobytes()).hexdigest()
 def _hash_anchor_state(env_snap,control_snap):
-    h=hashlib.sha256(np.asarray(env_snap["flattened"],np.float64).tobytes())
+    h=hashlib.sha256(_canonical_bytes(env_snap["flattened"]))
     h.update(json.dumps(control_state_payload(control_snap),sort_keys=True).encode())
     return h.hexdigest()
+def _canonical_bytes(arr):
+    x = np.asarray(arr, np.float64).copy()
+    x[x == 0.0] = 0.0  # signed-zero canonicalization
+    return x.tobytes()
 def _append(path,row):
     with open(path,"a",encoding="utf-8") as f: f.write(json.dumps(row,ensure_ascii=False,default=lambda x:x.tolist() if isinstance(x,np.ndarray) else int(x) if isinstance(x,np.integer) else float(x))+"\n")
 def _split(anchor):
