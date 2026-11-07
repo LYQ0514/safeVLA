@@ -80,3 +80,32 @@ data/eval/*/*.mp4
 # ---- 接触审计输出（Step 4+ 汇总结果，需 hash 追溯）----
 !data/audit/
 
+# ---- 调试产物 / 备份（一次性探索输出，不入库）----
+data/audit/*.json.bak_*
+data/eval/*/*.bak_polluted
+data/eval/*/*.bak_*
+*.bak
+*.bak_*
+
+# ---- 打包产物（体积大，由源码重建）----
+*.tar.gz
+*.zip
+
+# ---- 审计目录下的调试 json（只保留正式 .md 结论与关键 .json 契约）----
+data/audit/*_gate.json
+data/audit/*_replay.json
+data/audit/*_detection.json
+data/audit/*_verify.json
+data/audit/*_baseline.json
+data/audit/*_sensitivity.json
+data/audit/*_frequency.json
+data/audit/*_w1.json
+data/audit/*_w2.json
+data/audit/indirect_propagation_*.json
+data/audit/success_value_probe_gate*.json
+data/audit/quat_fix_verify.json
+data/audit/mug_static_drift_baseline.json
+
+# ---- 旧运行目录（历史会话临时产物，不入库）----
+safeVLA_round3/
+
