@@ -526,6 +526,9 @@ class TaskEventBridge:
                                        else self._eef_xy_at_first_finger.tolist()),
             "prev_eef": (None if self._prev_eef is None else self._prev_eef.tolist()),
             "event_index": self.event_index,
+            # 第二监视器（legacy）状态：同轨迹 A/B 需要在反事实分支中恢复
+            "compare_automaton": (self.compare_automaton.snapshot()
+                                  if self.compare_automaton is not None else None),
         }
 
     def restore(self, snap):
@@ -564,10 +567,13 @@ class TaskEventBridge:
         self._prev_eef = (None if snap.get("prev_eef") is None
                           else np.asarray(snap["prev_eef"]))
         self.event_index = int(snap.get("event_index", self.event_index))
+        # 恢复第二监视器（legacy）状态
+        if self.compare_automaton is not None and snap.get("compare_automaton") is not None:
+            self.compare_automaton.restore(snap["compare_automaton"])
 
     def finalize(self):
         """返回最终汇总（引用 trace hash，不代替原始记录）。"""
-        return {
+        fin = {
             "final_automaton_mode": self.auto.state.mode,
             "violation_code": self.auto.state.violation_code,
             "primary_violation": self._primary_violation,
@@ -583,6 +589,12 @@ class TaskEventBridge:
             "progress_history": list(self._progress_history),
             "last_progress_index": self._last_progress_index,
         }
+        # 第二监视器（legacy）最终状态：同轨迹 A/B 因果归因依据
+        if self.compare_automaton is not None:
+            fin["legacy_final_automaton_mode"] = self.compare_automaton.state.mode
+            fin["legacy_violation_code"] = self.compare_automaton.state.violation_code
+            fin["legacy_final_lifecycle"] = dict(self.compare_automaton.state.lifecycle)
+        return fin
 
     # ------------------------------------------------------------------
     # 内部

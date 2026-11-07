@@ -357,6 +357,72 @@ class TestNoReentryAfterTransport(unittest.TestCase):
         self.assertEqual(auto.state.lifecycle["bowl_main"], "RELEASED")
 
 
+class TestLegacyReentryGuard(unittest.TestCase):
+    """reentry_guard=False 复现修复前的 bug：运输阶段重入 acquisition → 超时 q_unknown。
+
+    这是同轨迹双影子监视器 A/B 的 legacy 自动机（与 fixed 唯一差异即此守卫）。
+    """
+
+    def _drive_to_transported(self, auto):
+        auto.process(mk_event(step=0, close_intent=True, task_contact=False))
+        auto.process(mk_event(step=1, close_intent=True, task_contact=True,
+                              left_finger_contact=True, valid_finger_target_contact=True,
+                              target_displacement_l1_mm=1.0))
+        auto.process(mk_event(step=2, close_intent=True, task_contact=True,
+                              left_finger_contact=True, valid_finger_target_contact=True,
+                              target_displacement_l1_mm=6.0))
+        for i in range(ACQ_BILATERAL_STEPS):
+            auto.process(mk_event(step=3 + i, close_intent=True, task_contact=True,
+                                  left_finger_contact=True, right_finger_contact=True,
+                                  valid_finger_target_contact=True,
+                                  target_displacement_l1_mm=7.0 + i,
+                                  closure_blocked=True, aperture=0.02))
+        auto.process(mk_event(step=10, close_intent=True, task_contact=True,
+                              left_finger_contact=True, right_finger_contact=True,
+                              valid_finger_target_contact=True,
+                              target_displacement_l1_mm=30.0))
+
+    def test_legacy_reentry_triggers_unknown(self):
+        from src.fpck.task_automaton_acq import GraspAcquisitionAutomaton
+        auto = GraspAcquisitionAutomaton(["bowl_main"], ["place_bowl"],
+                                         reentry_guard=False)
+        self._drive_to_transported(auto)
+        self.assertIn(auto.state.lifecycle["bowl_main"],
+                      ("CONTROLLED", "TRANSPORTED"))
+        st = None
+        for i in range(ACQ_TIMEOUT_STEPS + 5):
+            st = auto.process(mk_event(
+                step=11 + i, close_intent=True, task_contact=True,
+                left_finger_contact=True, right_finger_contact=True,
+                valid_finger_target_contact=True,
+                target_displacement_l1_mm=30.0 + i * 0.1))
+        self.assertEqual(st.mode, MODE_UNKNOWN,
+                         "legacy（reentry_guard=False）运输阶段重入应超时 q_unknown")
+
+    def test_fixed_vs_legacy_only_guard_differs(self):
+        """同一事件流：fixed 不 q_unknown，legacy q_unknown；唯一差异是守卫。"""
+        from src.fpck.task_automaton_acq import GraspAcquisitionAutomaton
+        fixed = GraspAcquisitionAutomaton(["bowl_main"], ["place_bowl"],
+                                          reentry_guard=True)
+        legacy = GraspAcquisitionAutomaton(["bowl_main"], ["place_bowl"],
+                                           reentry_guard=False)
+        self._drive_to_transported(fixed)
+        self._drive_to_transported(legacy)
+        # 两自动机在此点状态一致（都在 CONTROLLED/TRANSPORTED）
+        self.assertEqual(fixed.state.lifecycle["bowl_main"],
+                         legacy.state.lifecycle["bowl_main"])
+        s_fixed = s_legacy = None
+        for i in range(ACQ_TIMEOUT_STEPS + 5):
+            e = mk_event(step=11 + i, close_intent=True, task_contact=True,
+                         left_finger_contact=True, right_finger_contact=True,
+                         valid_finger_target_contact=True,
+                         target_displacement_l1_mm=30.0 + i * 0.1)
+            s_fixed = fixed.process(e)
+            s_legacy = legacy.process(e)
+        self.assertNotEqual(s_fixed.mode, MODE_UNKNOWN)
+        self.assertEqual(s_legacy.mode, MODE_UNKNOWN)
+
+
 class TestSnapshotRestore(unittest.TestCase):
     def test_acquisition_memory_roundtrip(self):
         auto = mk_auto()

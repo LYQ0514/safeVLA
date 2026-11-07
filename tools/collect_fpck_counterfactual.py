@@ -59,8 +59,12 @@ def _setup_bridge(env,bddl,obs,raw_path):
     bodies=[n if n.endswith("_main") else n+"_main" for n in targets]
     keys=[canonical_clause(x) for x in manifest["goal_clauses"]]
     auto=GraspAcquisitionAutomaton(targets,keys); obstacle=active_obstacle(env,obs)
+    # 同轨迹双影子监视器（裁决：legacy vs fixed 唯一差异即 reentry guard）：
+    # legacy = reentry_guard=False（复现运输阶段重入 acquisition 的 bug）
+    legacy=GraspAcquisitionAutomaton(targets,keys,reentry_guard=False)
     bridge=TaskEventBridge(auto,str(raw_path),targets,keys,
-                           obstacle_body=None if obstacle is None else obstacle+"_main")
+                           obstacle_body=None if obstacle is None else obstacle+"_main",
+                           compare_automaton=legacy)
     bridge.reset(env,{b:body_state(env,b)["pos"].copy() for b in bodies},bodies,
                  None if obstacle is None else obstacle+"_main")
     return manifest,bodies,obstacle,auto,bridge
@@ -179,6 +183,11 @@ def _collect_anchor(env, base, bridge, manifest, bodies, obstacle, auto,
                "chunk_hash": policy_snap.get("meta", {}).get("chunk_hash"),
                "buffer_index": policy_snap["buffer_index"],
                "automaton_before": bridge_snap["automaton"], "automaton_after": fin,
+               # 同轨迹双影子监视器：legacy（reentry_guard=False）最终状态，
+               # 用于 A/B 因果归因（fixed q_acc ∧ legacy q_unknown ⇒ 修复因果成立）
+               "legacy_final_mode": fin.get("legacy_final_automaton_mode"),
+               "legacy_violation_code": fin.get("legacy_violation_code"),
+               "legacy_final_lifecycle": fin.get("legacy_final_lifecycle"),
                "label_subreason": sub, "anchor_source": anchor_source,
                "event_log": str(branch_log.relative_to(out))}
         _append(rows_path, row)

@@ -124,13 +124,17 @@ class AcquisitionMemory:
 class GraspAcquisitionAutomaton(TaskAutomaton):
     """v1.3 自动机：显式 GRASP_ACQUISITION 状态。"""
 
-    def __init__(self, manipulated_targets, goal_clause_keys):
+    def __init__(self, manipulated_targets, goal_clause_keys, reentry_guard=True):
         super().__init__(manipulated_targets, goal_clause_keys)
         self.state.spec_version = SPEC_VERSION
         self.acq_mem: Dict[str, AcquisitionMemory] = {
             t: AcquisitionMemory() for t in self.manipulated_targets
         }
         self._acq_active_target: Optional[str] = None  # 当前正在 acquisition 的 target
+        # reentry_guard=False 复现修复前的 bug（运输阶段重入 acquisition → 超时
+        # q_unknown）。用于同轨迹双影子监视器 A/B（裁决：legacy vs fixed 唯一差异
+        # 即此守卫）。
+        self.reentry_guard = bool(reentry_guard)
 
     # ------------------------------------------------------------------
     # 状态扩展
@@ -251,7 +255,9 @@ class GraspAcquisitionAutomaton(TaskAutomaton):
             # 已控制/运输/释放的目标不再进入 acquisition：运输阶段夹爪仍闭合+接触目标，
             # 若无此守卫会重入 acquisition，60 步后触发 _acquisition_ambiguous 把
             # 正常运输（乃至目标已达成）误判为 q_unknown。
-            if self.state.lifecycle.get(t, "RESTING") in ("CONTROLLED", "TRANSPORTED", "RELEASED"):
+            if (self.reentry_guard
+                    and self.state.lifecycle.get(t, "RESTING")
+                    in ("CONTROLLED", "TRANSPORTED", "RELEASED")):
                 return
             if ev.close_intent and ev.valid_finger_target_contact:
                 m = self.acq_mem[t]
