@@ -497,7 +497,12 @@ class TaskEventBridge:
     def snapshot(self):
         """返回 bridge 完整状态（自动机 + 见证计数器 + 基线）。"""
         return {
-            "automaton": self.auto.state.snapshot(),
+            # v1.3 的 acquisition memory 是产品状态的一部分。只保存
+            # AutomatonState 会让反事实 sibling 丢失单指接触、闭爪意图与
+            # bilateral dwell，破坏 Markov 身份。
+            "automaton": (self.auto.snapshot()
+                          if hasattr(self.auto, "snapshot")
+                          else self.auto.state.snapshot()),
             "settled_baseline": {t: v.tolist() for t, v in (self._settled_baseline or {}).items()},
             "target_prev": {t: v.tolist() for t, v in self._target_prev.items()},
             "lift_hist": {t: list(v) for t, v in self._lift_hist.items()},
@@ -519,16 +524,21 @@ class TaskEventBridge:
             "prev_aperture": self._prev_aperture,
             "eef_xy_at_first_finger": (None if self._eef_xy_at_first_finger is None
                                        else self._eef_xy_at_first_finger.tolist()),
+            "prev_eef": (None if self._prev_eef is None else self._prev_eef.tolist()),
+            "event_index": self.event_index,
         }
 
     def restore(self, snap):
         """恢复 bridge 状态（含自动机 + 见证计数器）。"""
-        self.auto.state = AutomatonState(
-            mode=snap["automaton"]["mode"],
-            lifecycle=dict(snap["automaton"]["lifecycle"]),
-            achieved_mask=dict(snap["automaton"]["achieved_mask"]),
-            violation_code=snap["automaton"]["violation_code"],
-        )
+        if hasattr(self.auto, "restore"):
+            self.auto.restore(snap["automaton"])
+        else:
+            self.auto.state = AutomatonState(
+                mode=snap["automaton"]["mode"],
+                lifecycle=dict(snap["automaton"]["lifecycle"]),
+                achieved_mask=dict(snap["automaton"]["achieved_mask"]),
+                violation_code=snap["automaton"]["violation_code"],
+            )
         self._settled_baseline = {t: np.asarray(v) for t, v in snap["settled_baseline"].items()}
         self._target_prev = {t: np.asarray(v) for t, v in snap["target_prev"].items()}
         self._lift_hist = {t: list(v) for t, v in snap["lift_hist"].items()}
@@ -551,6 +561,9 @@ class TaskEventBridge:
         self._prev_aperture = snap.get("prev_aperture")
         self._eef_xy_at_first_finger = (None if snap.get("eef_xy_at_first_finger") is None
                                         else np.asarray(snap["eef_xy_at_first_finger"]))
+        self._prev_eef = (None if snap.get("prev_eef") is None
+                          else np.asarray(snap["prev_eef"]))
+        self.event_index = int(snap.get("event_index", self.event_index))
 
     def finalize(self):
         """返回最终汇总（引用 trace hash，不代替原始记录）。"""
