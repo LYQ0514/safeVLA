@@ -250,7 +250,69 @@ horizon 前 q_bad/q_unknown 提前终止而未触发；修复后 goal LII s1 出
 
 ---
 
-## 十一、工程修复记录（本实验期间，按时间）
+## 十一、B：105 个 UNSAFE_RETURN 失败分支离线归因
+
+### 数据与方法
+
+只分析 `samples_effective_v2.jsonl` 的 105 个 UNSAFE_RETURN 分支（28 个 anchor，
+80 个「干预候选 vs 同 anchor nominal」配对；bug 只影响 transportation 重入→
+q_unknown，不影响 q_bad，故这些分支标签稳定）。每个干预候选与同 anchor nominal
+配对，计算 Δτ_fail、违规码改变、生命周期推进、语义分歧步等。
+
+预注册分类（优先级互斥）：RECOVERY / PROGRESS_WITHOUT_COMPLETION /
+REDIRECTED_FAILURE / TRANSIENT_AVOIDANCE / MARGINAL_DELAY / NO_EFFECT。
+
+### 结果（`tools/analyze_fpck_failure_branches.py`）
+
+候选级（80 配对）：
+
+| 分类 | 计数 | 占比 |
+|---|---|---|
+| NO_EFFECT | 51 | 64% |
+| MARGINAL_DELAY (2-4 步) | 5 | 6% |
+| REDIRECTED_FAILURE | 17 | 21% |
+| TRANSIENT_AVOIDANCE (≥5 步) | 3 | 4% |
+| PROGRESS_WITHOUT_COMPLETION | 4 | 5% |
+| RECOVERY | 0 | 0% |
+
+anchor 级（28 anchor）：
+
+| 分类 | anchor 数 |
+|---|---|
+| 纯 NO_EFFECT / MARGINAL | 14 |
+| 含 REDIRECTED_FAILURE | 10 |
+| 含 TRANSIENT / PROGRESS | 4 |
+
+### 关键诊断：NO_EFFECT 是「亚阈值」而非「无物理作用」
+
+NO_EFFECT 配对中，**仅 16/51 的语义 trace 完全一致**——即 35/51 的 NO_EFFECT
+轨迹语义上仍有分歧（自动机中间状态不同），但分歧幅度不足以改变失败时间或违规码。
+
+这说明：候选确实扰动轨迹，但扰动（`max_action_delta=0.75` 的单步 hold/retreat/
+tangent_left/damped）**亚阈值**——不足以把 EEF 移出碰撞路径。
+
+### 裁决
+
+- 多数为 NO_EFFECT/MARGINAL（70% 配对，14/28 anchor 纯 NO_EFFECT）→ 按裁决
+  「若多数为 NO_EFFECT 则不直接做 C」；
+- REDIRECTED_FAILURE 占比显著（21% 配对，10/28 anchor）→ 需联合约束候选，而非
+  单纯扩大动作幅度；
+- TRANSIENT/PROGRESS 仅 4/28 anchor（14%）→ 正控制作用证据稀少。
+
+**结论：不进入「整 chunk + 分层 backward reachability」（C）。先重构候选几何与
+控制权限。** 理由：延长一个亚阈值动作不会产生恢复能力；当前候选在失败锚点上
+（碰撞前 5 步）以 ≤0.75 的单步扰动无法把 EEF 移出碰撞路径，多数轨迹因此仍以
+相同违规、相同步数失败。
+
+### 进入 C 的前置条件（未满足）
+
+需先证明候选在失败锚点上有「非亚阈值」控制作用——即重构后的候选能把多数失败
+锚点的违规码/失败时间改变（REDIRECTED 或 TRANSIENT 占比显著上升），才谈得上
+「多步时序可达性 vs 候选控制几何」的抉择。
+
+---
+
+## 十二、工程修复记录（本实验期间，按时间）
 
 1. 预失败锚点（`pre_failure_lead5`）：修复 nominal 早期失败的结构性缺失；
 2. signed-zero 假阴性（control payload canonicalization）；
